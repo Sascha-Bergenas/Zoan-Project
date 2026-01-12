@@ -26,6 +26,7 @@ We have a roadmap filled with exciting features and improvements to enhance your
 ## Who made this?
 **Meet the team:**
 
+<!-- Vad sägs om bilder istället för textlänkar här? Jag tänker mig profilbilderna från GitHub tex, om man har en där -->
 | Björne | Elias | Isabelle | Mäx | Sascha |
 |---|---|---|---|---|
 | [Björne](https://github.com/bjorneboman) | [Elias](https://github.com/Eliasjohansson123) | [Isabelle](https://github.com/isabellea-f) | [Mäx](https://github.com/maxmattiasson) | [Sascha](https://github.com/Sascha-Bergenas)
