@@ -10,9 +10,3 @@ const App = () => {
 export default App;
 
 //Använd export default för att exportera en komponent från en fil
-
-// const App = () => {
-//   return <h1>React fungerar 🎉</h1>;
-// };
-
-// export default App;
