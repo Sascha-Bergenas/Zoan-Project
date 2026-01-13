@@ -1,11 +1,11 @@
-export default function Button({ text, type, variant, disabled = false }) {
+export default function Button({
+  text,
+  type = "button",
+  variant = "primary",
+  disabled = false,
+}) {
   return (
-    <button
-      type={type}
-      disabled={disabled}
-      variant={variant}
-      className="btn btn-primary"
-    >
+    <button type={type} disabled={disabled} className={`btn btn-${variant}`}>
       {text}
     </button>
   );
