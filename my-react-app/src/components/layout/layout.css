@@ -1,0 +1,19 @@
+.header {
+  background-color: beige;
+  & nav {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+}
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+}
+.main {
+  background-color: antiquewhite;
+}
+.sidebar {
+  background-color: aquamarine;
+}

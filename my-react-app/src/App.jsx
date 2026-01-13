@@ -1,14 +1,17 @@
 import Button from "./components/ui/Button";
 import Card from "./components/ui/Card";
 import TimerDisplay from "./components/Features/timer/TimerDisplay";
-import "./components/features/timer/timer.css";
+import "./components/Features/timer/timer.css";
 import "./App.css";
 import MoodPicker from "./components/Features/mood/MoodPicker";
+import Layout from "./components/layout/Layout";
 
 export default function App() {
   return (
-    <>
+    <>  
       <div>
+      <Layout>
+      </Layout>
         <Button text="Test Secondary" variant="secondary" />
         <Button text="Primary Enabled" type="button" />
         <Button
