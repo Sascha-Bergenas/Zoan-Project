@@ -1,0 +1,25 @@
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #2b5381;
+  border: 1px solid #e5e7eb;
+  max-width: 300px;
+  text-align: center;
+  color: white;
+  font-weight: lighter;
+  font-family: sans-serif;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.card p {
+  margin: 0;
+}
+
+.card img {
+  max-width: 200px;
+  height: auto;
+}
