@@ -1,7 +1,7 @@
 .card {
   padding: 16px;
   border-radius: 8px;
-  background-color: #0e6dda;
+  background-color: #2b5381;
   border: 1px solid #e5e7eb;
   max-width: 300px;
   text-align: center;
@@ -17,4 +17,9 @@
 
 .card p {
   margin: 0;
+}
+
+.card img {
+  max-width: 200px;
+  height: auto;
 }

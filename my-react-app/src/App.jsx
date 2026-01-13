@@ -17,6 +17,7 @@ export default function App() {
       <div>
         <Card
           title="Card test"
+          img="https://media.lordicon.com/icons/wired/outline/46-timer-stopwatch.svg"
           description={`Lorem ipsum dolor, sit amet consectetur adipisicing elit.
 Magnam, est.`}
         >
