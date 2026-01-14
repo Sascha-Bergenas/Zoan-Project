@@ -1,5 +1,6 @@
 import Button from "./components/ui/Button";
 import Card from "./components/ui/Card";
+import InfoCard from "./components/ui/InfoCard";
 
 export default function App() {
   return (
@@ -16,8 +17,7 @@ export default function App() {
       </div>
       <div>
         <Card
-          title="Card test"
-          img="https://media.lordicon.com/icons/wired/outline/46-timer-stopwatch.svg"
+          title="Test Card"
           description={`Lorem ipsum dolor, sit amet consectetur adipisicing elit.
 Magnam, est.`}
         >
@@ -27,6 +27,14 @@ Magnam, est.`}
           </div>
         </Card>
       </div>
+      <InfoCard
+        title="Smarta Rekommendationer"
+        items={[
+          { text: "Ta en paus om 20 min" },
+          { text: "Möte kl. 11:00" },
+          { text: "Fokusera på Deep Work nu" },
+        ]}
+      />
     </>
   );
 }
