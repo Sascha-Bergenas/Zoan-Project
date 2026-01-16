@@ -1,5 +1,6 @@
 .header {
-  background-color: beige;
+  background-color: white;
+  max-height: 100px;
   & nav {
     display: flex;
     gap: 12px;
@@ -8,7 +9,7 @@
 }
 .layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-rows: 100px 1fr;
   min-height: 100vh;
 }
 .main {
@@ -16,4 +17,14 @@
 }
 .sidebar {
   background-color: aquamarine;
+  display: flex;
+  gap: 20px;
+}
+.logo {
+  font-size: 2rem;
+  color: black;
+  & span {
+    color: purple;
+    font-size: 3rem;
+  }
 }
