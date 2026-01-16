@@ -4,7 +4,6 @@ export default function Header(){
         <nav>
         <h1>ZOAN</h1>
         <p>rakkamakkaphoan</p>
-            <a href="/">Home</a>
             <a href="/dashboard">Dashboard</a>
         </nav>
     </header> 

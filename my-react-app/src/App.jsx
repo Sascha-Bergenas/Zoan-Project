@@ -1,3 +1,5 @@
+
+import { Routes, Route, Navigate } from "react-router-dom";
 import Button from "./components/ui/Button";
 import Card from "./components/ui/Card";
 import TimerDisplay from "./components/Features/timer/TimerDisplay";
@@ -5,13 +7,20 @@ import "./components/Features/timer/timer.css";
 import "./App.css";
 import MoodPicker from "./components/Features/mood/MoodPicker";
 import Layout from "./components/layout/Layout";
+import Dashboard from "./pages/DashboardPage.jsx"
 
 export default function App() {
   return (
     <>  
       <div>
-      <Layout>
-      </Layout>
+      <Routes>
+      <Route element={<Layout />}>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/history" element={<History />} />
+          <Route path="/third" element={<Third />} /> */}
+        </Route>
+      </Routes>
         <Button text="Test Secondary" variant="secondary" />
         <Button text="Primary Enabled" type="button" />
         <Button
