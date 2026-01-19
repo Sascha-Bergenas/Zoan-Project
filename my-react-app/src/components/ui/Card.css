@@ -24,6 +24,12 @@
 .card-large {
 }
 
+.card-timer {
+  grid-row: 1/2;
+  max-width: 250px;
+  min-height: 400px;
+}
+
 .card h3 {
   margin: 0 0 8px;
   font-size: 18px;
