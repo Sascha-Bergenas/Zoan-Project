@@ -1,6 +1,10 @@
 import Input from "./components/ui/input";
 import Button from "./components/ui/Button";
 import Card from "./components/ui/Card";
+import TimerDisplay from "./components/Features/timer/TimerDisplay";
+import "./components/features/timer/timer.css";
+import "./App.css";
+import MoodPicker from "./components/Features/mood/MoodPicker";
 
 //Använd export default för att exportera en komponent från en fil
 
@@ -18,19 +22,22 @@ export default function App() {
           disabled={true}
         />
       </div>
-      <div>
-        <Card
-          title="Card test"
-          img="https://media.lordicon.com/icons/wired/outline/46-timer-stopwatch.svg"
-          description={`Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-Magnam, est.`}
-        >
-          <div>
-            <Button text="Click here" />
-            <p>Children children</p>
-          </div>
-        </Card>
-      </div>
+      {/* ------TIMER-------- */}
+      <h3>Timer</h3>
+      <Card size="card-small">
+        <TimerDisplay hours={1} seconds={90} ms={23} />
+        <span>Paus: 00:13:55</span>
+        <div className="timer-actions">
+          <Button text="Start" />
+          <Button text="Paus" type="button" variant="secondary" />
+        </div>
+      </Card>
+
+      {/* -------- Mood ------- */}
+      <h3>Dagens Mood</h3>
+      <Card size="card-small">
+        <MoodPicker />
+      </Card>
     </>
   );
 }
