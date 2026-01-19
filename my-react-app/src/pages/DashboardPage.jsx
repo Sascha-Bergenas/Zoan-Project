@@ -1,42 +1,41 @@
 import BaseCard from "../components/ui/Card";
 import styles from "./Dashboard.module.css";
+import WorkSessionForm from "../components/ui/form/WorkSessionForm";
 
 function Dashboard() {
   return (
     <>
       <div className={styles.container}>
-        <BaseCard size="card-timer">
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
+        <BaseCard className={styles.timer} size="card-timer">
+          <p>TIMER</p>
+          <p>TIMER</p>
+          <p>TIMER</p>
+          <p>TIMER</p>
+          <p>TIMER</p>
+          <p>TIMER</p>
+          <p>TIMER</p>
         </BaseCard>
-        <BaseCard size="card-large">
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
+        <BaseCard className={styles.card1} size="card-large">
+          <p>STATUS</p>
+          <p>STATUS</p>
+          <p>STATUS</p>
+          <p>STATUS</p>
         </BaseCard>
 
-        <BaseCard size="card-small">
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
+        <BaseCard className={styles.card2} size="card-medium">
+          <p>SMARTA REKOMMENDATIONER</p>
+          <p>SMARTA REKOMMENDATIONER</p>
+          <p>SMARTA REKOMMENDATIONER</p>
+        </BaseCard>
+        <BaseCard className={styles.card3} size="card-small">
+          <p>MOOD</p>
+          <p>MOOD</p>
+          <p>MOOD</p>
+          <p>MOOD</p>
         </BaseCard>
         <BaseCard>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
-          <p>Testar</p>
+          <h3>Logga Arbetspass</h3>
+          <WorkSessionForm />
         </BaseCard>
       </div>
     </>
