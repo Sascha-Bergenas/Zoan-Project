@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import History from "./pages/HistoryPage";
 import Dashboard from "./pages/DashboardPage";
 
-
 //Använd export default för att exportera en komponent från en fil
 
 export default function App() {
