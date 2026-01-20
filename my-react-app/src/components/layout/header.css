@@ -3,8 +3,11 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  color: black;
   padding: 0 6rem;
+}
+
+nav h1 {
+  color: var(--primary-color);
 }
 
 nav ul {
@@ -16,14 +19,6 @@ nav ul {
 
 nav li {
   padding-left: 1rem;
-}
-
-nav a {
-  text-decoration: none;
-}
-
-nav a:visited {
-  color: inherit;
 }
 
 @media only screen and (max-width: 600px) {
