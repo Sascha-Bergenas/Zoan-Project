@@ -1,0 +1,34 @@
+Boilerroom-proj2/
+|
+└── my-react-app/
+    ├── eslint.config.js
+    ├── index.html
+    ├── package.json
+    ├── README.md
+    ├── vite.config.js
+    ├── public/
+    └── src/
+        ├── App.css
+        ├── App.jsx
+        ├── index.css
+        ├── main.jsx
+        ├── assets/
+        ├── components/
+        │   ├── layout/
+        │   │   ├── Header.jsx
+        │   │   └── Navigation.jsx
+        │   ├── timer/
+        │   │   ├── Timer.jsx
+        │   │   └── TimerDisplay.jsx
+        │   └── ui/
+        │       ├── Button.jsx
+        │       ├── Card.jsx
+        │       └── Input.jsx
+        ├── pages/
+        │   ├── DashboardPage.tsx
+        │   ├── HistoryPage.tsx
+        │   └── TimerPage.tsx
+        ├── types/
+        │   └── timeEntry.js
+        └── utils/
+            └── formatTime.js

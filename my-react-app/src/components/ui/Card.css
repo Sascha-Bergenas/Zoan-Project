@@ -1,0 +1,52 @@
+.card {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  border: 1px solid #e5e7eb;
+  max-width: 100%;
+  color: rgb(0, 0, 0);
+  font-weight: lighter;
+  font-family: sans-serif;
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 1.5rem;
+}
+
+.card-small {
+  min-width: 250px;
+  min-height: 150px;
+}
+
+.card-medium {
+  min-width: 350px;
+  min-height: 150px;
+}
+
+.card-large {
+  min-width: 600px;
+  min-height: 150px;
+}
+
+.card-timer {
+  min-width: 250px;
+  min-height: 400px;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.card p {
+  margin: 0;
+}
+
+.card img {
+  max-width: 200px;
+  height: auto;
+}
