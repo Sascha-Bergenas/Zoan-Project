@@ -11,6 +11,7 @@ function WorkSessionForm() {
     const workSession = {
       title: formData.get("title"),
       category: formData.get("category"),
+      comment: formData.get("comment"),
     };
 
     console.log("Arbetspass:", workSession);
@@ -33,6 +34,12 @@ function WorkSessionForm() {
         <option value="möte">Möte</option>
         <option value="annat">Annat</option>
       </Select>
+      <Input
+        className="input-comment"
+        type="text"
+        name="comment"
+        placeholder="Skriv en kommentar"
+      />
       <Button type="submit" text="Logga" />
     </form>
   );

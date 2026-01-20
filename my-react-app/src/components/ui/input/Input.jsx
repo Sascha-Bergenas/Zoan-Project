@@ -7,13 +7,14 @@ const Input = ({
   placeholder,
   value,
   onChange,
+  className,
 }) => {
   return (
     <div className="input-wrapper">
       <label>
         <span>{label}</span>
         <input
-          className="input"
+          className={className ? `input ${className}` : "input"}
           type={type}
           value={value}
           onChange={onChange}
