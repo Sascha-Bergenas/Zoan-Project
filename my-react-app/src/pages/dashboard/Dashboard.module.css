@@ -9,9 +9,10 @@ body {
 .container {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-
+  padding: 1rem;
   gap: 1rem;
   margin: 1rem;
+  border-radius: 4px;
   background-color: whitesmoke;
 }
 .timer {
