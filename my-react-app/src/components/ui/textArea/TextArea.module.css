@@ -6,7 +6,8 @@ textarea {
   font-family: sans-serif;
   background-color: #ffffff;
   color: #333333;
-  width: 12rem;
+  width: 15em;
+  height: 3em;
 }
 .textarea span {
   display: none;

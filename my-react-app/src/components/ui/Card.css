@@ -18,23 +18,18 @@
 }
 
 .card-small {
-  min-width: 250px;
+  max-width: 250px;
   min-height: 150px;
 }
 
 .card-medium {
-  min-width: 350px;
+  max-width: 350px;
   min-height: 150px;
 }
 
 .card-large {
-  min-width: 600px;
+  max-width: 600px;
   min-height: 150px;
-}
-
-.card-timer {
-  min-width: 250px;
-  min-height: 400px;
 }
 
 .card h3 {
