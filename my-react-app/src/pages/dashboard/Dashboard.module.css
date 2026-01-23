@@ -2,7 +2,8 @@ body {
   align-items: center;
 }
 
-.main {
+.wrapper {
+  container-type: inline-size;
 }
 
 .container {
@@ -52,69 +53,75 @@ body {
 
 @container (inline-size < 1200px) {
   .container {
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: auto;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 500px);
   }
 
   .timer {
-    grid-column: span 2;
-    grid-row: auto;
+    grid-column: span 1;
+    grid-row: 1;
   }
 
   .card1 {
-    grid-column: span 1;
-    grid-row: auto;
+    grid-column: span 2;
+    grid-row: 1;
   }
 
   .card2 {
     grid-column: span 1;
-    grid-row: auto;
+    grid-row: 2;
   }
 
   .card3 {
     grid-column: span 1;
-    grid-row: auto;
+    grid-row: 2;
   }
 
   .card4 {
     grid-column: span 1;
-    grid-row: auto;
+    grid-row: 3;
   }
 
   .card5 {
     grid-column: span 1;
-    grid-row: auto;
+    grid-row: 3;
   }
 }
 
 @container (inline-size < 768px) {
   .container {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 
   .timer {
-    grid-column: span 4;
+    grid-column: span 1;
+    grid-row: auto;
   }
 
   .card1 {
-    grid-column: span 4;
+    grid-column: span 1;
+    grid-row: auto;
   }
 
   .card2 {
-    grid-column: span 4;
+    grid-column: span 1;
+    grid-row: auto;
   }
 
   .card3 {
-    grid-column: span 2;
+    grid-column: span 1;
+    grid-row: auto;
   }
 
   .card4 {
-    grid-column: span 2;
+    grid-column: span 1;
+    grid-row: auto;
   }
 
   .card5 {
-    grid-column: span 4;
+    grid-column: span 1;
+    grid-row: auto;
   }
 }
 

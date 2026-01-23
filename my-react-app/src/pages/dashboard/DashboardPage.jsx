@@ -6,7 +6,7 @@ function Dashboard() {
   return (
     <>
       {" "}
-      <main className={styles.main}>
+      <div className={styles.wrapper}>
         <div className={styles.container}>
           <BaseCard className={styles.timer} size="card-timer">
             <h3>CARD TIMER</h3>
@@ -25,15 +25,15 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.card4} size="card-small">
-            <h3>Logga Arbetspass</h3>
+            <h3> Card 4 Logga Arbetspass</h3>
             <WorkSessionForm />
           </BaseCard>
 
           <BaseCard className={styles.card5} size="card-small">
-            <h3>Kalender</h3>
+            <h3> Card 5 Kalender</h3>
           </BaseCard>
         </div>
-      </main>
+      </div>
     </>
   );
 }
