@@ -1,12 +1,10 @@
 import BaseCard from "../../components/ui/Card";
 import styles from "./Dashboard.module.css";
 import WorkSessionForm from "../../components/ui/form/WorkSessionForm";
-import Header from "../../components/layout/Header";
 
 function Dashboard() {
   return (
     <>
-      <Header></Header>
       <div className={styles.container}>
         <BaseCard className={styles.timer} size="card-timer">
           <p>CARD TIMER</p>

@@ -1,3 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Primary (Purple) */
+  --primary-color: rgb(124, 92, 255);
+  --primary-light-color: rgb(226, 220, 255);
+  --primary-dark-color: rgb(49, 37, 109);
+
+  /* Neutrals */
+  --black-color: rgb(20, 20, 25);
+  --gray-dark-color: rgb(70, 70, 85);
+  --gray-color: rgb(140, 145, 155);
+  --gray-light-color: rgb(245, 246, 250);
+  --white-color: rgb(255, 255, 255);
+
+  /* Status Colors */
+  --error-color: rgb(239, 68, 68);
+}
+
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--gray-light-color);
+  color: var(--black-color);
+}
+
+/* Typography
+========================================================================== */
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: inherit;
+}
+
+.text-sm {
+  font-size: 1rem;
+}
+
+.text-md {
+  font-size: 1.2rem;
+}
+
+.text-lg {
+  font-size: 2rem;
+}
+
+/* Titles */
+
+.section-title {
+  padding-bottom: 0.4em;
+  font-size: 4.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.small-title {
+  padding-bottom: 0.3em;
+  font-size: 2.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Links */
+
+a {
+  font-family: inherit;
+  font-weight: 400;
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+/* Other */
+
+.text-center {
+  text-align: center;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 1300px) {
+  .section-title {
+    font-size: 3.5rem;
+  }
+
+  .small-title {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .section-title {
+    font-size: 2.8rem;
+  }
+
+  .small-title {
+    font-size: 1.8rem;
+  }
+}
+
+/* Colors
+========================================================================== */
+
+/* Backgrounds */
+.bg-black {
+  background-color: var(--black-color);
+}
+
+.bg-gray {
+  background-color: var(--gray-color);
+}
+
+.bg-gray-light {
+  background-color: var(--gray-light-color);
+}
+
+.bg-white {
+  background-color: var(--white-color);
+}
+
+.text-white {
+  color: var(--white-color);
+}
+
+.text-gray {
+  color: var(--gray-color);
+}
+
+/* Layout
+========================================================================== */
+
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
 }

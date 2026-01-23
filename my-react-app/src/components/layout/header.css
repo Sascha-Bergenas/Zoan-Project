@@ -1,0 +1,37 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 5rem;
+}
+
+nav h1 {
+  color: var(--primary-color);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  padding-left: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  nav {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: var(--primary-light-color);
+  }
+  nav ul {
+    flex-direction: column;
+    padding-top: 0.5rem;
+  }
+  nav li {
+    padding: 0.5rem 0;
+  }
+}
