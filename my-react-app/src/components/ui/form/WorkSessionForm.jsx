@@ -1,48 +1,76 @@
+import { useState } from "react";
 import Button from "../Button";
 import Input from "../input";
 import Select from "../select/Select";
+import TextArea from "../textArea/TextArea";
 
 function WorkSessionForm() {
+  // State för att lagra arbetspassets information (titel, kategori, kommentar)
+  const [workSession, setWorkSession] = useState({
+    title: "",
+    category: "",
+    comment: "",
+  });
+
+  // Hanterar ändringar i input-fält genom att uppdatera state
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    // Uppdaterar state med det nya värdet från det ändrade fältet
+    setWorkSession((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Hanterar formulärskickning - rensar formulär och state
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData(e.target);
-
-    const workSession = {
-      title: formData.get("title"),
-      category: formData.get("category"),
-      comment: formData.get("comment"),
-    };
+    // Nollställer state
+    setWorkSession({ title: "", category: "", comment: "" });
 
     console.log("Arbetspass:", workSession);
 
+    // Nollställer formulärets HTML-element
     e.target.reset();
   };
 
   return (
+    // Formulär för att logga arbetspass-aktiviteter
     <form onSubmit={handleSubmit}>
+      {/* Input-fält för aktivitetens titel */}
       <Input
         type="text"
         label="Aktivitet"
         name="title"
         placeholder="Vad har du jobbat med?"
+        value={workSession.title}
+        onChange={handleChange}
       />
-      <Select label="Kategori" name="category">
-        <option value="">Välj kategori</option>
-        <option value="arbete">Arbete</option>
-        <option value="studier">Studier</option>
-        <option value="möte">Möte</option>
-        <option value="annat">Annat</option>
+      {/* Dropdown för att välja aktivitetens kategori */}
+      <Select
+        label="Kategori"
+        name="category"
+        value={workSession.category}
+        onChange={handleChange}
+      >
+        <option value="">Välj Kategori</option>
+        <option value="Arbete">Arbete</option>
+        <option value="Studier">Studier</option>
+        <option value="Möte">Möte</option>
+        <option value="Annat">Annat</option>
+        <option value="Chill-i-Dill">Chill-i-Dill</option>
       </Select>
-      <Input
-        className="input-comment"
-        type="text"
+
+      <TextArea
+        label="Kommentar"
         name="comment"
+        value={workSession.comment}
+        onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
       <Button type="submit" text="Logga" />
     </form>
   );
 }
-
 export default WorkSessionForm;

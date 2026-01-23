@@ -1,11 +1,13 @@
 import styles from "./Select.module.css";
 
-function Select({ label, name, children }) {
+function Select({ label, name, value, onChange, children, className }) {
   return (
-    <div className={styles.select}>
+    <div className={`${styles.select} ${className}`}>
       <label>
         <span>{label}</span>
-        <select name={name}>{children}</select>
+        <select name={name} value={value} onChange={onChange}>
+          {children}
+        </select>
       </label>
     </div>
   );
