@@ -6,6 +6,7 @@
   font-family: sans-serif;
   background-color: #ffffff;
   color: #333333;
+  width: 15em;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
@@ -34,18 +35,4 @@
 
 .input-wrapper span {
   display: none;
-}
-
-.input-comment {
-  padding: 10px 12px;
-  border: 1px solid #d0d0d0;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-family: sans-serif;
-  background-color: #ffffff;
-  color: #333333;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-  height: 3rem;
 }
