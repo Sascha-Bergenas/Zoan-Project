@@ -36,7 +36,7 @@
 
 .card3 {
   grid-column: span 2;
-  grid-row: 2;
+  grid-row: 1;
   max-width: none;
 }
 
@@ -48,7 +48,7 @@
 
 .card5 {
   grid-column: span 2;
-  grid-row: 1;
+  grid-row: 2;
   max-width: none;
 }
 

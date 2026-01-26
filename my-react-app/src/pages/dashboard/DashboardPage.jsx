@@ -27,13 +27,13 @@ function Dashboard() {
             <h3>CARD 3 Mood</h3>
           </BaseCard>
 
+          <BaseCard className={styles.card5} size="card-small">
+            <h3> Card 5 Kalender</h3>
+          </BaseCard>
+
           <BaseCard className={styles.card4} size="card-small">
             <h3> Card 4 Logga Arbetspass</h3>
             <WorkSessionForm />
-          </BaseCard>
-
-          <BaseCard className={styles.card5} size="card-small">
-            <h3> Card 5 Kalender</h3>
           </BaseCard>
         </div>
       </div>
