@@ -12,7 +12,7 @@ function Dashboard() {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <BaseCard className={styles.timer} size="card-timer">
-            <p>CARD TIMER</p>
+            <Timer />
           </BaseCard>
 
           <BaseCard className={styles.card1} size="card-large">
