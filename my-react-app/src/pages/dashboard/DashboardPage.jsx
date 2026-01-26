@@ -7,11 +7,8 @@ import Topbar from "../../components/layout/Topbar";
 function Dashboard() {
   return (
     <>
-      <div className={styles.container}>
-        <BaseCard className={styles.timer} size="card-timer">
-          <Timer />
-        </BaseCard>
-      <Topbar></Topbar>
+    <Topbar></Topbar>
+
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <BaseCard className={styles.timer} size="card-timer">
@@ -39,8 +36,8 @@ function Dashboard() {
             <h3> Card 5 Kalender</h3>
           </BaseCard>
         </div>
-      </div>
-    </>
+        </div>
+     </>
   );
 }
 export default Dashboard;
