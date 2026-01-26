@@ -4,8 +4,14 @@
   border-radius: 0.25rem;
   box-shadow: rgba(0, 0, 0, 0.425) 0 1px 3px 0;
   display: inline-flex;
-  font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica,
-    Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    system-ui,
+    "Helvetica Neue",
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 16px;
   justify-content: center;
   padding: 0.5rem 2rem;

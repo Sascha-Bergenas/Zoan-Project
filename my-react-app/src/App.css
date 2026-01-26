@@ -7,8 +7,8 @@
 
 :root {
   /* Primary (Purple) */
-  --primary-color: rgb(124, 92, 255);
-  --primary-light-color: rgb(226, 220, 255);
+  --primary-color: rgb(103, 99, 122);
+  --primary-light-color: rgb(182 152 206);
   --primary-dark-color: rgb(49, 37, 109);
 
   /* Neutrals */
@@ -44,7 +44,7 @@ h4 {
 }
 
 .text-md {
-  font-size: 1.2rem;
+  font-size: 1.7rem;
 }
 
 .text-lg {
