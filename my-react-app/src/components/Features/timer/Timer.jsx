@@ -5,16 +5,28 @@ import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
 import SessionModal from "../sessionModal/sessionModal";
 import "./Timer.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Timer() {
   //get timer state and control functions from custom hook
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
 
+  //ref för modal dialog element
   const dialogRef = useRef(null);
 
-  const handleStopClick = () => {
+  const [stopTimeFormatted, setStopTimeFormatted] = useState("");
+
+  //Funktion med stopTimer för att öppna modal vid timer stopp
+  const handleStopClick = (
+    formattedMinutes,
+    formattedSeconds,
+    formattedHundredths,
+  ) => {
+    const formattedTime = `${formattedMinutes}:${formattedSeconds},${formattedHundredths}`;
+    console.log(formattedTime);
+    setStopTimeFormatted(formattedTime);
+    console.log(stopTimeFormatted);
     stopTimer();
     dialogRef.current.showModal();
   };
@@ -77,12 +89,20 @@ export default function Timer() {
           text="Pause"
           variant="secondary"
         />
+        {/* Session modal med handleClose för att stänga loggen*/}
         <SessionModal
           dialogRef={dialogRef}
+          stopTimeFormatted={stopTimeFormatted}
           handleCloseModal={handleCloseModal}
         />
         <Button
-          onClick={handleStopClick}
+          onClick={() =>
+            handleStopClick(
+              formattedMinutes,
+              formattedSeconds,
+              formattedHundredths,
+            )
+          }
           disabled={!hasStarted}
           text="Stop"
           variant="primary"

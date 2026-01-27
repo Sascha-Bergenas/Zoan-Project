@@ -32,8 +32,7 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.card4} size="card-small">
-            <h3> Card 4 Logga Arbetspass</h3>
-            <WorkSessionForm />
+            <h3> Card 4 Todo</h3>
           </BaseCard>
         </div>
       </div>

@@ -34,6 +34,7 @@ function WorkSessionForm({ handleCloseModal }) {
     // Nollställer formulärets HTML-element
     e.target.reset();
 
+    // Stänger modalen efter inlämning
     handleCloseModal();
   };
 
