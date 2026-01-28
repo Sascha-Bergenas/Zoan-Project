@@ -6,15 +6,14 @@ import Button from "../../ui/Button";
 import "./Timer.css";
 
 export default function Timer() {
-  //get timer state and control functions from custom hook
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
 
   //Converts ms to formatted time values to display on page
-  function calcTime(time) {
-    const hours = Math.floor(time / 3600000);
-    const minutes = Math.floor((time % 3600000) / 60000);
-    const seconds = Math.floor((time % 60000) / 1000);
+  function calcTime(ms) {
+    const hours = Math.floor(ms / 3600000);
+    const minutes = Math.floor((ms % 3600000) / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
 
     return {
       formattedHours: hours.toString().padStart(2, "0"),
@@ -24,7 +23,11 @@ export default function Timer() {
   }
 
   //format current time value for rendering
-  const { formattedHours, formattedMinutes, formattedSeconds } = calcTime(time);
+  const result = calcTime(time);
+
+  const formattedHours = result.formattedHours;
+  const formattedMinutes = result.formattedMinutes;
+  const formattedSeconds = result.formattedSeconds;
 
   return (
     <div className="timer-fill">
