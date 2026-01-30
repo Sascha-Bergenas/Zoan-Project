@@ -1,11 +1,14 @@
 // Component display timer UI and buttons
 //Use the timer logic hook to control stopwatch
 
+import { useState } from "react";
 import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
 import "./Timer.css";
 
 export default function Timer() {
+  const [selectedMode, setSelectedmode] = useState(null);
+
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
 
@@ -29,6 +32,10 @@ export default function Timer() {
   const formattedMinutes = result.formattedMinutes;
   const formattedSeconds = result.formattedSeconds;
 
+  function handleModeSelect(mode) {
+    setSelectedmode(mode);
+  }
+
   return (
     <div className="timer-fill">
       <div className="stopwatch">
@@ -38,6 +45,7 @@ export default function Timer() {
           <div className="ring-inner">
             <div className="time-text">
               {formattedHours}:{formattedMinutes}:{formattedSeconds}
+              <p>{selectedMode}</p>
             </div>
           </div>
         </div>
@@ -45,7 +53,7 @@ export default function Timer() {
 
       {/* Timer control buttons */}
       <div className="timer-buttons">
-        <Button
+        {/*      <Button
           onClick={startTimer}
           disabled={isRunning}
           text="Start"
@@ -62,6 +70,28 @@ export default function Timer() {
           onClick={stopTimer}
           disabled={!hasStarted}
           text="Stop"
+          variant="primary"
+        /> */}
+        <Button
+          onClick={() => handleModeSelect("deep")}
+          text="Deep Work"
+          variant="primary"
+        />
+        <Button
+          onClick={() => handleModeSelect("meeting")}
+          text="Möte"
+          variant="secondary"
+        />
+        <Button
+          onClick={() => handleModeSelect("chill")}
+          text="Chill"
+          variant="secondary"
+        />
+        <Button
+          onClick={startTimer}
+          disabled={selectedMode === null}
+          text="Starta Session"
+          l
           variant="primary"
         />
       </div>
