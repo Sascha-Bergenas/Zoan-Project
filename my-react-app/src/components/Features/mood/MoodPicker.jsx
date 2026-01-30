@@ -34,24 +34,23 @@ export default function MoodPicker({
       emoji: TbMoodSadFilled,
       color: "blue",
     },
-  ],
+  ], value, onChange,
 }) {
   return (
     <div className="mood-picker">
+      <p>Hur känner du dig?</p>
       <div className="mood-options">
         <ul>
-          {moodOptions.map((mood) => (
-            <li key={mood.id} className={`mood-${mood.color}`}>
-              <mood.emoji size={52} />
+          {moodOptions.map((mood) => {
+
+            const isActive = value === mood.label;
+
+          return ( 
+            <li key={mood.id} className={`mood-${mood.color} ${isActive ? "active" : ""}`} onClick={() => onChange(mood.label)}>
+              <mood.emoji size={48} />
             </li>
-          ))}
+          )})}
         </ul>
-        <div>
-          <p>Lägg till en kommentar</p>
-          <button className="btn-plus" type="button">
-            <FaPlus size={28} />
-          </button>
-        </div>
       </div>
     </div>
   );
