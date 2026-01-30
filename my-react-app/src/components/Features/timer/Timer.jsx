@@ -91,11 +91,7 @@ export default function Timer() {
         />
         <Button
           onClick={() =>
-            handleStopClick(
-              formattedMinutes,
-              formattedSeconds,
-              formattedHundredths,
-            )
+            handleStopClick(formattedHours, formattedMinutes, formattedSeconds)
           }
           disabled={!hasStarted}
           text="Stop"
