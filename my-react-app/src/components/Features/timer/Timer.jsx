@@ -1,6 +1,3 @@
-// Component display timer UI and buttons
-//Use the timer logic hook to control stopwatch
-
 import { useRef, useState } from "react";
 import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
@@ -13,30 +10,10 @@ export default function Timer() {
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
 
-  //ref för modal dialog element
   const dialogRef = useRef(null);
 
   const [stopTimeFormatted, setStopTimeFormatted] = useState("");
 
-  //Funktion med stopTimer för att öppna modal vid timer stopp
-  const handleStopClick = (
-    formattedMinutes,
-    formattedSeconds,
-    formattedHundredths,
-  ) => {
-    const formattedTime = `${formattedMinutes}:${formattedSeconds},${formattedHundredths}`;
-    console.log(formattedTime);
-    setStopTimeFormatted(formattedTime);
-    console.log(stopTimeFormatted);
-    stopTimer();
-    dialogRef.current.showModal();
-  };
-
-  const handleCloseModal = () => {
-    dialogRef.current.close();
-  };
-
-  //Converts ms to formatted time values to display on page
   function calcTime(ms) {
     const hours = Math.floor(ms / 3600000);
     const minutes = Math.floor((ms % 3600000) / 60000);
@@ -49,7 +26,6 @@ export default function Timer() {
     };
   }
 
-  //format current time value for rendering
   const result = calcTime(time);
 
   const formattedHours = result.formattedHours;
@@ -64,15 +40,27 @@ export default function Timer() {
     setSelectedmode(null);
   }
 
-  function stopResetMode() {
+  const handleStopClick = () => {
+    const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    setStopTimeFormatted(formattedTime);
     stopTimer();
+    dialogRef.current.showModal();
+  };
+
+  const handleCloseModal = () => {
+    dialogRef.current.close();
     resetModeSelect();
-  }
+  };
 
   return (
     <div className="timer-fill">
+      <SessionModal
+        dialogRef={dialogRef}
+        stopTimeFormatted={stopTimeFormatted}
+        handleCloseModal={handleCloseModal}
+      />
+
       <div className="stopwatch">
-        {/* Progress ring uses css variable to show time progress */}
         <div className="ring" style={{ "--p": (time % 60000) / 60000 }}>
           <div className="ticks" />
           <div className="ring-inner">
@@ -82,26 +70,25 @@ export default function Timer() {
           </div>
         </div>
       </div>
-      {/* Timer control buttons */}
+
       <div className="timer-buttons">
         {!isRunning && hasStarted && (
-          <>
-            <Button onClick={startTimer} text="Start" variant="primary" />
-          </>
+          <Button onClick={startTimer} text="Start" variant="primary" />
         )}
+
         {isRunning && (
-          <>
-            <Button onClick={pauseTimer} text="Pause" variant="secondary" />
-          </>
+          <Button onClick={pauseTimer} text="Pause" variant="secondary" />
         )}
+
         {hasStarted && (
           <Button
-            onClick={() => stopResetMode()}
+            onClick={handleStopClick}
             disabled={!hasStarted}
             text="Stop"
             variant="primary"
           />
         )}
+
         {!hasStarted && selectedMode === null && (
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
@@ -122,6 +109,7 @@ export default function Timer() {
             />
           </>
         )}
+
         {selectedMode !== null && !hasStarted && (
           <>
             <p>Starta en ny session och påbörja timern.</p>
@@ -132,16 +120,15 @@ export default function Timer() {
               variant="primary"
             />
             <Button
-              onClick={() => {
-                resetModeSelect();
-              }}
+              onClick={resetModeSelect}
               disabled={selectedMode === null}
               text="Återgå"
               variant="primary"
             />
           </>
         )}
-        <p>{selectedMode}</p> {/* Test only */}
+
+        <p>{selectedMode}</p>
       </div>
     </div>
   );

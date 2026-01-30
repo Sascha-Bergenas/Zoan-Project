@@ -5,11 +5,12 @@ import Modal from "../../ui/modal/Modal";
 function SessionModal({ dialogRef, handleCloseModal, stopTimeFormatted }) {
   return (
     <>
+      {" "}
       <Modal dialogRef={dialogRef}>
-        <h3>Logga din session</h3>
-        <p>Sessionens längd: {stopTimeFormatted}</p>
-        <WorkSessionForm handleCloseModal={handleCloseModal} />
-      </Modal>
+        {" "}
+        <h3>Logga din session</h3> <p>Sessionens längd: {stopTimeFormatted}</p>{" "}
+        <WorkSessionForm handleCloseModal={handleCloseModal} />{" "}
+      </Modal>{" "}
     </>
   );
 }
