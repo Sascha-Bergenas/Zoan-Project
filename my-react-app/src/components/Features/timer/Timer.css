@@ -28,6 +28,7 @@
   );
 
   filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.22));
+  margin-bottom: 2.5rem;
 }
 
 .ticks {
@@ -64,6 +65,7 @@
   .ring {
     background: none;
     padding: 0;
+    margin-bottom: 0;
     filter: none;
     width: 100%;
     aspect-ratio: auto;
