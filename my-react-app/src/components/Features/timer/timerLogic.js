@@ -19,7 +19,6 @@ export default function useTimerLogic() {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const [selectedMode, setSelectedmode] = useState(null);
 
   const startTimeRef = useRef(null);
   const elapsedRef = useRef(0);

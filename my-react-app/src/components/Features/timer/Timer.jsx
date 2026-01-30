@@ -36,6 +36,15 @@ export default function Timer() {
     setSelectedmode(mode);
   }
 
+  function resetModeSelect() {
+    setSelectedmode(null);
+  }
+
+  function stopResetMode() {
+    stopTimer();
+    resetModeSelect();
+  }
+
   return (
     <div className="timer-fill">
       <div className="stopwatch">
@@ -45,12 +54,10 @@ export default function Timer() {
           <div className="ring-inner">
             <div className="time-text">
               {formattedHours}:{formattedMinutes}:{formattedSeconds}
-              <p>{selectedMode}</p>
             </div>
           </div>
         </div>
       </div>
-
       {/* Timer control buttons */}
       <div className="timer-buttons">
         {!isRunning && hasStarted && (
@@ -58,30 +65,27 @@ export default function Timer() {
             <Button onClick={startTimer} text="Start" variant="primary" />
           </>
         )}
-
         {isRunning && (
           <>
             <Button onClick={pauseTimer} text="Pause" variant="secondary" />
           </>
         )}
-
         {hasStarted && (
           <Button
-            onClick={stopTimer}
+            onClick={() => stopResetMode()}
             disabled={!hasStarted}
             text="Stop"
             variant="primary"
           />
         )}
-
-        {!hasStarted && (
+        {!hasStarted && selectedMode === null && (
           <>
+            <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
             <Button
               onClick={() => handleModeSelect("deep")}
               text="Deep Work"
               variant="primary"
             />
-
             <Button
               onClick={() => handleModeSelect("meeting")}
               text="Möte"
@@ -94,15 +98,26 @@ export default function Timer() {
             />
           </>
         )}
-
-        {!hasStarted && (
-          <Button
-            onClick={startTimer}
-            disabled={selectedMode === null}
-            text="Starta Session"
-            variant="primary"
-          />
+        {selectedMode !== null && !hasStarted && (
+          <>
+            <p>Starta en ny session och påbörja timern.</p>
+            <Button
+              onClick={startTimer}
+              disabled={selectedMode === null}
+              text="Starta Session"
+              variant="primary"
+            />
+            <Button
+              onClick={() => {
+                resetModeSelect();
+              }}
+              disabled={selectedMode === null}
+              text="Återgå"
+              variant="primary"
+            />
+          </>
         )}
+        <p>{selectedMode}</p> {/* Test only */}
       </div>
     </div>
   );
