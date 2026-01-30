@@ -34,3 +34,6 @@
 .mood-picker p {
   font-size: 01rem;
 }
+.active {
+  filter: brightness(1.2);
+}

@@ -3,6 +3,7 @@ import Button from "../Button";
 import Input from "../input";
 import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
+import MoodPicker from "../../Features/mood/MoodPicker";
 
 function WorkSessionForm({ handleCloseModal }) {
   // State för att lagra arbetspassets information (titel, kategori, kommentar)
@@ -10,10 +11,11 @@ function WorkSessionForm({ handleCloseModal }) {
     title: "",
     category: "",
     comment: "",
+    mood: ""
   });
 
   // Hanterar ändringar i input-fält genom att uppdatera state
-  const handleChange = (e) => {
+  const handleChange = (e) => { 
     const { name, value } = e.target;
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
@@ -27,7 +29,7 @@ function WorkSessionForm({ handleCloseModal }) {
     e.preventDefault();
 
     // Nollställer state
-    setWorkSession({ title: "", category: "", comment: "" });
+    setWorkSession({ title: "", category: "", comment: "", mood: "" });
 
     console.log("Arbetspass:", workSession);
 
@@ -70,6 +72,7 @@ function WorkSessionForm({ handleCloseModal }) {
         onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
+      <MoodPicker value={workSession.mood} onChange={(mood) => setWorkSession((prev) => ({...prev, mood}))}></MoodPicker>
       <Button type="submit" text="Logga" />
     </form>
   );
