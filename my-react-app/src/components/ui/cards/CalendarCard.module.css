@@ -1,0 +1,25 @@
+.calendarWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.miniCalendar {
+  height: 50%;
+}
+
+.miniCalendar .fc {
+  font-size: 0.7rem;
+}
+
+.miniCalendar .fc-daygrid-day-frame {
+  min-height: 36px;
+}
+
+.miniCalendar .fc-toolbar-title {
+  font-size: 0.8rem;
+}
+
+.miniCalendar .fc-event {
+  font-size: 0.6rem;
+  padding: 1px 2px;
+}
