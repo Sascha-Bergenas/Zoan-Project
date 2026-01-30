@@ -1,17 +1,27 @@
-// Custom hook that contains all stopwatch behavior
-// It handles starting, pausing, stopping and tracking elapsed time
+/**
+ * Custom react hook for timer functionality.
+ *
+ * Handles starting, pausing, stopping, and tracking time.
+ *
+ * @returns {{
+ *   time: number,
+ *   startTimer: Function,
+ *   pauseTimer: Function,
+ *   stopTimer: Function,
+ *   isRunning: boolean,
+ *   hasStarted: boolean
+ * }}
+ */
 
 import { useState, useEffect, useRef } from "react";
 
 export default function useTimerLogic() {
-  const [time, setTime] = useState(0); // Time showed on page
+  const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
-  //Store values that should stay between renders
-  //without causing component re-renders
-  const startTimeRef = useRef(null); // when current run starts
-  const elapsedRef = useRef(0); // time elapsed before resume
+  const startTimeRef = useRef(null);
+  const elapsedRef = useRef(0);
 
   function startTimer() {
     // set start time, timer will resume from paused state
@@ -37,7 +47,6 @@ export default function useTimerLogic() {
   }
 
   useEffect(() => {
-    //only run interval while timer is active
     if (!isRunning) return;
 
     //Update displayted time using timestamps
@@ -45,7 +54,6 @@ export default function useTimerLogic() {
       setTime(Date.now() - startTimeRef.current);
     }, 10);
 
-    //Clear interval when timer stops or unmounts
     return () => clearInterval(interval);
   }, [isRunning]);
 
