@@ -1,6 +1,7 @@
 // Component display timer UI and buttons
 //Use the timer logic hook to control stopwatch
 
+import { useState } from "react";
 import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
 import SessionModal from "../sessionModal/sessionModal";
@@ -8,6 +9,8 @@ import "./Timer.css";
 import { useRef, useState } from "react";
 
 export default function Timer() {
+  const [selectedMode, setSelectedmode] = useState(null);
+
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
 
@@ -54,6 +57,19 @@ export default function Timer() {
   const formattedMinutes = result.formattedMinutes;
   const formattedSeconds = result.formattedSeconds;
 
+  function handleModeSelect(mode) {
+    setSelectedmode(mode);
+  }
+
+  function resetModeSelect() {
+    setSelectedmode(null);
+  }
+
+  function stopResetMode() {
+    stopTimer();
+    resetModeSelect();
+  }
+
   return (
     <div className="timer-fill">
       <div className="stopwatch">
@@ -67,36 +83,66 @@ export default function Timer() {
           </div>
         </div>
       </div>
-
       {/* Timer control buttons */}
       <div className="timer-buttons">
-        <Button
-          onClick={startTimer}
-          disabled={isRunning}
-          text="Start"
-          l
-          variant="primary"
-        />
-        <Button
-          onClick={pauseTimer}
-          disabled={!isRunning}
-          text="Pause"
-          variant="secondary"
-        />
-        {/* Session modal med handleClose för att stänga loggen*/}
-        <SessionModal
-          dialogRef={dialogRef}
-          stopTimeFormatted={stopTimeFormatted}
-          handleCloseModal={handleCloseModal}
-        />
-        <Button
-          onClick={() =>
-            handleStopClick(formattedHours, formattedMinutes, formattedSeconds)
-          }
-          disabled={!hasStarted}
-          text="Stop"
-          variant="primary"
-        />
+        {!isRunning && hasStarted && (
+          <>
+            <Button onClick={startTimer} text="Start" variant="primary" />
+          </>
+        )}
+        {isRunning && (
+          <>
+            <Button onClick={pauseTimer} text="Pause" variant="secondary" />
+          </>
+        )}
+        {hasStarted && (
+          <Button
+            onClick={() => stopResetMode()}
+            disabled={!hasStarted}
+            text="Stop"
+            variant="primary"
+          />
+        )}
+        {!hasStarted && selectedMode === null && (
+          <>
+            <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
+            <Button
+              onClick={() => handleModeSelect("deep")}
+              text="Deep Work"
+              variant="primary"
+            />
+            <Button
+              onClick={() => handleModeSelect("meeting")}
+              text="Möte"
+              variant="secondary"
+            />
+            <Button
+              onClick={() => handleModeSelect("chill")}
+              text="Chill"
+              variant="secondary"
+            />
+          </>
+        )}
+        {selectedMode !== null && !hasStarted && (
+          <>
+            <p>Starta en ny session och påbörja timern.</p>
+            <Button
+              onClick={startTimer}
+              disabled={selectedMode === null}
+              text="Starta Session"
+              variant="primary"
+            />
+            <Button
+              onClick={() => {
+                resetModeSelect();
+              }}
+              disabled={selectedMode === null}
+              text="Återgå"
+              variant="primary"
+            />
+          </>
+        )}
+        <p>{selectedMode}</p> {/* Test only */}
       </div>
     </div>
   );
