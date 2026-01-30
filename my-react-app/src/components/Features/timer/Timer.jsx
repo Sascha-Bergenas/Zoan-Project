@@ -53,47 +53,56 @@ export default function Timer() {
 
       {/* Timer control buttons */}
       <div className="timer-buttons">
-        {/*      <Button
-          onClick={startTimer}
-          disabled={isRunning}
-          text="Start"
-          l
-          variant="primary"
-        />
-        <Button
-          onClick={pauseTimer}
-          disabled={!isRunning}
-          text="Pause"
-          variant="secondary"
-        />
-        <Button
-          onClick={stopTimer}
-          disabled={!hasStarted}
-          text="Stop"
-          variant="primary"
-        /> */}
-        <Button
-          onClick={() => handleModeSelect("deep")}
-          text="Deep Work"
-          variant="primary"
-        />
-        <Button
-          onClick={() => handleModeSelect("meeting")}
-          text="Möte"
-          variant="secondary"
-        />
-        <Button
-          onClick={() => handleModeSelect("chill")}
-          text="Chill"
-          variant="secondary"
-        />
-        <Button
-          onClick={startTimer}
-          disabled={selectedMode === null}
-          text="Starta Session"
-          l
-          variant="primary"
-        />
+        {!isRunning && hasStarted && (
+          <>
+            <Button onClick={startTimer} text="Start" variant="primary" />
+          </>
+        )}
+
+        {isRunning && (
+          <>
+            <Button onClick={pauseTimer} text="Pause" variant="secondary" />
+          </>
+        )}
+
+        {hasStarted && (
+          <Button
+            onClick={stopTimer}
+            disabled={!hasStarted}
+            text="Stop"
+            variant="primary"
+          />
+        )}
+
+        {!hasStarted && (
+          <>
+            <Button
+              onClick={() => handleModeSelect("deep")}
+              text="Deep Work"
+              variant="primary"
+            />
+
+            <Button
+              onClick={() => handleModeSelect("meeting")}
+              text="Möte"
+              variant="secondary"
+            />
+            <Button
+              onClick={() => handleModeSelect("chill")}
+              text="Chill"
+              variant="secondary"
+            />
+          </>
+        )}
+
+        {!hasStarted && (
+          <Button
+            onClick={startTimer}
+            disabled={selectedMode === null}
+            text="Starta Session"
+            variant="primary"
+          />
+        )}
       </div>
     </div>
   );
