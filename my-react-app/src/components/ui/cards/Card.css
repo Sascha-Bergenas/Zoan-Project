@@ -32,7 +32,7 @@
   min-height: 150px;
 }
 
-.card h3 {
+.card > h3 {
   margin: 0 0 8px;
   font-size: 18px;
 }

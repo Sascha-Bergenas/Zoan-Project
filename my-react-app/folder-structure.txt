@@ -2,32 +2,64 @@ Boilerroom-proj2/
 |
 └── my-react-app/
     ├── eslint.config.js
+    ├── folder-structure.txt
     ├── index.html
     ├── package.json
     ├── README.md
     ├── vite.config.js
-    ├── public/
     └── src/
         ├── App.css
         ├── App.jsx
         ├── index.css
         ├── main.jsx
-        ├── assets/
         ├── components/
+        │   ├── Features/
+        │   │   ├── mood/
+        │   │   │   ├── mood.css
+        │   │   │   └── MoodPicker.jsx
+        │   │   ├── sessionModal/
+        │   │   │   └── sessionModal.jsx
+        │   │   ├── status/
+        │   │   │   ├── StatusPanel.jsx
+        │   │   │   └── StatusPanel.module.css
+        │   │   └── timer/
+        │   │       ├── Timer.css
+        │   │       ├── Timer.jsx
+        │   │       └── timerLogic.js
         │   ├── layout/
+        │   │   ├── header.css
         │   │   ├── Header.jsx
-        │   │   └── Navigation.jsx
-        │   ├── timer/
-        │   │   ├── Timer.jsx
-        │   │   └── TimerDisplay.jsx
+        │   │   ├── Topbar.jsx
+        │   │   └── Topbar.module.css
         │   └── ui/
+        │       ├── Button.css
         │       ├── Button.jsx
-        │       ├── Card.jsx
-        │       └── Input.jsx
+        │       ├── cards/
+        │       │   ├── Card.css
+        │       │   ├── Card.jsx
+        │       │   ├── TopBarCard.jsx
+        │       │   └── TopBarCard.module.css
+        │       ├── form/
+        │       │   └── WorkSessionForm.jsx
+        │       ├── input/
+        │       │   ├── index.js
+        │       │   ├── Input.css
+        │       │   └── Input.jsx
+        │       ├── modal/
+        │       │   ├── Modal.jsx
+        │       │   └── Modal.module.css
+        │       ├── select/
+        │       │   ├── Select.jsx
+        │       │   └── Select.module.css
+        │       └── textArea/
+        │           ├── TextArea.jsx
+        │           └── TextArea.module.css
         ├── pages/
-        │   ├── DashboardPage.tsx
-        │   ├── HistoryPage.tsx
-        │   └── TimerPage.tsx
+        │   ├── HistoryPage.jsx
+        │   ├── TimerPage.jsx
+        │   └── dashboard/
+        │       ├── Dashboard.module.css
+        │       └── DashboardPage.jsx
         ├── types/
         │   └── timeEntry.js
         └── utils/

@@ -3,11 +3,36 @@
 
 import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
+import SessionModal from "../sessionModal/sessionModal";
 import "./Timer.css";
+import { useRef, useState } from "react";
 
 export default function Timer() {
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
+
+  //ref för modal dialog element
+  const dialogRef = useRef(null);
+
+  const [stopTimeFormatted, setStopTimeFormatted] = useState("");
+
+  //Funktion med stopTimer för att öppna modal vid timer stopp
+  const handleStopClick = (
+    formattedMinutes,
+    formattedSeconds,
+    formattedHundredths,
+  ) => {
+    const formattedTime = `${formattedMinutes}:${formattedSeconds},${formattedHundredths}`;
+    console.log(formattedTime);
+    setStopTimeFormatted(formattedTime);
+    console.log(stopTimeFormatted);
+    stopTimer();
+    dialogRef.current.showModal();
+  };
+
+  const handleCloseModal = () => {
+    dialogRef.current.close();
+  };
 
   //Converts ms to formatted time values to display on page
   function calcTime(ms) {
@@ -58,8 +83,16 @@ export default function Timer() {
           text="Pause"
           variant="secondary"
         />
+        {/* Session modal med handleClose för att stänga loggen*/}
+        <SessionModal
+          dialogRef={dialogRef}
+          stopTimeFormatted={stopTimeFormatted}
+          handleCloseModal={handleCloseModal}
+        />
         <Button
-          onClick={stopTimer}
+          onClick={() =>
+            handleStopClick(formattedHours, formattedMinutes, formattedSeconds)
+          }
           disabled={!hasStarted}
           text="Stop"
           variant="primary"

@@ -4,7 +4,7 @@ import Input from "../input";
 import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
 
-function WorkSessionForm() {
+function WorkSessionForm({ handleCloseModal }) {
   // State för att lagra arbetspassets information (titel, kategori, kommentar)
   const [workSession, setWorkSession] = useState({
     title: "",
@@ -33,6 +33,9 @@ function WorkSessionForm() {
 
     // Nollställer formulärets HTML-element
     e.target.reset();
+
+    // Stänger modalen efter inlämning
+    handleCloseModal();
   };
 
   return (
@@ -58,8 +61,6 @@ function WorkSessionForm() {
         <option value="Arbete">Arbete</option>
         <option value="Studier">Studier</option>
         <option value="Möte">Möte</option>
-        <option value="Annat">Annat</option>
-        <option value="Chill-i-Dill">Chill-i-Dill</option>
       </Select>
 
       <TextArea
