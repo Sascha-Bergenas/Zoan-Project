@@ -10,10 +10,6 @@ function Dashboard() {
 
       <div className={styles.wrapper}>
         <div className={styles.container}>
-          <BaseCard className={styles.timer} size="card-timer">
-            <Timer />
-          </BaseCard>
-
           <BaseCard className={styles.card1} size="card-large">
             <h3>CARD 1 Status</h3>
           </BaseCard>
@@ -21,10 +17,13 @@ function Dashboard() {
           <BaseCard className={styles.card2} size="card-medium">
             <h3>CARD 2 Smarta rekommendationer</h3>
           </BaseCard>
-
-          <BaseCard className={styles.card3} size="card-small">
-            <h3>CARD 3 Mood</h3>
+          <BaseCard className={styles.timer} size="card-timer">
+            <Timer />
           </BaseCard>
+
+          {/* <BaseCard className={styles.card3} size="card-small">
+            <h3>CARD 3 Mood</h3>
+          </BaseCard> */}
 
           <BaseCard className={styles.card5} size="card-small">
             <h3> Card 5 Kalender</h3>
