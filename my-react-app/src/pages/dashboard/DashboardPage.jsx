@@ -1,6 +1,5 @@
 import BaseCard from "../../components/ui/cards/Card";
 import styles from "./Dashboard.module.css";
-import WorkSessionForm from "../../components/ui/form/WorkSessionForm";
 import Timer from "../../components/Features/timer/Timer";
 import Topbar from "../../components/layout/Topbar";
 
