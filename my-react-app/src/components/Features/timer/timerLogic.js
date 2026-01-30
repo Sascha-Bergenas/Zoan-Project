@@ -28,7 +28,7 @@ export default function useTimerLogic() {
     startTimeRef.current = Date.now() - elapsedRef.current;
     setIsRunning(true);
     setHasStarted(true);
-    console.log("Start:", new Date(startTimeRef.current).toLocaleString());
+    console.log("Start:", new Date().toLocaleString());
   }
 
   function pauseTimer() {
@@ -49,7 +49,7 @@ export default function useTimerLogic() {
   useEffect(() => {
     if (!isRunning) return;
 
-    //Update displayted time using timestamps
+    //calculates elapsed time
     const interval = setInterval(() => {
       setTime(Date.now() - startTimeRef.current);
     }, 10);

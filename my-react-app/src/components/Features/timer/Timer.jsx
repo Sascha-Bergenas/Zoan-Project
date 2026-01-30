@@ -6,31 +6,28 @@ import Button from "../../ui/Button";
 import "./Timer.css";
 
 export default function Timer() {
-  //get timer state and control functions from custom hook
   const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
     useTimerLogic();
 
   //Converts ms to formatted time values to display on page
-  function calcTime(time) {
-    const minutes = Math.floor(time / 60000);
-    const seconds = Math.floor((time % 60000) / 1000);
-    const hundredths = Math.floor((time % 1000) / 10);
-
-    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
-    const formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
-    const formattedHundredths = hundredths < 10 ? "0" + hundredths : hundredths;
+  function calcTime(ms) {
+    const hours = Math.floor(ms / 3600000);
+    const minutes = Math.floor((ms % 3600000) / 60000);
+    const seconds = Math.floor((ms % 60000) / 1000);
 
     return {
-      formattedMinutes: minutes < 10 ? "0" + minutes : String(minutes),
-      formattedSeconds: seconds < 10 ? "0" + seconds : String(seconds),
-      formattedHundredths:
-        hundredths < 10 ? "0" + hundredths : String(hundredths),
+      formattedHours: hours.toString().padStart(2, "0"),
+      formattedMinutes: minutes.toString().padStart(2, "0"),
+      formattedSeconds: seconds.toString().padStart(2, "0"),
     };
   }
 
   //format current time value for rendering
-  const { formattedMinutes, formattedSeconds, formattedHundredths } =
-    calcTime(time);
+  const result = calcTime(time);
+
+  const formattedHours = result.formattedHours;
+  const formattedMinutes = result.formattedMinutes;
+  const formattedSeconds = result.formattedSeconds;
 
   return (
     <div className="timer-fill">
@@ -40,10 +37,7 @@ export default function Timer() {
           <div className="ticks" />
           <div className="ring-inner">
             <div className="time-text">
-              {formattedMinutes}:{formattedSeconds}
-              <span className="milliseconds text-md">
-                :{formattedHundredths}
-              </span>
+              {formattedHours}:{formattedMinutes}:{formattedSeconds}
             </div>
           </div>
         </div>
