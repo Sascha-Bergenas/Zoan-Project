@@ -1,12 +1,11 @@
 // Component display timer UI and buttons
 //Use the timer logic hook to control stopwatch
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
 import SessionModal from "../sessionModal/sessionModal";
 import "./Timer.css";
-import { useRef, useState } from "react";
 
 export default function Timer() {
   const [selectedMode, setSelectedmode] = useState(null);
