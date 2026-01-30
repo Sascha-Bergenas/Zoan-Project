@@ -1,12 +1,12 @@
 .input {
   padding: 10px 12px;
+  margin-top: 10px;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
   font-size: 1rem;
   font-family: sans-serif;
   background-color: #ffffff;
   color: #333333;
-  max-width: 10rem;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease;
