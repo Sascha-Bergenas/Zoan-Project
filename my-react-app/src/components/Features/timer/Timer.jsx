@@ -71,6 +71,7 @@ export default function Timer() {
         </div>
       </div>
 
+      {/* Start / Stop / Pause Buttons */}
       <div className="timer-buttons">
         {!isRunning && hasStarted && (
           <Button onClick={startTimer} text="Start" variant="primary" />
@@ -89,6 +90,7 @@ export default function Timer() {
           />
         )}
 
+        {/* Mode buttons */}
         {!hasStarted && selectedMode === null && (
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
@@ -105,11 +107,12 @@ export default function Timer() {
             <Button
               onClick={() => handleModeSelect("chill")}
               text="Chill"
-              variant="secondary"
+              variant="primary"
             />
           </>
         )}
 
+        {/* Start session / Return button */}
         {selectedMode !== null && !hasStarted && (
           <>
             <p>Starta en ny session och påbörja timern.</p>
