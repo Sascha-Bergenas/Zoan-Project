@@ -1,9 +1,9 @@
 /*Kalenderkortet*/
 .fc {
-  background: var(--white-color);
+  /* background: var(--white-color); */
   border-radius: 14px;
-  padding: 1rem;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  /* padding: 1rem; */
+  /* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); */
   font-family: system-ui, sans-serif;
 }
 
@@ -44,6 +44,10 @@
   color: #4b5563;
   padding: 0.5rem 0;
   border: none;
+}
+
+.fc .fc-scrollgrid {
+  table-layout: auto;
 }
 
 /*Dagsceller*/
