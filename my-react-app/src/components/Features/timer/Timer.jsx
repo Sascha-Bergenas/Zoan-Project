@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
-import SessionModal from "../sessionModal/sessionModal";
+import SessionModal from "../modals/sessionModal/sessionModal";
 import "./Timer.css";
 
 export default function Timer() {

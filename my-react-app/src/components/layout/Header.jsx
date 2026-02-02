@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import LoginModal from "../../components/Features/modals/loginModal/loginModal";
 import "./header.css";
 
 export default function Header() {
@@ -13,6 +14,9 @@ export default function Header() {
 
           <li>
             <Link to="/history">Historik</Link>
+          </li>
+          <li>
+            <LoginModal />
           </li>
         </ul>
       </nav>
