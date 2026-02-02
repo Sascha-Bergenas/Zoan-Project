@@ -25,7 +25,7 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.card5} size="card-small">
-            <CalendarCard className={styles.miniCalendar} />
+            <CalendarCard />
           </BaseCard>
 
           <BaseCard className={styles.card4} size="card-small">

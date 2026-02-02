@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "../input/Input";
 import Button from "../Button";
-import "./Todo.module.css";
+import "./Todo.css";
 
 const Todo = () => {
   const [input, setInput] = useState("");
@@ -15,7 +15,7 @@ const Todo = () => {
   };
 
   return (
-    <div>
+    <div className="todo-wrapper">
       <Input
         type="text"
         label="Kom ihåg"
@@ -24,9 +24,7 @@ const Todo = () => {
         value={input}
         placeholder="Kom ihåg att..."
       />
-      <Button onClick={addTodo} text="Lägg till" variant="primary">
-        Lägg till
-      </Button>
+      <Button onClick={addTodo} text="+" variant="primary"></Button>
       <ul>
         {todos.map((todo) => (
           <li key={todo.id}>{todo.text}</li>
