@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Box, Typography } from "@mui/material";
 import Button from "../../../ui/Button";
+import LoginForm from "../../../ui/form/LoginForm";
 
 const style = {
   position: "absolute",
@@ -27,10 +28,8 @@ export default function LoginModal() {
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Typography variant="h6">Text in a modal</Typography>
-
-          <Typography sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus.
+          <Typography>
+            <LoginForm />
           </Typography>
         </Box>
       </Modal>
