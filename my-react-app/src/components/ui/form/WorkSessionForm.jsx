@@ -11,11 +11,11 @@ function WorkSessionForm({ handleCloseModal }) {
     title: "",
     category: "",
     comment: "",
-    mood: ""
+    mood: "",
   });
 
   // Hanterar ändringar i input-fält genom att uppdatera state
-  const handleChange = (e) => { 
+  const handleChange = (e) => {
     const { name, value } = e.target;
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
@@ -72,7 +72,10 @@ function WorkSessionForm({ handleCloseModal }) {
         onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
-      <MoodPicker value={workSession.mood} onChange={(mood) => setWorkSession((prev) => ({...prev, mood}))}></MoodPicker>
+      <MoodPicker
+        value={workSession.mood}
+        onChange={(mood) => setWorkSession((prev) => ({ ...prev, mood }))}
+      ></MoodPicker>
       <Button type="submit" text="Logga" />
     </form>
   );
