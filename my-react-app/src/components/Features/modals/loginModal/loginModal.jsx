@@ -12,6 +12,7 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
+  borderRadius: 5,
 };
 
 export default function LoginModal() {

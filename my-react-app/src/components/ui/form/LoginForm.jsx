@@ -4,7 +4,7 @@ import Button from "../Button";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignedUp, setIsSignedUp] = useState(false);
+  const [isSignedUp, setIsSignedUp] = useState(true);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -29,81 +29,73 @@ export default function LoginForm() {
 
   return (
     <form>
-      <div>
-        {isSignedUp ? (
-          <>
-            <div>
-              <label>E-post</label>
-              <input
-                name="email"
-                type="text"
-                value={email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label>Lösenord</label>
-              <input
-                name="password"
-                type="password"
-                value={password}
-                onChange={handleChange}
-              />
-            </div>
-            <Button text="Logga in" type="button" />
-            <Button
-              text="Bli medlem"
-              type="button"
-              variant="secondary"
-              onClick={loginSignupToggle}
+      {isSignedUp ? (
+        <>
+          <div>
+            <input
+              name="email"
+              placeholder="E-post"
+              type="text"
+              value={email}
+              onChange={handleChange}
             />
-            <p>Logga in</p>
-          </>
-        ) : (
-          <>
-            <div>
-              <label>E-post</label>
-              <input
-                name="email"
-                type="text"
-                value={email}
-                onChange={handleChange}
-              />
-              <label>Namn</label>
-              <input
-                name="name"
-                type="text"
-                /* value={password} */
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label>Lösenord</label>
-              <input
-                name="password"
-                type="password"
-                value={password}
-                onChange={handleChange}
-              />
-              <label>Upprepa Lösenord</label>
-              <input
-                name="password"
-                type="password"
-                /* value={password} */
-                onChange={handleChange}
-              />
-            </div>
-            <Button text="Bli Medlem" type="button" />
-            <Button
-              text="Logga in"
-              type="button"
-              variant="secondary"
-              onClick={loginSignupToggle}
+          </div>
+          <div>
+            <input
+              name="password"
+              placeholder="Lösenord"
+              type="password"
+              value={password}
+              onChange={handleChange}
             />
-            <p>Bli medlem</p>
-          </>
-        )}
-      </div>
+          </div>
+          <Button text="Logga in" type="button" />
+          <Button
+            text="Bli medlem"
+            type="button"
+            variant="secondary"
+            onClick={loginSignupToggle}
+          />
+        </>
+      ) : (
+        <>
+          <input
+            name="email"
+            placeholder="E-post"
+            type="text"
+            value={email}
+            onChange={handleChange}
+          />
+          <input
+            name="name"
+            placeholder="Namn"
+            type="text"
+            /* value={password} */
+            onChange={handleChange}
+          />
+          <input
+            name="password"
+            placeholder="Lösenord"
+            type="password"
+            value={password}
+            onChange={handleChange}
+          />
+          <input
+            name="password"
+            placeholder="Upprepa Lösenord"
+            type="password"
+            /* value={password} */
+            onChange={handleChange}
+          />
+          <Button text="Bli Medlem" type="button" />
+          <Button
+            text="Logga in"
+            type="button"
+            variant="secondary"
+            onClick={loginSignupToggle}
+          />
+        </>
+      )}
     </form>
   );
 }
