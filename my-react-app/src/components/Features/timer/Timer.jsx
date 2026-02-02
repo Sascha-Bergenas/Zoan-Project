@@ -7,10 +7,12 @@ import "./Timer.css";
 export default function Timer() {
   const [selectedMode, setSelectedmode] = useState(null);
 
-  const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted } =
+  const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted, getStartedTime } =
     useTimerLogic();
 
   const dialogRef = useRef(null);
+
+  const [timerData, setTimerData] = useState(null);
 
   const [stopTimeFormatted, setStopTimeFormatted] = useState("");
 
@@ -42,6 +44,17 @@ export default function Timer() {
 
   const handleStopClick = () => {
     const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    
+    const startedAt = getStartedTime();
+
+    const data = {
+        activeTime: time,
+        startedAt,
+        endedAt: Date.now(),  
+        formatted: formattedTime,
+    }
+
+    setTimerData(data)
     setStopTimeFormatted(formattedTime);
     stopTimer();
     dialogRef.current.showModal();
@@ -58,6 +71,7 @@ export default function Timer() {
         dialogRef={dialogRef}
         stopTimeFormatted={stopTimeFormatted}
         handleCloseModal={handleCloseModal}
+        timerData={timerData}
       />
 
       <div className="stopwatch">
