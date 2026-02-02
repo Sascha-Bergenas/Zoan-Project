@@ -1,0 +1,84 @@
+/* === Kalenderkortet === */
+.fc {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  font-family: system-ui, sans-serif;
+}
+
+.fc-toolbar {
+  margin-bottom: 1rem;
+}
+
+.fc-toolbar-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.fc .fc-toolbar-title {
+  margin-left: 3rem;
+}
+
+.fc-button {
+  background: #2c3e50;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 0.4rem 0.7rem;
+}
+
+.fc-button:hover {
+  background: #3b4f66;
+}
+
+.fc-button:focus {
+  box-shadow: none;
+}
+
+/* === Veckodagar === */
+.fc-col-header-cell {
+  background: #f5f3ff;
+  font-weight: 600;
+  color: #4b5563;
+  padding: 0.5rem 0;
+  border: none;
+}
+
+/* === Dagsceller === */
+.fc-daygrid-day {
+  border: 1px solid #e5e7eb;
+}
+
+.fc-daygrid-day-frame {
+  min-height: 52px;
+  padding: 0.15rem;
+}
+
+/* === Datum-siffran === */
+.fc-daygrid-day-number {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+/* === Idag === */
+.fc-day-today {
+  background: #ede9fe !important;
+}
+
+/* === Vald / aktiv dag === */
+.fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  font-weight: 700;
+  color: #6d28d9;
+}
+
+.fc .fc-daygrid-day-frame {
+  height: 3rem;
+}
+
+/* === Dölj dagar från andra månader === */
+.fc-day-other {
+  display: none;
+}

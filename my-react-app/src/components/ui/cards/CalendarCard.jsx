@@ -1,22 +1,21 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import styles from "./CalendarCard.module.css";
+
+import "./calendar.css";
 
 function CalendarCard() {
   return (
-    <div className={styles.calendarWrapper}>
-      <div className={styles.miniCalendar}>
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          height="auto"
-          headerToolbar={{
-            left: "prev",
-            center: "title",
-            right: "next",
-          }}
-        />
-      </div>
+    <div>
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView="dayGridMonth"
+        headerToolbar={{
+          left: "prev,next",
+          center: "title",
+          right: "",
+        }}
+        height="auto"
+      />
     </div>
   );
 }
