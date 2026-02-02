@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./header.css";
+import AuthPage from "../../pages/AuthPage";
 
 export default function Header() {
   return (
@@ -14,6 +15,7 @@ export default function Header() {
           <li>
             <Link to="/history">Historik</Link>
           </li>
+          <AuthPage></AuthPage>
         </ul>
       </nav>
     </header>

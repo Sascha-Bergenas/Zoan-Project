@@ -4,8 +4,15 @@ import Input from "../input";
 import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
 import MoodPicker from "../../Features/mood/MoodPicker";
+import { useAuth } from "../../../contexts/AuthContext";
+import saveSession from "../../../supabase/saveSession";
+import { addLocalSession } from "../../../storage/localStorage";
 
-function WorkSessionForm({ handleCloseModal }) {
+function WorkSessionForm({ handleCloseModal, timerData }) {
+
+  const { user, isAuthed } = useAuth();
+
+
   // State för att lagra arbetspassets information (titel, kategori, kommentar)
   const [workSession, setWorkSession] = useState({
     title: "",
@@ -25,19 +32,35 @@ function WorkSessionForm({ handleCloseModal }) {
   };
 
   // Hanterar formulärskickning - rensar formulär och state
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Nollställer state
-    setWorkSession({ title: "", category: "", comment: "", mood: "" });
+    const sessionToSave = {
+      ...workSession,
+      ...timerData,
+    };
 
-    console.log("Arbetspass:", workSession);
+    try {
+      if (isAuthed) {
+        await saveSession(user.id, sessionToSave)
+        console.log('sparat till db')
+      } else {
+        addLocalSession(sessionToSave)
+        console.log('sparat till local')
+      }
+        
+      // Nollställer state
+      setWorkSession({ title: "", category: "", comment: "", mood: "" });
+    
+      // Nollställer formulärets HTML-element
+      e.target.reset();
+  
+      // Stänger modalen efter inlämning
+      handleCloseModal();
+    } catch (err) {
+      console.log(err)
+    }
 
-    // Nollställer formulärets HTML-element
-    e.target.reset();
-
-    // Stänger modalen efter inlämning
-    handleCloseModal();
   };
 
   return (
