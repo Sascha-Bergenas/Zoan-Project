@@ -51,7 +51,6 @@ export default function Timer() {
         activeTime: time,
         startedAt,
         endedAt: Date.now(),  
-        formatted: formattedTime,
     }
 
     setTimerData(data)
