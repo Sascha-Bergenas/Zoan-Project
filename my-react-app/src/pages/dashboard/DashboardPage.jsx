@@ -2,7 +2,8 @@ import BaseCard from "../../components/ui/cards/Card";
 import styles from "./Dashboard.module.css";
 import Timer from "../../components/Features/timer/Timer";
 import Topbar from "../../components/layout/Topbar";
-import CalendarCard from "../../components/ui/cards/calendarCard";
+import CalendarCard from "../../components/ui/cards/CalendarCard";
+import Todo from "../../components/ui/todo/Todo";
 
 function Dashboard() {
   return (
@@ -24,11 +25,12 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.card5} size="card-small">
-            <CalendarCard className={styles.miniCalendar} />
+            <CalendarCard />
           </BaseCard>
 
           <BaseCard className={styles.card4} size="card-small">
-            <h3> Card 4 Todo</h3>
+            <h3>Todo</h3>
+            <Todo />
           </BaseCard>
         </div>
       </div>
