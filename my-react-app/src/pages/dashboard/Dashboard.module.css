@@ -40,7 +40,8 @@
   grid-column: span 3;
   grid-row: 2;
   max-width: none;
-  max-height: 20rem;
+  max-height: 15rem;
+  min-height: 15rem;
 }
 
 .card5 {

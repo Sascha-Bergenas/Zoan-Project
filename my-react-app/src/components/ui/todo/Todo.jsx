@@ -2,7 +2,6 @@ import { useState } from "react";
 import Input from "../input/Input";
 import Button from "../Button";
 import "./Todo.css";
-import BaseCard from "../cards/Card";
 
 const Todo = () => {
   const [input, setInput] = useState("");
@@ -10,7 +9,7 @@ const Todo = () => {
 
   const addTodo = () => {
     if (!input.trim()) return;
-    setTodos((prev) => [...prev, { id: Date.now(), text: input }]);
+    setTodos((prev) => [{ id: Date.now(), text: input }, ...prev]);
 
     setInput("");
   };
@@ -28,16 +27,24 @@ const Todo = () => {
         />
         <Button onClick={addTodo} text="+" variant="primary"></Button>
       </div>
-      <div className="list-wrapper">
-        <ul className="ul-wrapper">
-          {todos.map((todo) => (
-            <div className="li-wrapper">
-              <li key={todo.id}>{todo.text}</li>
-              <button className="todo-button">x</button>
-            </div>
-          ))}
-        </ul>
-      </div>
+
+      <ul className="li-wrapper">
+        {todos.map((todo) => (
+          <li className="li-item" key={todo.id}>
+            <span className="todo-text">{todo.text}</span>
+
+            <button
+              className="todo-button"
+              aria-label={`Ta bort ${todo.text}`}
+              onClick={() =>
+                setTodos((prev) => prev.filter((t) => t.id !== todo.id))
+              }
+            >
+              x
+            </button>
+          </li>
+        ))}
+      </ul>
     </>
   );
 };
