@@ -1,14 +1,12 @@
 import { useRef, useState } from "react";
-import useTimerLogic from "./timerLogic";
 import Button from "../../ui/Button";
 import SessionModal from "../sessionModal/sessionModal";
 import "./Timer.css";
 
-export default function Timer() {
+export default function Timer({ timer }) {
   const [selectedMode, setSelectedmode] = useState(null);
 
-  const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted, getStartedTime } =
-    useTimerLogic();
+  const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted, getStartedTime} = timer;
 
   const dialogRef = useRef(null);
 

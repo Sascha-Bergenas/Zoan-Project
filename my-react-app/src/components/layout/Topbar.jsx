@@ -1,12 +1,19 @@
 import TopBarCard from "../ui/cards/TopBarCard";
 import styles from "./Topbar.module.css";
+import { calcTime } from "../../utils/formatTime";
 
-export default function Topbar(){
-   
+export default function Topbar({ timer }){
+
+    const { getStartedTime, hasStarted, now } = timer;
+    const startedAt = getStartedTime();
+    
+    const totalTimeMs = hasStarted && startedAt ? Math.max(0, now - startedAt) : 0;
+    const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
+    
     return (
         <aside className={styles.container}>
-            <TopBarCard title='Aktiv tid' color="green">
-                <p>Damn</p>
+            <TopBarCard title='Total tid' color="green">
+                <p>{formattedHours}h {formattedMinutes}min</p>
             </TopBarCard>
             <TopBarCard title='Energiprognos' color="yellow">
                 <p>Gla som sjutton</p>

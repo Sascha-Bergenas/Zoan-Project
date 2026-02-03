@@ -2,12 +2,16 @@ import BaseCard from "../../components/ui/cards/Card";
 import styles from "./Dashboard.module.css";
 import Timer from "../../components/Features/timer/Timer";
 import Topbar from "../../components/layout/Topbar";
+import useTimerLogic from "../../components/Features/timer/timerLogic";
 
 function Dashboard() {
+
+  const timer  = useTimerLogic();
+
   return (
     <>
-      <Topbar></Topbar>
-
+      <Topbar timer={timer} />
+      
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <BaseCard className={styles.card1} size="card-large">
@@ -18,7 +22,7 @@ function Dashboard() {
             <h3>CARD 2 Smarta rekommendationer</h3>
           </BaseCard>
           <BaseCard className={styles.timer} size="card-timer">
-            <Timer />
+            <Timer timer={timer}/>
           </BaseCard>
 
           {/* <BaseCard className={styles.card3} size="card-small">

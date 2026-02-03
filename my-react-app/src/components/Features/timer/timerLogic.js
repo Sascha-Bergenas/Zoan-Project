@@ -11,6 +11,7 @@
  *   isRunning: boolean,
  *   hasStarted: boolean
  *   getStartedTime: Function,
+ *   now: number,
  * }}
  */
 
@@ -20,6 +21,7 @@ export default function useTimerLogic() {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+  const [now, setNow] = useState(0);
 
   const startTimeRef = useRef(null);
   const elapsedRef = useRef(0);
@@ -29,6 +31,7 @@ export default function useTimerLogic() {
     // get true start time for data collection
     if (startedAtRef.current === null) {
       startedAtRef.current = Date.now();
+      setNow(Date.now());
     }
     // set start time, timer will resume from paused state
     startTimeRef.current = Date.now() - elapsedRef.current;
@@ -47,6 +50,7 @@ export default function useTimerLogic() {
     //Reset timer to initial state
     setIsRunning(false);
     setTime(0);
+    setNow(0);
     elapsedRef.current = 0;
     startedAtRef.current = null;
     setHasStarted(false);
@@ -69,6 +73,16 @@ export default function useTimerLogic() {
     return () => clearInterval(interval);
   }, [isRunning]);
 
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    const interval = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [hasStarted]);
+
   return {
     time,
     startTimer,
@@ -77,5 +91,6 @@ export default function useTimerLogic() {
     isRunning,
     hasStarted,
     getStartedTime,
+    now,
   };
 }
