@@ -33,8 +33,20 @@
   background: var(--primary-color);
 }
 
-.fc-button:focus {
+.fc .fc-button:focus {
   box-shadow: none;
+  outline: none;
+}
+
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  border-radius: 10px;
+  outline: none;
+}
+
+button:focus-visible {
+  outline-offset: 2px;
+  box-shadow: 1px 0 0 3px;
 }
 
 /*Veckodagar*/
