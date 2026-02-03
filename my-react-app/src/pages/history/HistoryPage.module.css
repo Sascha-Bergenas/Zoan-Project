@@ -1,0 +1,14 @@
+.wrapper {
+    container-type: inline-size;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    padding: 1rem;
+    gap: 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+    background-color: var(--primary-light-color);
+    max-width : fit-content;
+}
