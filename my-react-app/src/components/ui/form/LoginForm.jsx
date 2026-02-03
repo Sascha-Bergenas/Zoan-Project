@@ -7,7 +7,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
 
-  const { signIn, signUp, user, isAuthed } = useAuth();
+  const { signIn, signUp, user, isAuthed, signOut } = useAuth();
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -68,7 +68,12 @@ export default function LoginForm() {
             onClick={loginSignupToggle}
           />
 
-          {isAuthed && <div>Inloggad som: {user.email}</div>}
+          {isAuthed && (
+            <>
+              <div>Inloggad som: {user.email}</div>
+              <Button text="Logga ut" type="button" onClick={signOut} />
+            </>
+          )}
         </>
       ) : (
         <>
