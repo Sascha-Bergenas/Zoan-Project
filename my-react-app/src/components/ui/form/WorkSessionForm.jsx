@@ -4,7 +4,7 @@ import Input from "../input";
 import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
 import MoodPicker from "../../Features/mood/MoodPicker";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/useAuth";
 import saveSession from "../../../supabase/saveSession";
 import { addLocalSession } from "../../../storage/localStorage";
 
