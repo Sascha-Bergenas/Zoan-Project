@@ -2,10 +2,11 @@ import TopBarCard from "../ui/cards/TopBarCard";
 import styles from "./Topbar.module.css";
 
 export default function Topbar(){
+   
     return (
         <aside className={styles.container}>
-            <TopBarCard title='Aktiv tid' color="red">
-                <p>3h 15min</p>
+            <TopBarCard title='Aktiv tid' color="green">
+                <p>Damn</p>
             </TopBarCard>
             <TopBarCard title='Energiprognos' color="yellow">
                 <p>Gla som sjutton</p>

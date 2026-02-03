@@ -10,7 +10,7 @@
  *   stopTimer: Function,
  *   isRunning: boolean,
  *   hasStarted: boolean
- *   getStartedTime: Function
+ *   getStartedTime: Function,
  * }}
  */
 
