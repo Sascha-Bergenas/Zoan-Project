@@ -21,17 +21,25 @@ export default function LoginForm() {
     }
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e, action) {
     e.preventDefault();
 
     const trimmedEmail = email.trim();
 
-    const { error } = isSignedUp
-      ? await signIn(trimmedEmail, password)
-      : await signUp(trimmedEmail, password);
+    if (action === "login") {
+      const { error } = await signIn(trimmedEmail, password);
+      if (error) return alert(error.message);
+      alert("logged in");
+    }
 
-    if (!error) alert("Success");
-    if (error) alert(error.message);
+    if (action === "signup") {
+      const { error } = await signUp(trimmedEmail, password);
+      if (error) return alert(error.message);
+      alert("sign up");
+    }
+
+    setEmail("");
+    setPassword("");
   }
 
   function loginSignupToggle() {
@@ -60,13 +68,15 @@ export default function LoginForm() {
               onChange={handleChange}
             />
           </div>
-          <Button text="Logga in" type="submit" />
-          <Button
-            text="Bli medlem"
-            type="button"
-            variant="secondary"
-            onClick={loginSignupToggle}
-          />
+
+          {/* Log in button */}
+          {!isAuthed && (
+            <Button
+              text="Logga in"
+              type="submit"
+              onClick={(e) => handleSubmit(e, "login")}
+            />
+          )}
 
           {isAuthed && (
             <>
@@ -74,6 +84,13 @@ export default function LoginForm() {
               <Button text="Logga ut" type="button" onClick={signOut} />
             </>
           )}
+
+          <Button
+            text="Bli medlem"
+            type="button"
+            variant="secondary"
+            onClick={loginSignupToggle}
+          />
         </>
       ) : (
         <>
@@ -84,12 +101,6 @@ export default function LoginForm() {
             value={email}
             onChange={handleChange}
           />
-          {/*  <input
-            name="name"
-            placeholder="Namn"
-            type="text"
-            onChange={handleChange}
-          /> */}
           <input
             name="password"
             placeholder="Lösenord"
@@ -97,13 +108,13 @@ export default function LoginForm() {
             value={password}
             onChange={handleChange}
           />
-          {/*     <input
-            name="password"
-            placeholder="Upprepa Lösenord"
-            type="password"
-            onChange={handleChange}
-          /> */}
-          <Button text="Bli Medlem" type="submit" />
+
+          {/* Signup button */}
+          <Button
+            text="Bli Medlem"
+            type="submit"
+            onClick={(e) => handleSubmit(e, "signup")}
+          />
           <Button
             text="Logga in"
             type="button"
