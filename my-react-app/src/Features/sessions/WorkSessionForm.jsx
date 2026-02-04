@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../../components/ui/Button";
+import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
