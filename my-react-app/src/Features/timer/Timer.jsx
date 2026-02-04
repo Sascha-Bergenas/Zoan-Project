@@ -1,12 +1,20 @@
 import { useRef, useState } from "react";
-import Button from "../../ui/Button";
+import Button from "../../components/ui/Button";
 import SessionModal from "../modals/sessionModal/sessionModal";
 import "./Timer.css";
 
 export default function Timer({ timer }) {
   const [selectedMode, setSelectedmode] = useState(null);
 
-  const { time, startTimer, pauseTimer, stopTimer, isRunning, hasStarted, getStartedTime} = timer;
+  const {
+    time,
+    startTimer,
+    pauseTimer,
+    stopTimer,
+    isRunning,
+    hasStarted,
+    getStartedTime,
+  } = timer;
 
   const dialogRef = useRef(null);
 
@@ -42,16 +50,16 @@ export default function Timer({ timer }) {
 
   const handleStopClick = () => {
     const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
-    
+
     const startedAt = getStartedTime();
 
     const data = {
-        activeTime: time,
-        startedAt,
-        endedAt: Date.now(),  
-    }
+      activeTime: time,
+      startedAt,
+      endedAt: Date.now(),
+    };
 
-    setTimerData(data)
+    setTimerData(data);
     setStopTimeFormatted(formattedTime);
     stopTimer();
     dialogRef.current.showModal();

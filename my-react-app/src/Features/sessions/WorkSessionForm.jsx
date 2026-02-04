@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Button from "../../ui/Button";
-import Input from "../../ui/input";
-import Select from "../../ui/select/Select";
-import TextArea from "../../ui/textArea/TextArea";
-import MoodPicker from "../../Features/mood/MoodPicker";
-import { useAuth } from "../../../contexts/useAuth";
-import { sessionStore } from "../../../storage/localStorage";
-import saveSession from "../../../supabase/saveSession";
+import Button from "../../components/ui/Button";
+import Input from "../../components/ui/input";
+import Select from "../../components/ui/select/Select";
+import TextArea from "../../components/ui/textArea/TextArea";
+import MoodPicker from "../mood/MoodPicker";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import saveSession from "../../supabase/saveSession";
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
   const { user, isAuthed } = useAuth();

@@ -1,5 +1,5 @@
 import WorkSessionForm from "../../../Features/sessions/WorkSessionForm";
-import Modal from "../../../ui/modal/Modal";
+import Modal from "../../../components/ui/modal/Modal";
 
 // Session modal komponent för att logga en arbetsession vid timer stopp och stänga modalen
 function SessionModal({
