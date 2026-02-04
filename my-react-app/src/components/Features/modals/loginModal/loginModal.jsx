@@ -29,9 +29,7 @@ export default function LoginModal() {
 
       <Modal open={open} onClose={handleClose}>
         <Box sx={style}>
-          <Typography>
-            <LoginForm />
-          </Typography>
+          <LoginForm />
         </Box>
       </Modal>
     </>
