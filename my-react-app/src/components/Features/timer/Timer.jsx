@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import Button from "../../ui/Button";
-import SessionModal from "../sessionModal/sessionModal";
+import SessionModal from "../modals/sessionModal/sessionModal";
 import "./Timer.css";
 
 export default function Timer({ timer }) {
@@ -82,6 +82,7 @@ export default function Timer({ timer }) {
         </div>
       </div>
 
+      {/* Start / Stop / Pause Buttons */}
       <div className="timer-buttons">
         {!isRunning && hasStarted && (
           <Button onClick={startTimer} text="Start" variant="primary" />
@@ -100,6 +101,7 @@ export default function Timer({ timer }) {
           />
         )}
 
+        {/* Mode buttons */}
         {!hasStarted && selectedMode === null && (
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
@@ -116,11 +118,12 @@ export default function Timer({ timer }) {
             <Button
               onClick={() => handleModeSelect("chill")}
               text="Chill"
-              variant="secondary"
+              variant="primary"
             />
           </>
         )}
 
+        {/* Start session / Return button */}
         {selectedMode !== null && !hasStarted && (
           <>
             <p>Starta en ny session och påbörja timern.</p>

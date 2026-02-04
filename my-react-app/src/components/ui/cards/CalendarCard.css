@@ -1,0 +1,95 @@
+/*Kalenderkortet*/
+.fc {
+  /* background: var(--white-color); */
+  border-radius: 14px;
+  /* padding: 1rem; */
+  /* box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); */
+  font-family: system-ui, sans-serif;
+}
+
+.fc-toolbar {
+  margin-bottom: 1rem;
+}
+
+.fc-toolbar-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gray-dark-color);
+}
+
+.fc .fc-toolbar-title {
+  margin-left: 2rem;
+}
+
+.fc .fc-button-primary {
+  background: var(--primary-light-color);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 0.4rem 0.7rem;
+}
+
+.fc .fc-button:hover {
+  background: var(--primary-color);
+}
+
+.fc .fc-button:focus {
+  box-shadow: none;
+  outline: none;
+}
+
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  border-radius: 10px;
+  outline: none;
+}
+
+button:focus-visible {
+  outline-offset: 2px;
+  box-shadow: 1px 0 0 3px;
+}
+
+/*Veckodagar*/
+.fc-col-header-cell {
+  background: var(--primary-light-color);
+  font-weight: 600;
+  color: #4b5563;
+  padding: 0.5rem 0;
+  border: none;
+}
+
+.fc .fc-scrollgrid {
+  table-layout: auto;
+}
+
+/*Dagsceller*/
+.fc-daygrid-day {
+  border: 1px solid #e5e7eb;
+}
+
+.fc-daygrid-day-frame {
+  min-height: 52px;
+  padding: 0.15rem;
+}
+
+/*Datum-siffran*/
+.fc-daygrid-day-number {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+/*Idag, important behövs för fullCalender override*/
+.fc-day-today {
+  background: #ede9fe !important;
+}
+
+/*Aktiv dag*/
+.fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  font-weight: 700;
+  color: var(--primary-light-color);
+}
+
+.fc .fc-daygrid-day-frame {
+  height: 3rem;
+}
