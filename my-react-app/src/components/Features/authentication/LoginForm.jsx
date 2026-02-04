@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Button from "../Button";
+import Button from "../../ui/Button";
 import { useAuth } from "../../../contexts/useAuth";
 
 export default function LoginForm() {

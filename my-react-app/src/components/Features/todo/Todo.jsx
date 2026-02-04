@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../input/Input";
-import Button from "../Button";
+import Input from "../../ui/input/Input";
+import Button from "../../ui/Button";
 import "./Todo.css";
 
 const Todo = () => {
