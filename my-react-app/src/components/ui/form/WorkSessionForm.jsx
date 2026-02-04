@@ -5,8 +5,8 @@ import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
 import MoodPicker from "../../Features/mood/MoodPicker";
 import { useAuth } from "../../../contexts/useAuth";
-import saveSession from "../../../supabase/saveSession";
-import { addLocalSession } from "../../../storage/localStorage";
+import { sessionStore } from "../../../storage/localStorage";
+import saveSession from "../../../supabase/saveSession"; 
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
 
@@ -45,7 +45,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         await saveSession(user.id, sessionToSave)
         console.log('sparat till db')
       } else {
-        addLocalSession(sessionToSave)
+        sessionStore.add(sessionToSave)
         console.log('sparat till local')
       }
         

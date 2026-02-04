@@ -1,32 +1,33 @@
-const key = "localsessions";
-
-export function loadSession() {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
+export function createLocalStore(key) {
+  function load() {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
   }
-}
 
-export function addLocalSession(sessionToSave) {
-  const sessions = loadSession();
+  function add(item) {
+    const items = load();
 
-  const toSave = [
-    {
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
-      ...sessionToSave,
-    },
-    ...sessions,
-  ];
-  saveLocalSessions(toSave);
-}
+    save([
+      {
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        ...item,
+      },
+      ...items,
+    ]);
+  }
 
-export function saveLocalSessions(sessions) {
-  localStorage.setItem(key, JSON.stringify(sessions));
+  function save(items) {
+    localStorage.setItem(key, JSON.stringify(items));
+  }
+  function clear() {
+    localStorage.removeItem(key);
+  }
+  return { load, add, save, clear };
 }
-
-export function clearSession() {
-  localStorage.removeItem(key);
-}
+export const sessionStore = createLocalStore("localsessions");
+export const todoStore = createLocalStore("localtodos");
