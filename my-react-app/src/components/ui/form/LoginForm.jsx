@@ -78,13 +78,6 @@ export default function LoginForm() {
             />
           )}
 
-          {isAuthed && (
-            <>
-              <div>Inloggad som: {user.email}</div>
-              <Button text="Logga ut" type="button" onClick={signOut} />
-            </>
-          )}
-
           <Button
             text="Bli medlem"
             type="button"
