@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Input from "../../ui/input/Input";
 import Button from "../../ui/Button";
 import "./Todo.css";
+import { todoStore } from "../../../storage/localStorage";
 
 const Todo = () => {
   const [input, setInput] = useState("");
@@ -14,6 +15,10 @@ const Todo = () => {
     setInput("");
   };
 
+  useEffect(() => {
+    todoStore.add(todos);
+  }, [todos]);
+
   return (
     <>
       <div className="todo-wrapper">
@@ -25,7 +30,12 @@ const Todo = () => {
           value={input}
           placeholder="Kom ihåg att..."
         />
-        <Button onClick={addTodo} text="+" variant="primary"></Button>
+        <Button
+          onClick={addTodo}
+          text="+"
+          variant="primary"
+          className="todo-add-btn"
+        ></Button>
       </div>
 
       <ul className="li-wrapper">
