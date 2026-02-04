@@ -4,18 +4,12 @@
   border-radius: 0.25rem;
   box-shadow: rgba(0, 0, 0, 0.425) 0 1px 3px 0;
   display: inline-flex;
-  font-family:
-    system-ui,
-    -apple-system,
-    system-ui,
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: inherit, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   justify-content: center;
+  min-width: 8rem;
   padding: 0.5rem 2rem;
-  margin: 0.4rem;
+  margin: 0.8rem 0.4rem;
 }
 
 .btn:hover {
@@ -29,21 +23,26 @@
 }
 
 .btn-primary {
-  background-color: #b698ce;
-  color: #fff;
+  background-color: var(--primary-light-color);
+  color: var(--gray-light-color);
 }
 
 .btn-primary:hover {
-  background-color: #e3e7eb;
-  color: black;
+  background-color: var(--primary-color);
 }
 
 .btn-secondary {
-  background-color: #e3e7eb;
-  color: #000000;
+  background-color: var(--gray-light-color);
 }
 
 .btn-secondary:hover {
-  background-color: #b698ce;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+@media only screen and (max-width: 580px) {
+  .btn {
+    padding: 0.4rem 1rem;
+    margin: 0.4rem;
+  }
 }

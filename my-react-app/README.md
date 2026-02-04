@@ -1,16 +1,32 @@
-# React + Vite
+# Zoan
+**The** productivity tool for time tracking and energy management that 
+**keeps you in the zone!**
+-
+_- A project for the Webdeveloper Fullstack JS program at Chas Academy_
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## What is it, actually?
+Zoan is a web and mobile application designed to help users work in harmony with their selves. By letting you track time spent for different tasks during the workday alongside their perceived energy levels, the app helps you to use that data to better plan workdays and stick to that plan. All is to help you make more effecient use of your energy during the course of the day. 
 
-Currently, two official plugins are available:
+Zoan aims to **enhance your productivity** and helps you **stay focused throughout the day**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How to try it out
+For now, Zoan is only available for local development. To try it out clone the repository and run dev script from `my-react-app` directory: `npm run dev`.
 
-## React Compiler
+## What makes it tick?
+_More information about the tech stack is coming_
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Zoan is built mainly with React/React Native. Local storage is used to store user data initially.
 
-## Expanding the ESLint configuration
+## What's coming down the road?
+We have a roadmap filled with exciting features and improvements to enhance your experience with Zoan. Some of the upcoming features include:
+- User authentication and profiles
+- Cloud syncing across devices
+- Analytics and reporting - visualize your productivity patterns
+- Customizable reminders and notifications
+## Who made this?
+**Meet the team:**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+<!-- Vad sägs om bilder istället för textlänkar här? Jag tänker mig profilbilderna från GitHub tex, om man har en där -->
+| Björne | Elias | Isabelle | Mäx | Sascha |
+|---|---|---|---|---|
+| [Björne](https://github.com/bjorneboman) | [Elias](https://github.com/Eliasjohansson123) | [Isabelle](https://github.com/isabellea-f) | [Mäx](https://github.com/maxmattiasson) | [Sascha](https://github.com/Sascha-Bergenas)

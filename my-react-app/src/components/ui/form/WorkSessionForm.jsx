@@ -5,7 +5,7 @@ import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
 import MoodPicker from "../../Features/mood/MoodPicker";
 
-function WorkSessionForm({ handleCloseModal }) {
+function WorkSessionForm({ handleCloseModal, timerData }) {
   // State för att lagra arbetspassets information (titel, kategori, kommentar)
   const [workSession, setWorkSession] = useState({
     title: "",
@@ -27,6 +27,13 @@ function WorkSessionForm({ handleCloseModal }) {
   // Hanterar formulärskickning - rensar formulär och state
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const sessionToSave = {
+      ...workSession,
+      ...timerData,
+    };
+
+    console.log("SAVE THIS:", sessionToSave);
 
     // Nollställer state
     setWorkSession({ title: "", category: "", comment: "", mood: "" });
