@@ -24,7 +24,19 @@
 
 body {
   font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--gray-light-color);
+  background-color: var(--gray-light-color);
+  color: var(--black-color);
+}
+
+body.dark {
+  --gray-light-color: rgb(20, 20, 25);
+  --black-color: rgb(245, 246, 250);
+  --white-color: rgb(30, 30, 35);
+
+  --primary-light-color: rgb(58, 54, 78);
+  --primary-color: rgb(105, 92, 143);
+
+  background-color: var(--gray-light-color);
   color: var(--black-color);
 }
 
