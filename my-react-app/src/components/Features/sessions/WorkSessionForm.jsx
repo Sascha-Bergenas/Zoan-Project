@@ -5,8 +5,8 @@ import Select from "../../ui/select/Select";
 import TextArea from "../../ui/textArea/TextArea";
 import MoodPicker from "../../Features/mood/MoodPicker";
 import { useAuth } from "../../../contexts/useAuth";
+import { sessionStore } from "../../../storage/localStorage";
 import saveSession from "../../../supabase/saveSession";
-import { addLocalSession } from "../../../storage/localStorage";
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
   const { user, isAuthed } = useAuth();
@@ -43,7 +43,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         await saveSession(user.id, sessionToSave);
         console.log("sparat till db");
       } else {
-        addLocalSession(sessionToSave);
+        sessionStore.add(sessionToSave);
         console.log("sparat till local");
       }
 
