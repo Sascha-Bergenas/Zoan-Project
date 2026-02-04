@@ -6,8 +6,15 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPassWordError] = useState("");
 
   const { signIn, signUp, user, isAuthed, signOut } = useAuth();
+
+  //Switch between loginmode and signup mode
+  function loginSignupToggle() {
+    setIsSignedUp((prev) => !prev);
+  }
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -21,29 +28,49 @@ export default function LoginForm() {
     }
   }
 
+  //default form behaviour
   async function handleSubmit(e, action) {
     e.preventDefault();
 
     const trimmedEmail = email.trim();
+    if (!validateForm(trimmedEmail)) return;
 
     if (action === "login") {
       const { error } = await signIn(trimmedEmail, password);
       if (error) return alert(error.message);
-      alert("logged in");
     }
 
     if (action === "signup") {
       const { error } = await signUp(trimmedEmail, password);
       if (error) return alert(error.message);
-      alert("sign up");
     }
 
     setEmail("");
     setPassword("");
   }
 
-  function loginSignupToggle() {
-    setIsSignedUp((prev) => !prev);
+  function validateForm(trimmedEmail) {
+    if (trimmedEmail === "") {
+      setEmailError("Skriv in en e-postadress");
+      return false;
+    }
+
+    if (!trimmedEmail.includes("@")) {
+      setEmailError("Ogiltig e-postadress");
+      return false;
+    }
+
+    if (password === "") {
+      setPassWordError("Skriv in ditt lösenord.");
+      return false;
+    }
+
+    if (password.length < 6) {
+      setPassWordError("Ditt lösenord måste vara minst 6 tecken.");
+      return false;
+    }
+
+    return true;
   }
 
   return (
@@ -68,6 +95,8 @@ export default function LoginForm() {
               onChange={handleChange}
             />
           </div>
+          {emailError && <p>{emailError}</p>}
+          {passwordError && <p>{passwordError}</p>}
 
           {/* Log in button */}
           {!isAuthed && (
@@ -114,6 +143,8 @@ export default function LoginForm() {
             variant="secondary"
             onClick={loginSignupToggle}
           />
+          {emailError && <p>{emailError}</p>}
+          {passwordError && <p>{passwordError}</p>}
         </>
       )}
     </form>
