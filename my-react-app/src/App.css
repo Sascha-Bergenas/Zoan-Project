@@ -9,6 +9,7 @@
   /* Primary (Purple) */
   --primary-color: rgb(103, 99, 122);
   --primary-light-color: rgb(182 152 206);
+  --primary-lighter-color: rgb(237 233 254);
   --primary-dark-color: rgb(49, 37, 109);
 
   /* Neutrals */
@@ -34,7 +35,10 @@ body.dark {
   --white-color: rgb(30, 30, 35);
 
   --primary-light-color: rgb(58, 54, 78);
+  --primary-lighter-color: rgb(105, 92, 143);
   --primary-color: rgb(105, 92, 143);
+
+  --gray-dark-color: rgb(189, 189, 228);
 
   background-color: var(--gray-light-color);
   color: var(--black-color);
