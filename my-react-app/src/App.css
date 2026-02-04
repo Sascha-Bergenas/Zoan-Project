@@ -21,6 +21,12 @@
 
   /* Status Colors */
   --error-color: rgb(239, 68, 68);
+
+  /* Topbar cards */
+  --card-1: linear-gradient(180deg, rgb(126, 164, 214), rgb(88, 120, 182));
+  --card-2: linear-gradient(180deg, rgb(170, 140, 220), rgb(130, 100, 190));
+  --card-3: linear-gradient(180deg, rgb(172, 171, 231), rgb(112, 93, 221));
+  --card-4: linear-gradient(180deg, rgb(165, 140, 210), rgb(120, 95, 175));
 }
 
 body {
@@ -42,6 +48,11 @@ body.dark {
 
   background-color: var(--gray-light-color);
   color: var(--black-color);
+
+  --card-1: linear-gradient(0deg, rgb(45, 50, 95), rgb(70, 110, 150));
+  --card-2: linear-gradient(0deg, rgb(60, 45, 110), rgb(90, 70, 150));
+  --card-3: linear-gradient(0deg, rgb(36, 51, 95), rgb(63, 83, 161));
+  --card-4: linear-gradient(0deg, rgb(70, 55, 110), rgb(100, 80, 150));
 }
 
 /* Typography
