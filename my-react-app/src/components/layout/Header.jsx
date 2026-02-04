@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import LoginModal from "../../components/Features/modals/loginModal/loginModal";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../contexts/useAuth";
 import Button from "../ui/Button";
 import "./header.css";
 
