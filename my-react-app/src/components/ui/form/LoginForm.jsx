@@ -47,7 +47,7 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       {isSignedUp ? (
         <>
           <div>
@@ -73,7 +73,7 @@ export default function LoginForm() {
           {!isAuthed && (
             <Button
               text="Logga in"
-              type="submit"
+              type="button"
               onClick={(e) => handleSubmit(e, "login")}
             />
           )}
@@ -105,7 +105,7 @@ export default function LoginForm() {
           {/* Signup button */}
           <Button
             text="Bli Medlem"
-            type="submit"
+            type="button"
             onClick={(e) => handleSubmit(e, "signup")}
           />
           <Button
