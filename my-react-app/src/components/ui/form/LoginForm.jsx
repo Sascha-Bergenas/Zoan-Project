@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../Button";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/useAuth";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
