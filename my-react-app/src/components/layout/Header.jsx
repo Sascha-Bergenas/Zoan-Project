@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
+import LoginModal from "../../components/Features/modals/loginModal/loginModal";
+import { useAuth } from "../../contexts/useAuth";
+import Button from "../ui/Button";
 import "./header.css";
 
 export default function Header() {
+  const { isAuthed, user, signOut } = useAuth();
+
   return (
     <header>
       <nav>
@@ -13,6 +18,20 @@ export default function Header() {
 
           <li>
             <Link to="/history">Historik</Link>
+          </li>
+          <li>
+            {!isAuthed && <LoginModal />}
+
+            {isAuthed && (
+              <>
+                <li>
+                  <p className="text-sm">Inloggad som: {user.email}</p>
+                </li>
+                <li>
+                  <Button text="Logga ut" type="button" onClick={signOut} />
+                </li>
+              </>
+            )}
           </li>
         </ul>
       </nav>

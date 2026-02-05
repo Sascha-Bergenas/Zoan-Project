@@ -4,18 +4,25 @@ import Input from "../input";
 import Select from "../select/Select";
 import TextArea from "../textArea/TextArea";
 import MoodPicker from "../../Features/mood/MoodPicker";
+import { useAuth } from "../../../contexts/useAuth";
+import { sessionStore } from "../../../storage/localStorage";
+import saveSession from "../../../supabase/saveSession"; 
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
+
+  const { user, isAuthed } = useAuth();
+
+
   // State för att lagra arbetspassets information (titel, kategori, kommentar)
   const [workSession, setWorkSession] = useState({
     title: "",
     category: "",
     comment: "",
-    mood: ""
+    mood: "",
   });
 
   // Hanterar ändringar i input-fält genom att uppdatera state
-  const handleChange = (e) => { 
+  const handleChange = (e) => {
     const { name, value } = e.target;
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
@@ -25,7 +32,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
   };
 
   // Hanterar formulärskickning - rensar formulär och state
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const sessionToSave = {
@@ -33,18 +40,27 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
       ...timerData,
     };
 
-    console.log("SAVE THIS:", sessionToSave);
+    try {
+      if (isAuthed) {
+        await saveSession(user.id, sessionToSave)
+        console.log('sparat till db')
+      } else {
+        sessionStore.add(sessionToSave)
+        console.log('sparat till local')
+      }
+        
+      // Nollställer state
+      setWorkSession({ title: "", category: "", comment: "", mood: "" });
+    
+      // Nollställer formulärets HTML-element
+      e.target.reset();
+  
+      // Stänger modalen efter inlämning
+      handleCloseModal();
+    } catch (err) {
+      console.log(err)
+    }
 
-    // Nollställer state
-    setWorkSession({ title: "", category: "", comment: "", mood: "" });
-
-    console.log("Arbetspass:", workSession);
-
-    // Nollställer formulärets HTML-element
-    e.target.reset();
-
-    // Stänger modalen efter inlämning
-    handleCloseModal();
   };
 
   return (
@@ -79,7 +95,10 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
-      <MoodPicker value={workSession.mood} onChange={(mood) => setWorkSession((prev) => ({...prev, mood}))}></MoodPicker>
+      <MoodPicker
+        value={workSession.mood}
+        onChange={(mood) => setWorkSession((prev) => ({ ...prev, mood }))}
+      ></MoodPicker>
       <Button type="submit" text="Logga" />
     </form>
   );

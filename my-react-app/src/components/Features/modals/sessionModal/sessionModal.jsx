@@ -1,5 +1,5 @@
-import WorkSessionForm from "../../ui/form/WorkSessionForm";
-import Modal from "../../ui/modal/Modal";
+import WorkSessionForm from "../../../ui/form/WorkSessionForm";
+import Modal from "../../../ui/modal/Modal";
 
 // Session modal komponent för att logga en arbetsession vid timer stopp och stänga modalen
 function SessionModal({ dialogRef, handleCloseModal, stopTimeFormatted, timerData}) {

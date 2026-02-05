@@ -12,7 +12,7 @@
   margin: 1rem;
   border-radius: 10px;
   background-color: var(--primary-light-color);
-  max-width: fit-content;
+  max-width: 90rem;
 }
 
 .timer {
@@ -40,6 +40,8 @@
   grid-column: span 3;
   grid-row: 2;
   max-width: none;
+  max-height: 15rem;
+  min-height: 15rem;
 }
 
 .card5 {
