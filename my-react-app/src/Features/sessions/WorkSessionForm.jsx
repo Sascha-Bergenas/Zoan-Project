@@ -16,7 +16,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
     title: "",
     category: "",
     comment: "",
-    mood: "",
+    mood: ""
   });
 
   // Hanterar ändringar i input-fält genom att uppdatera state
@@ -25,7 +25,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -35,12 +35,13 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
 
     const sessionToSave = {
       ...workSession,
-      ...timerData,
+      ...timerData
     };
 
     try {
       if (isAuthed) {
         await saveSession(user.id, sessionToSave);
+        sessionStore.add(sessionToSave);
         console.log("sparat till db");
       } else {
         sessionStore.add(sessionToSave);
