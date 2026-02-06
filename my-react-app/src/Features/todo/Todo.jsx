@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../components/ui/input/Input";
 import Button from "../../components/ui/button/Button";
 import "./Todo.css";
-import { todoStore } from "../../../storage/localStorage";
+import { todoStore } from "../../storage/localStorage";
 
 const Todo = () => {
   const [input, setInput] = useState("");
