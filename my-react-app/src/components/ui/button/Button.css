@@ -24,18 +24,25 @@
 
 .btn-primary {
   background-color: var(--primary-light-color);
-  color: var(--gray-light-color);
+  color: var(--black-color);
 }
-
 .btn-primary:hover {
   background-color: var(--primary-color);
 }
 
 .btn-secondary {
   background-color: var(--gray-light-color);
+  color: var(--black-color);
 }
 
 .btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.btn-login {
+  padding: 0.2rem 1rem;
+  margin: 0 2rem;
   background-color: var(--primary-color);
   color: var(--white-color);
 }

@@ -12,18 +12,18 @@ export default function Topbar({ timer }) {
 
   return (
     <aside className={styles.container}>
-      <TopBarCard title="Total tid" color="green">
+      <TopBarCard title="Total tid" className={styles.card1}>
         <p>
           {formattedHours}h {formattedMinutes}min
         </p>
       </TopBarCard>
-      <TopBarCard title="Energiprognos" color="yellow">
+      <TopBarCard title="Energiprognos" className={styles.card2}>
         <p>Gla som sjutton</p>
       </TopBarCard>
-      <TopBarCard title="Nästa rast" color="red">
+      <TopBarCard title="Nästa rast" className={styles.card3}>
         <p>om 45min</p>
       </TopBarCard>
-      <TopBarCard title="Nuvarande mode" color="green">
+      <TopBarCard title="Nuvarande mode" className={styles.card4}>
         <p>Deep work</p>
       </TopBarCard>
     </aside>

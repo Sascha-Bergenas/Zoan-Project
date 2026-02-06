@@ -3,3 +3,23 @@
   gap: 20px;
   justify-content: center;
 }
+
+.card1,
+.card2,
+.card3,
+.card4 {
+  border: none;
+}
+
+.card1 {
+  background: var(--card-1);
+}
+.card2 {
+  background: var(--card-2);
+}
+.card3 {
+  background: var(--card-3);
+}
+.card4 {
+  background: var(--card-4);
+}

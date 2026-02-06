@@ -53,7 +53,7 @@ button:focus-visible {
 .fc-col-header-cell {
   background: var(--primary-light-color);
   font-weight: 600;
-  color: #4b5563;
+  color: var(--black-color);
   padding: 0.5rem 0;
   border: none;
 }
@@ -64,7 +64,7 @@ button:focus-visible {
 
 /*Dagsceller*/
 .fc-daygrid-day {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--white);
 }
 
 .fc-daygrid-day-frame {
@@ -76,12 +76,12 @@ button:focus-visible {
 .fc-daygrid-day-number {
   font-size: 1rem;
   font-weight: 500;
-  color: #374151;
+  color: var(--black-color);
 }
 
 /*Idag, important behövs för fullCalender override*/
 .fc-day-today {
-  background: #ede9fe !important;
+  background: var(--primary-lighter-color) !important;
 }
 
 /*Aktiv dag*/

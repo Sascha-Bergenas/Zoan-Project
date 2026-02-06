@@ -1,0 +1,13 @@
+.login-modal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 400px;
+  padding: 32px;
+  border-radius: 20px;
+
+  background: var(--white-color);
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+}
