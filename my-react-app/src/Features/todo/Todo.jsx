@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-import Input from "../../ui/input/Input";
-import Button from "../../ui/Button";
+import { useState } from "react";
+import Input from "../../components/ui/input/Input";
+import Button from "../../components/ui/button/Button";
 import "./Todo.css";
 import { todoStore } from "../../../storage/localStorage";
 

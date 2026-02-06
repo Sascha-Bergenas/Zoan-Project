@@ -1,10 +1,10 @@
 import BaseCard from "../../components/ui/cards/Card";
 import styles from "./Dashboard.module.css";
-import Timer from "../../components/Features/timer/Timer";
+import Timer from "../../Features/timer/Timer";
 import Topbar from "../../components/layout/Topbar";
-import useTimerLogic from "../../components/Features/timer/timerLogic";
-import CalendarCard from "../../components/Features/calendar/CalendarCard";
-import Todo from "../../components/Features/todo/Todo";
+import useTimerLogic from "../../Features/timer/timerLogic";
+import CalendarCard from "../../Features/calendar/CalendarCard";
+import Todo from "../../Features/todo/Todo";
 
 function Dashboard() {
   const timer = useTimerLogic();

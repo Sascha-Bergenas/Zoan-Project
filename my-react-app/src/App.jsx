@@ -3,8 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import History from "./pages/HistoryPage";
 import Dashboard from "./pages/dashboard/DashboardPage";
 import Header from "./components/layout/Header";
-import Timer from "./components/Features/timer/Timer";
-import Topbar from "./components/layout/Topbar";
 
 //Använd export default för att exportera en komponent från en fil
 
