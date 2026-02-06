@@ -78,7 +78,7 @@ h4 {
 }
 
 .text-md {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 }
 
 .text-lg {
@@ -125,7 +125,7 @@ a:hover {
 }
 
 .text-bold {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 1300px) {
