@@ -32,7 +32,12 @@ export default function Header() {
                   <p className="text-sm">
                     Hej <span className="text-bold">{user.email}!</span>
                   </p>
-                  <Button text="Logga ut" type="button" onClick={signOut} />
+                  <Button
+                    text="Logga ut"
+                    type="login"
+                    onClick={signOut}
+                    variant="login"
+                  />
                 </li>
               </>
             )}

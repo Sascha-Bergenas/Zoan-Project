@@ -12,7 +12,7 @@ export default function LoginModal() {
 
   return (
     <>
-      <Button text="Logga in" onClick={handleOpen}>
+      <Button text="Logga in" onClick={handleOpen} variant="login">
         Logga in
       </Button>
 
