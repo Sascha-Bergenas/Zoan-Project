@@ -35,6 +35,13 @@ body {
   color: var(--black-color);
 }
 
+* {
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
+}
+
 body.dark {
   --gray-light-color: rgb(20, 20, 25);
   --black-color: rgb(245, 246, 250);
