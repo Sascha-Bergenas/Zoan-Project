@@ -9,9 +9,9 @@ export default function Header() {
 
   return (
     <header>
-      <nav>
-        <h1 className="text-lg">Zoan</h1>
-        <ul className="text-md">
+      <nav className="flex">
+        <h1 className="text-md">Zoan</h1>
+        <ul className="text-md flex">
           <li>
             <Link to="/">Dashboard</Link>
           </li>
@@ -24,10 +24,10 @@ export default function Header() {
 
             {isAuthed && (
               <>
-                <li>
-                  <p className="text-sm">Inloggad som: {user.email}</p>
-                </li>
-                <li>
+                <li className="logged-in flex">
+                  <p className="text-sm">
+                    Hej <span className="text-bold">{user.email}!</span>
+                  </p>
                   <Button text="Logga ut" type="button" onClick={signOut} />
                 </li>
               </>
