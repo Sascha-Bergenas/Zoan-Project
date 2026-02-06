@@ -10,7 +10,8 @@ export default function Header() {
   return (
     <header>
       <nav>
-        <h1 className="text-lg">Zoan</h1>
+        {/* <h1 className="text-lg">Zoan</h1> */}
+        <img src="src/img/zoan-logo.png" />
         <ul className="text-md">
           <li>
             <Link to="/">Dashboard</Link>

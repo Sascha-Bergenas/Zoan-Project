@@ -1,21 +1,18 @@
-import styles from "./listItem.module.css"
+import styles from "./List.module.css"
 
-function ListItem({session}) {
+export default function ListItem({session, evenOdd}) {
     const {date, header, category, startTime, stopTime, zoanTime, pauseTime, comment, mood} = session
     return(
-        <li className={styles.listItem}>
-            
+        <li className={`${styles.listItem} ${evenOdd === "even" ? styles.even : styles.odd}`}>
             <span>{date}</span>
-            <span>{header}</span>
+            <span className={styles.cutLine}>{header}</span>
             <span>{category}</span>
             <span>{startTime}</span>
             <span>{stopTime}</span>
             <span>{zoanTime}</span>
             <span>{pauseTime}</span>
-            <span>{comment}</span>
-            <span>{mood}</span>
+            <span className={styles.cutLine}>{comment}</span>
+            <span className={styles.lastCol}>{mood}</span>
         </li>
     )
 }
-
-export default ListItem

@@ -1,8 +1,14 @@
+h2 {
+    margin-inline: auto;
+    max-width : 90rem;
+}
+
 .wrapper {
     container-type: inline-size;
     display: flex;
     justify-content: center;
 }
+
 
 .container {
     padding: 1rem;
@@ -10,5 +16,5 @@
     margin: 1rem;
     border-radius: 10px;
     background-color: var(--primary-light-color);
-    max-width : fit-content;
+    max-width : 90rem;
 }
