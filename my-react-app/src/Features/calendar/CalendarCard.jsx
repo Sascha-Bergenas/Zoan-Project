@@ -7,22 +7,26 @@ import { sessionStore } from "../../storage/localStorage";
 import "../mood/mood.css";
 
 function CalendarCard() {
+  // Sessions från localStorage lagras i sessions
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    // Ladda sessioner initialt och vid lokala lagringsändringar
+    // Hämtar sessions från localStorage och sparar i state
     const loadSessions = () => {
       setSessions(sessionStore.load());
     };
 
     loadSessions();
 
+    // Lyssnar på egen event när localStorage ändras
     const handleLocalChange = (event) => {
+      // Ignorera om det inte gäller våra sessions
       if (event?.detail?.key !== "localsessions") return;
       loadSessions();
     };
 
     window.addEventListener("localstore:change", handleLocalChange);
+    // Städar upp event-lyssnaren när komponenten tas bort
     return () =>
       window.removeEventListener("localstore:change", handleLocalChange);
   }, []);
@@ -35,28 +39,66 @@ function CalendarCard() {
     bad: "mood-blue"
   };
 
-  // Skapar FullCalendar-events utifrån sessioner, körs bara om data ändras
+  // Skapar ett event per dag (dominerande mood för dagen vinner)
   const events = useMemo(() => {
-    return sessions
-      .map((session) => {
-        const rawDate =
-          session?.endedAt ?? session?.ended_at ?? session?.createdAt;
-        if (!rawDate) return null;
+    // Samlar statistik per datum så att vi kan räkna dominerande mood
+    const statsByDate = {};
 
-        const date = new Date(rawDate);
-        if (Number.isNaN(date.getTime())) return null;
-        // Exakt kalenderdag i formatet YYYY-MM-DD, timmar mm räknas inte med
-        const dateKey = date.toISOString().split("T")[0];
+    sessions.forEach((session) => {
+      // Använder slutdatum först, annars skapad tid
+      const rawDate =
+        session?.endedAt ?? session?.ended_at ?? session?.createdAt;
+      if (!rawDate) return;
 
-        // Event-objektet som blir en prick i kalendern
-        return {
-          id: session?.id ?? `$dateKey-${session?.mood ?? "unknown"}`,
-          title: "",
-          start: dateKey,
-          className: moodClassByLabel[session?.mood] || "mood-unknown"
-        };
-      })
-      .filter(Boolean);
+      const date = new Date(rawDate);
+      // Avbryt om datumet är ogiltigt
+      if (Number.isNaN(date.getTime())) return;
+
+      // Exakt kalenderdag i formatet YYYY-MM-DD, timmar mm räknas inte med
+      const dateKey = date.toISOString().split("T")[0];
+      const mood = session?.mood ?? "unknown";
+
+      // Skapa datum-nyckel om den saknas
+      if (!statsByDate[dateKey]) {
+        statsByDate[dateKey] = { counts: {}, latestByMood: {} };
+      }
+
+      // Räkna hur många gånger varje mood förekommer
+      const stats = statsByDate[dateKey];
+      stats.counts[mood] = (stats.counts[mood] || 0) + 1;
+
+      // Spara senaste tiden för varje mood
+      stats.latestByMood[mood] = Math.max(
+        stats.latestByMood[mood] || 0,
+        date.getTime()
+      );
+    });
+
+    // Välj dominant mood (flest förekomster, tiebreak = senaste mood)
+    return Object.entries(statsByDate).map(([dateKey, stats]) => {
+      let dominantMood = "unknown";
+      let maxCount = -1;
+      let latestTs = -1;
+
+      Object.entries(stats.counts).forEach(([mood, count]) => {
+        const moodLatest = stats.latestByMood[mood] || 0;
+
+        // Tiebreak: senaste mood vinner
+        if (count > maxCount || (count === maxCount && moodLatest > latestTs)) {
+          dominantMood = mood;
+          maxCount = count;
+          latestTs = moodLatest;
+        }
+      });
+
+      // Bygg FullCalendar-eventet för dagen (färg styrs av mood-klass)
+      return {
+        id: `${dateKey}-${dominantMood}`,
+        title: "",
+        start: dateKey,
+        className: moodClassByLabel[dominantMood] || "mood-unknown"
+      };
+    });
   }, [sessions]);
 
   return (

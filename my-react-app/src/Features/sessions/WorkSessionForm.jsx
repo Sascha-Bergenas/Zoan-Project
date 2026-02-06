@@ -41,7 +41,6 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
     try {
       if (isAuthed) {
         await saveSession(user.id, sessionToSave);
-        sessionStore.add(sessionToSave);
         console.log("sparat till db");
       } else {
         sessionStore.add(sessionToSave);
