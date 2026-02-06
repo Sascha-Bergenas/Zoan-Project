@@ -1,4 +1,4 @@
-import TopBarCard from "../ui/cards/TopBarCard";
+import TopBarCard from "./TopBarCard";
 import styles from "./Topbar.module.css";
 import { calcTime } from "../../utils/formatTime";
 

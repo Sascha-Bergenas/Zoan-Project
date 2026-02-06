@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import LoginModal from "../Features/modals/loginModal/LoginModal";
+import LoginModal from "../../Features/modals/loginModal/loginModal";
 import { useAuth } from "../../contexts/useAuth";
-import Button from "../ui/Button";
+import Button from "../ui/button/Button";
 import "./header.css";
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";

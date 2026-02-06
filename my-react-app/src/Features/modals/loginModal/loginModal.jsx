@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, Box, Typography } from "@mui/material";
-import Button from "../../../ui/Button";
-import LoginForm from "../../../ui/form/LoginForm";
+import Button from "../../../components/ui/button/Button";
+import LoginForm from "../../authentication/LoginForm";
 
 const style = {
   position: "absolute",

@@ -1,17 +1,15 @@
 import { useState } from "react";
-import Button from "../Button";
-import Input from "../input";
-import Select from "../select/Select";
-import TextArea from "../textArea/TextArea";
-import MoodPicker from "../../Features/mood/MoodPicker";
-import { useAuth } from "../../../contexts/useAuth";
-import saveSession from "../../../supabase/saveSession";
-import { addLocalSession } from "../../../storage/localStorage";
+import Button from "../../components/ui/button/Button";
+import Input from "../../components/ui/input";
+import Select from "../../components/ui/select/Select";
+import TextArea from "../../components/ui/textArea/TextArea";
+import MoodPicker from "../mood/MoodPicker";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import saveSession from "../../supabase/saveSession";
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
-
   const { user, isAuthed } = useAuth();
-
 
   // State för att lagra arbetspassets information (titel, kategori, kommentar)
   const [workSession, setWorkSession] = useState({
@@ -42,25 +40,24 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
 
     try {
       if (isAuthed) {
-        await saveSession(user.id, sessionToSave)
-        console.log('sparat till db')
+        await saveSession(user.id, sessionToSave);
+        console.log("sparat till db");
       } else {
-        addLocalSession(sessionToSave)
-        console.log('sparat till local')
+        sessionStore.add(sessionToSave);
+        console.log("sparat till local");
       }
-        
+
       // Nollställer state
       setWorkSession({ title: "", category: "", comment: "", mood: "" });
-    
+
       // Nollställer formulärets HTML-element
       e.target.reset();
-  
+
       // Stänger modalen efter inlämning
       handleCloseModal();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-
   };
 
   return (
