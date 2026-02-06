@@ -5,19 +5,17 @@ import Button from "../ui/button/Button";
 import "./header.css";
 import { useContext } from "react";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Sun, Moon } from "lucide-react";
 
 export default function Header() {
   const { isAuthed, user, signOut } = useAuth();
-  const { toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   return (
     <header>
       <nav>
         <h1 className="text-lg">Zoan</h1>
         <ul className="text-md">
-          <li>
-            <button onClick={toggleTheme}>Dark Mode</button>
-          </li>
           <li>
             <Link to="/">Dashboard</Link>
           </li>
@@ -38,6 +36,11 @@ export default function Header() {
                 </li>
               </>
             )}
+          </li>
+          <li>
+            <button className="theme-toggle" onClick={toggleTheme}>
+              {theme === "dark" ? <Sun size={25} /> : <Moon size={25} />}
+            </button>
           </li>
         </ul>
       </nav>

@@ -8,7 +8,7 @@ export function ThemeProvider({ children }) {
   });
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light")); // if themse is light, change to dark. otherwise light
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   useEffect(() => {
