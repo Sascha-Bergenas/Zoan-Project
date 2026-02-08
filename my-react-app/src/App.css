@@ -9,6 +9,7 @@
   /* Primary (Purple) */
   --primary-color: rgb(103, 99, 122);
   --primary-light-color: rgb(182 152 206);
+  --primary-lighter-color: rgb(237 233 254);
   --primary-dark-color: rgb(49, 37, 109);
 
   /* Neutrals */
@@ -20,12 +21,45 @@
 
   /* Status Colors */
   --error-color: rgb(239, 68, 68);
+
+  /* Topbar cards */
+  --card-1: linear-gradient(180deg, rgb(126, 164, 214), rgb(88, 120, 182));
+  --card-2: linear-gradient(180deg, rgb(170, 140, 220), rgb(130, 100, 190));
+  --card-3: linear-gradient(180deg, rgb(172, 171, 231), rgb(112, 93, 221));
+  --card-4: linear-gradient(180deg, rgb(165, 140, 210), rgb(120, 95, 175));
 }
 
 body {
   font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--gray-light-color);
+  background-color: var(--gray-light-color);
   color: var(--black-color);
+}
+
+* {
+  transition:
+    background-color 250ms ease,
+    color 250ms ease,
+    border-color 250ms ease;
+}
+
+body.dark {
+  --gray-light-color: rgb(20, 20, 25);
+  --black-color: rgb(245, 246, 250);
+  --white-color: rgb(30, 30, 35);
+
+  --primary-light-color: rgb(58, 54, 78);
+  --primary-lighter-color: rgb(105, 92, 143);
+  --primary-color: rgb(105, 92, 143);
+
+  --gray-dark-color: rgb(189, 189, 228);
+
+  background-color: var(--gray-light-color);
+  color: var(--black-color);
+
+  --card-1: linear-gradient(0deg, rgb(45, 50, 95), rgb(70, 110, 150));
+  --card-2: linear-gradient(0deg, rgb(60, 45, 110), rgb(90, 70, 150));
+  --card-3: linear-gradient(0deg, rgb(36, 51, 95), rgb(63, 83, 161));
+  --card-4: linear-gradient(0deg, rgb(70, 55, 110), rgb(100, 80, 150));
 }
 
 /* Typography
@@ -44,7 +78,7 @@ h4 {
 }
 
 .text-md {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 }
 
 .text-lg {
@@ -91,7 +125,7 @@ a:hover {
 }
 
 .text-bold {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 @media only screen and (max-width: 1300px) {

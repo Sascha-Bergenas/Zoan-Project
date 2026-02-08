@@ -1,19 +1,8 @@
 import { useState } from "react";
-import { Modal, Box, Typography } from "@mui/material";
+import { Modal, Box } from "@mui/material";
 import Button from "../../../components/ui/button/Button";
 import LoginForm from "../../authentication/LoginForm";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 5,
-};
+import "./LoginModal.css";
 
 export default function LoginModal() {
   const [open, setOpen] = useState(false);
@@ -23,15 +12,13 @@ export default function LoginModal() {
 
   return (
     <>
-      <Button text="Logga in" onClick={handleOpen}>
+      <Button text="Logga in" onClick={handleOpen} variant="login">
         Logga in
       </Button>
 
       <Modal open={open} onClose={handleClose}>
-        <Box sx={style}>
-          <Typography>
-            <LoginForm />
-          </Typography>
+        <Box className="login-modal-box">
+          <LoginForm />
         </Box>
       </Modal>
     </>

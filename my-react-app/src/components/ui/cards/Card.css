@@ -1,10 +1,10 @@
 .card {
   padding: 1rem;
   border-radius: 8px;
-  background-color: #f7f7f7;
+  background-color: var(--white-color);
   border: 1px solid #e5e7eb;
   max-width: 100%;
-  color: rgb(0, 0, 0);
+  color: var(--black-color);
   font-weight: lighter;
   font-family: sans-serif;
   box-shadow:
