@@ -128,6 +128,10 @@ a:hover {
   font-weight: 600;
 }
 
+ul {
+  list-style-type: none;
+}
+
 @media only screen and (max-width: 1300px) {
   .section-title {
     font-size: 3.5rem;
