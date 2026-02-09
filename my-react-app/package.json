@@ -17,6 +17,7 @@
     "@fullcalendar/react": "^6.1.20",
     "@fullcalendar/timegrid": "^6.1.20",
     "@mui/material": "^7.3.7",
+    "@recharts/devtools": "^0.0.8",
     "@supabase/supabase-js": "^2.93.3",
     "lucide-react": "^0.563.0",
     "react": "^19.2.0",
@@ -25,7 +26,8 @@
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.12.0",
-    "react-timer-hook": "^4.0.5"
+    "react-timer-hook": "^4.0.5",
+    "recharts": "^3.7.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
