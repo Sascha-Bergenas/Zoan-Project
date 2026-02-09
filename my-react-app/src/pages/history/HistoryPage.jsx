@@ -7,40 +7,6 @@ import getSessions from "../../supabase/getSessions";
 
 
 export default function History() {
-  // const mockData = [{
-  //   date: "2026-02-03",
-  //   header: "Jobbat med attityden",
-  //   category: "Möte", 
-  //   startTime: "12.00", 
-  //   stopTime: "16.00", 
-  //   zoanTime: "04.00", 
-  //   pauseTime: "00.00", 
-  //   comment: "Folks problem! Det är väl inget fel på min attityd! Det är ju andra som är dumma i huvet!", 
-  //   mood: "Bitter"
-  // },
-  // {
-  //   date: "2026-02-03",
-  //   header: "Jobbat med branchen",
-  //   category: "Jobb", 
-  //   startTime: "08.00", 
-  //   stopTime: "11.30", 
-  //   zoanTime: "03.00", 
-  //   pauseTime: "00.30", 
-  //   comment: "Svårt, med det gick framåt", 
-  //   mood: "Great"
-  // },
-  // {
-  //   date: "2026-02-06",
-  //   header: "Tvingat AI:n i VS C till slavgöra",
-  //   category: "Jobb", 
-  //   startTime: "09.30", 
-  //   stopTime: "11.30", 
-  //   zoanTime: "02.00", 
-  //   pauseTime: "00.00", 
-  //   comment: "Piskar man bara tillräckligt hårt och tillräckligt ofta så kan den ju vara riktigt duglig ibland.", 
-  //   mood: "Maniac"
-  // }]
-
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
   
@@ -58,6 +24,7 @@ export default function History() {
         console.log(err)
       }
     }
+    
     fetchSessions()
     return () => { mounted = false}
 
@@ -71,16 +38,19 @@ export default function History() {
       <section className={styles.wrapper}>
         <div className={styles.container}>
           <h2>Loggade sessioner</h2>
+          {/* Put antingen... 
+              -knapp för manuell loggning eller
+              -knappar för sortering och filter 
+            ...here, inline med h2 eller på ny rad */}
             <BaseCard>
               <List sessions={sessions} />
             </BaseCard>
+          {/* Put eventuellt knapp för manuell loggning here */}
         </div>
       </section>
 
+      {/* Put en najsig graf here (OBS! INTE en Graaf) */}
 
-      {/* Placeholder för graf */}
-
-      {/*  Placeholder för manuell loggning */}
     </>
   );
 }

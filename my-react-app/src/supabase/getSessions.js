@@ -5,6 +5,6 @@ export default async function getSessions() {
         .from('sessions')
         .select('*')
 
-    console.log(sessions, error)
+    if (error) console.log(error)
     return(sessions)
 }
