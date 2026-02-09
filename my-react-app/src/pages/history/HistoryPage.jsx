@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
 import BaseCard from "../../components/ui/cards/Card"
+import Button from "../../components/ui/button/Button";
 import { useAuth } from "../../contexts/useAuth";
 import getSessions from "../../supabase/getSessions"; 
 
@@ -10,7 +11,7 @@ export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
   
-  // Hämta data från Supabase/localStorage
+  // Hämta data från Supabase
 
   useEffect(() => {
     let mounted = true
@@ -18,7 +19,7 @@ export default function History() {
       if(!isAuthed) return
 
       try {
-          const data = await getSessions(user.id)
+          const data = await getSessions()
           if(mounted) setSessions(data || [])
       } catch (err) {
         console.log(err)
@@ -38,13 +39,11 @@ export default function History() {
       <section className={styles.wrapper}>
         <div className={styles.container}>
           <h2>Loggade sessioner</h2>
-          {/* Put antingen... 
-              -knapp för manuell loggning eller
-              -knappar för sortering och filter 
-            ...here, inline med h2 eller på ny rad */}
-            <BaseCard>
-              <List sessions={sessions} />
-            </BaseCard>
+          {/* Knapp för manuell loggning */}
+          <Button text={"Lägg till"} />
+          <BaseCard>
+            <List sessions={sessions} />
+          </BaseCard>
           {/* Put eventuellt knapp för manuell loggning here */}
         </div>
       </section>
