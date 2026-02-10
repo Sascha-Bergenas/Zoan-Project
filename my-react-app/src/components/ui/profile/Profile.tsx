@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import supabase from "../../../supabase/supabase";
+import "./Profile.css";
 
 type UserProfile = {
   id: string;
@@ -87,7 +88,7 @@ export default function Profile() {
           if (file) uploadAvatar(file);
         }}
       />
-      <h3>Välkommen {profile.username}</h3>
+      <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <img
         src={(profile.avatar_url ?? DEFAULT_AVATAR) + "?t=" + Date.now()}
         alt="avatar"
