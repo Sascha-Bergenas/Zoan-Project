@@ -1,0 +1,39 @@
+.mood-green {
+  color: rgb(114, 212, 114);
+}
+
+.mood-dark-green {
+  color: rgb(27, 94, 27);
+}
+
+.mood-orange {
+  color: rgb(204, 113, 27);
+}
+.mood-blue {
+  color: rgb(26, 68, 206);
+}
+
+.mood-options ul {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  list-style: none;
+}
+
+.btn-plus {
+  all: unset;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #000000;
+  margin: 1rem;
+}
+
+.mood-picker p {
+  font-size: 01rem;
+}
+.active {
+  filter: brightness(1.4);
+}

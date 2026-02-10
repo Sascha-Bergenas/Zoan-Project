@@ -1,0 +1,96 @@
+/**
+ * Custom react hook for timer functionality.
+ *
+ * Handles starting, pausing, stopping, and tracking time.
+ *
+ * @returns {{
+ *   time: number,
+ *   startTimer: Function,
+ *   pauseTimer: Function,
+ *   stopTimer: Function,
+ *   isRunning: boolean,
+ *   hasStarted: boolean
+ *   getStartedTime: Function,
+ *   now: number,
+ * }}
+ */
+
+import { useState, useEffect, useRef } from "react";
+
+export default function useTimerLogic() {
+  const [time, setTime] = useState(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [now, setNow] = useState(0);
+
+  const startTimeRef = useRef(null);
+  const elapsedRef = useRef(0);
+  const startedAtRef = useRef(null);
+
+  function startTimer() {
+    // get true start time for data collection
+    if (startedAtRef.current === null) {
+      startedAtRef.current = Date.now();
+      setNow(Date.now());
+    }
+    // set start time, timer will resume from paused state
+    startTimeRef.current = Date.now() - elapsedRef.current;
+    setIsRunning(true);
+    setHasStarted(true);
+    console.log("Start:", new Date().toLocaleString());
+  }
+
+  function pauseTimer() {
+    // save elapsed time so timer can continue later
+    elapsedRef.current = Date.now() - startTimeRef.current;
+    setIsRunning(false);
+  }
+
+  function stopTimer() {
+    //Reset timer to initial state
+    setIsRunning(false);
+    setTime(0);
+    setNow(0);
+    elapsedRef.current = 0;
+    startedAtRef.current = null;
+    setHasStarted(false);
+
+    console.log("Stop:", new Date(Date.now()).toLocaleString());
+  }
+
+  function getStartedTime() {
+    return startedAtRef.current;
+  }
+
+  useEffect(() => {
+    if (!isRunning) return;
+
+    //calculates elapsed time
+    const interval = setInterval(() => {
+      setTime(Date.now() - startTimeRef.current);
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, [isRunning]);
+
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    const interval = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [hasStarted]);
+
+  return {
+    time,
+    startTimer,
+    pauseTimer,
+    stopTimer,
+    isRunning,
+    hasStarted,
+    getStartedTime,
+    now,
+  };
+}
