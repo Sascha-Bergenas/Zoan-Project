@@ -16,7 +16,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
     title: "",
     category: "",
     comment: "",
-    mood: "",
+    mood: ""
   });
 
   // Hanterar ändringar i input-fält genom att uppdatera state
@@ -25,7 +25,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value
     }));
   };
 
@@ -35,7 +35,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
 
     const sessionToSave = {
       ...workSession,
-      ...timerData,
+      ...timerData
     };
 
     try {
@@ -46,6 +46,9 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         sessionStore.add(sessionToSave);
         console.log("sparat till local");
       }
+
+      // Signalerar till kalendern att sessions har uppdaterats
+      window.dispatchEvent(new CustomEvent("sessions:change"));
 
       // Nollställer state
       setWorkSession({ title: "", category: "", comment: "", mood: "" });
