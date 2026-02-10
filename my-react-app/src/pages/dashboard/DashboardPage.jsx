@@ -5,6 +5,7 @@ import Topbar from "../../components/layout/Topbar";
 import useTimerLogic from "../../Features/timer/timerLogic";
 import CalendarCard from "../../Features/calendar/CalendarCard";
 import Todo from "../../Features/todo/Todo";
+import Profile from "../../components/ui/profile/Profile";
 
 function Dashboard() {
   const timer = useTimerLogic();
@@ -16,7 +17,7 @@ function Dashboard() {
       <div className={styles.wrapper}>
         <div className={styles.container}>
           <BaseCard className={styles.card1} size="card-large">
-            <h3>CARD 1 Status</h3>
+            <Profile />
           </BaseCard>
 
           <BaseCard className={styles.card2} size="card-medium">
