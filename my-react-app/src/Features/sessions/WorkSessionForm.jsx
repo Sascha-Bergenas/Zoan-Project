@@ -86,6 +86,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         <option value="Arbete">Arbete</option>
         <option value="Studier">Studier</option>
         <option value="Möte">Möte</option>
+        {/* <option value="Chill">Chill-i-Dill</option> */}
       </Select>
 
       <TextArea
