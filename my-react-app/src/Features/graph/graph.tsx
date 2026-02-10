@@ -5,7 +5,7 @@ import {
   Tooltip,
   Bar,
   BarStack,
-  TooltipIndex,
+  TooltipIndex
 } from "recharts";
 import { RechartsDevtools } from "@recharts/devtools";
 
@@ -14,49 +14,49 @@ const rangedStackedBarData = [
     name: "Mon",
     value1: 400,
     value2: 300,
-    value3: 200,
+    value3: 200
   },
   {
     name: "Tue",
     value1: 300,
     value2: 200,
-    value3: 221,
+    value3: 221
   },
   {
     name: "Wed",
     value1: 200,
     value2: 1398,
-    value3: 229,
+    value3: 229
   },
   {
     name: "Thu",
     value1: 278,
     value2: 390,
-    value3: 200,
+    value3: 200
   },
   {
     name: "Fri",
     value1: 189,
     value2: 480,
-    value3: 218,
+    value3: 218
   },
   {
     name: "Sat",
     value1: 239,
     value2: 380,
-    value3: 250,
+    value3: 250
   },
   {
     name: "Sun",
     value1: 349,
     value2: 430,
-    value3: 210,
-  },
+    value3: 210
+  }
 ];
 
 const RangedStackedBarChart = ({
   isAnimationActive = true,
-  defaultIndex,
+  defaultIndex
 }: {
   isAnimationActive?: boolean;
   defaultIndex?: TooltipIndex;
@@ -64,9 +64,9 @@ const RangedStackedBarChart = ({
   <BarChart
     style={{
       width: "100%",
-      maxWidth: "700px",
-      maxHeight: "70vh",
-      aspectRatio: 1.618,
+      maxWidth: "70rem",
+      maxHeight: "60vh",
+      aspectRatio: 1.618
     }}
     responsive
     data={rangedStackedBarData}
@@ -75,7 +75,7 @@ const RangedStackedBarChart = ({
       top: 20,
       right: 20,
       bottom: 20,
-      left: 20,
+      left: 20
     }}
   >
     <XAxis dataKey="name" />
