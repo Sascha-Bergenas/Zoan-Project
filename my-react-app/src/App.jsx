@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import History from "./pages/HistoryPage";
+import History from "./pages/history/HistoryPage";
 import Dashboard from "./pages/dashboard/DashboardPage";
 import Header from "./components/layout/Header";
 import { useContext } from "react";

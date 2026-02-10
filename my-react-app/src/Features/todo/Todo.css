@@ -20,7 +20,9 @@
 
 .li-wrapper {
   overflow-y: scroll;
-  max-height: 9rem;
+  max-height: 11rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .todo-button {
