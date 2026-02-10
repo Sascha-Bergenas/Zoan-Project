@@ -42,7 +42,7 @@ export default function History() {
               -knapp för manuell loggning eller
               -knappar för sortering och filter 
             ...here, inline med h2 eller på ny rad */}
-          <BaseCard>
+          <BaseCard className={styles.list}>
             <List sessions={sessions} />
           </BaseCard>
           {/* Put eventuellt knapp för manuell loggning here */}
