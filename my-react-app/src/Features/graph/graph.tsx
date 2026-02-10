@@ -50,7 +50,7 @@ const rangedStackedBarData = [
   {
     name: "Wed",
     work: 200,
-    study: 1398,
+    study: 398,
     meeting: 229
   },
   {
@@ -63,7 +63,7 @@ const rangedStackedBarData = [
     name: "Fri",
     work: 189,
     study: 480,
-    meeting: 218
+    meeting: 318
   },
   {
     name: "Sat",
@@ -75,7 +75,7 @@ const rangedStackedBarData = [
     name: "Sun",
     work: 349,
     study: 430,
-    meeting: 210
+    meeting: 410
   }
 ];
 
