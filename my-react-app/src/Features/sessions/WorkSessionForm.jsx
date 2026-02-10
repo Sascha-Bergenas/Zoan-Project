@@ -47,6 +47,9 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         console.log("sparat till local");
       }
 
+      // Signalerar till kalendern att sessions har uppdaterats
+      window.dispatchEvent(new CustomEvent("sessions:change"));
+
       // Nollställer state
       setWorkSession({ title: "", category: "", comment: "", mood: "" });
 

@@ -4,32 +4,62 @@ import svLocale from "@fullcalendar/core/locales/sv";
 import "./CalendarCard.css";
 import { useEffect, useState, useMemo } from "react";
 import { sessionStore } from "../../storage/localStorage";
+import { useAuth } from "../../contexts/useAuth";
+import supabase from "../../supabase/supabase";
 import "../mood/mood.css";
 
 function CalendarCard() {
   // Sessions från localStorage lagras i sessions
   const [sessions, setSessions] = useState([]);
+  const { user, isAuthed } = useAuth();
 
   useEffect(() => {
-    // Hämtar sessions från localStorage och sparar i state
-    const loadSessions = () => {
+    // Hämtar sessions från Supabase när man är inloggad, annars localStorage
+    const loadSessions = async () => {
+      if (isAuthed && user?.id) {
+        // Filtrerar på user_id så att bara inloggad användares sessions hämtas
+        const { data, error } = await supabase
+          .from("sessions")
+          .select("id, mood, ended_at, created_at")
+          .eq("user_id", user.id)
+          .order("ended_at", { ascending: false });
+
+        if (error) {
+          console.log(error);
+          return;
+        }
+
+        setSessions(data || []);
+        return;
+      }
+
       setSessions(sessionStore.load());
     };
 
     loadSessions();
 
-    // Lyssnar på egen event när localStorage ändras
+    // Reagerar på sparade sessions från Supabase och localStorage
+    const handleSessionsChange = () => {
+      loadSessions();
+    };
+
+    // Lyssnar på lokala ändringar när man inte är inloggad
     const handleLocalChange = (event) => {
-      // Ignorera om det inte gäller våra sessions
       if (event?.detail?.key !== "localsessions") return;
       loadSessions();
     };
 
-    window.addEventListener("localstore:change", handleLocalChange);
-    // Städar upp event-lyssnaren när komponenten tas bort
-    return () =>
+    window.addEventListener("sessions:change", handleSessionsChange);
+    if (!isAuthed) {
+      window.addEventListener("localstore:change", handleLocalChange);
+    }
+
+    // Städar upp event-lyssnare när komponenten tas bort
+    return () => {
+      window.removeEventListener("sessions:change", handleSessionsChange);
       window.removeEventListener("localstore:change", handleLocalChange);
-  }, []);
+    };
+  }, [isAuthed, user?.id]);
 
   // Mappar mood-värde till CSS-klass för färg
   const moodClassByLabel = {
