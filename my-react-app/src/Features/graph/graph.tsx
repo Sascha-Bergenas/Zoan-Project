@@ -154,9 +154,6 @@ const RangedStackedBarChart = ({
 }) => (
   <div className="graph-row">
     <div className="graph-wrapper">
-      <PieChartWithCustomizedLabel isAnimationActive={isAnimationActive} />
-    </div>
-    <div className="graph-wrapper">
       {/* Stapeldiagrammet använder mockdata per veckodag */}
       <BarChart
         style={{
@@ -216,6 +213,9 @@ const RangedStackedBarChart = ({
         </BarStack>
         <RechartsDevtools />
       </BarChart>
+    </div>
+    <div className="graph-wrapper">
+      <PieChartWithCustomizedLabel isAnimationActive={isAnimationActive} />
     </div>
   </div>
 );

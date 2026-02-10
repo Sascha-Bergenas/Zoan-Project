@@ -13,3 +13,22 @@
   justify-content: center;
   width: 100%;
 }
+
+@media (max-width: 1200px) {
+  .graph-row {
+    flex-direction: row;
+  }
+
+  .graph-wrapper {
+    flex: 1 1 22rem;
+  }
+}
+@media (max-width: 650px) {
+  .graph-row {
+    flex-direction: column;
+  }
+
+  .graph-wrapper {
+    flex: 1 1 100%;
+  }
+}
