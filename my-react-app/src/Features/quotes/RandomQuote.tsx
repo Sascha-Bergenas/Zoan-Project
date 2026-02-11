@@ -1,15 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { quotes } from "./quotes";
 
 export default function RandomQuote() {
-  const quotes = useMemo(
-    () => [
-      "Do one thing well.",
-      "Progress over perfection.",
-      "Small steps add up.",
-    ],
-    [],
-  );
-
   const [quote, setQuote] = useState<string>("");
 
   useEffect(() => {
