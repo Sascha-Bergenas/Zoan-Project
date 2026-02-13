@@ -16,7 +16,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
     title: "",
     category: "",
     comment: "",
-    mood: ""
+    mood: null
   });
 
   // Hanterar ändringar i input-fält genom att uppdatera state
@@ -51,7 +51,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
       window.dispatchEvent(new CustomEvent("sessions:change"));
 
       // Nollställer state
-      setWorkSession({ title: "", category: "", comment: "", mood: "" });
+      setWorkSession({ title: "", category: "", comment: "", mood: null });
 
       // Nollställer formulärets HTML-element
       e.target.reset();
