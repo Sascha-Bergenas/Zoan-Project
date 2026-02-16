@@ -50,7 +50,7 @@ export default function History() {
       </section>
 
       {/* Put en najsig graf here (OBS! INTE en Graaf) */}
-      <Graph />
+      <Graph sessions={sessions} />
     </>
   );
 }
