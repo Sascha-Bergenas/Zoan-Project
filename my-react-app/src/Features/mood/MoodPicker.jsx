@@ -12,25 +12,25 @@ export default function MoodPicker({
   moodOptions = [
     {
       id: 1,
-      label: "happy",
+      label: 1,
       emoji: TbMoodHappyFilled,
       color: "green",
     },
     {
       id: 2,
-      label: "fine",
+      label: 2,
       emoji: TbMoodSmileFilled,
       color: "dark-green",
     },
     {
       id: 3,
-      label: "meh",
+      label: 3,
       emoji: TbMoodEmptyFilled,
       color: "orange",
     },
     {
       id: 4,
-      label: "bad",
+      label: 4,
       emoji: TbMoodSadFilled,
       color: "blue",
     },

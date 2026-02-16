@@ -29,7 +29,7 @@ export default function Header() {
 
             {isAuthed && (
               <>
-                <li className="logged-in flex">
+                <div className="logged-in flex">
                   <p className="text-sm">
                     Hej <span className="text-bold">{user.email}!</span>
                   </p>
@@ -39,7 +39,7 @@ export default function Header() {
                     onClick={signOut}
                     variant="login"
                   />
-                </li>
+                </div>
               </>
             )}
           </li>

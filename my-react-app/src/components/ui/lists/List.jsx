@@ -10,7 +10,6 @@ function List({sessions = []}) {
         "Start",
         "Stopp",
         "Aktiv tid",
-        "Paus tid",
         "Kommentar",
         "Mood"
     ]

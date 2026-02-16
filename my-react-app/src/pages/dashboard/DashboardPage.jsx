@@ -8,7 +8,7 @@ import Todo from "../../Features/todo/Todo";
 
 function Dashboard() {
   const timer = useTimerLogic();
-
+  console.log(timer)
   return (
     <>
       <Topbar timer={timer} />
