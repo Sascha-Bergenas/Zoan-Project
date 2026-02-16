@@ -10,9 +10,7 @@ export default function Timer() {
   const {
     time,
     state,
-    startTimer,
-    pauseTimer,
-    stopTimer,
+    actions,
     getStartedTime,
   } = useTimer();
 
@@ -61,7 +59,7 @@ export default function Timer() {
 
     setTimerData(data);
     setStopTimeFormatted(formattedTime);
-    stopTimer();
+    actions.stop();
     dialogRef.current.showModal();
   };
 
@@ -118,13 +116,13 @@ export default function Timer() {
           <>
             <p>Starta en ny session och påbörja timern.</p>
             <Button
-              onClick={startTimer}
+              onClick={actions.start()}
               disabled={selectedMode === null}
               text="Starta Session"
               variant="primary"
             />
             <Button
-              onClick={resetModeSelect}
+              onClick={actions.clearMode()}
               disabled={selectedMode === null}
               text="Återgå"
               variant="primary"
@@ -135,9 +133,9 @@ export default function Timer() {
         {state.status !== 'idle' && state.firstStartedAtMs != null && (
           <>
           {state.status === "running" ? (
-            <Button onClick={pauseTimer} text="Pause" variant="secondary" />
+            <Button onClick={actions.pause()} text="Pause" variant="secondary" />
           ) : (
-            <Button onClick={startTimer} text="Resume" variant="secondary" />
+            <Button onClick={actions.start()} text="Resume" variant="secondary" />
           )}
     
           <Button onClick={handleStopClick} text="Stop" variant="primary" />

@@ -9,6 +9,13 @@ import React, {
   
   type TimerStatus = "idle" | "running" | "paused";
   type TimerMode = "deep" | "meeting" | "chill" | null;
+  type TimerActions = {
+    start: () => void;
+    pause: () => void;
+    stop: () => void; 
+    setMode: (mode: TimerMode) => void;
+    clearMode: () => void;
+  }
   
   type TimerState = {
     status: TimerStatus;
@@ -74,6 +81,7 @@ import React, {
         if (state.status !== "idle" || state.firstStartedAtMs != null) return state;
         return { ...state, mode: null };
       }
+      default: return state;
     }
   }
   
@@ -88,14 +96,8 @@ import React, {
     time: number;
     now: number;
     getStartedTime: () => number | null;
-  
-    // actions
-    startTimer: () => void;
-    pauseTimer: () => void;
-    stopTimer: () => void;
-    setMode: (mode: TimerMode) => void;
-    clearMode: () => void;
 
+    actions: TimerActions;
     state: TimerState;
   };
   
@@ -105,7 +107,14 @@ import React, {
     const [state, dispatch] = useReducer(timerReducer, initialState);
   
     const [now, setNow] = useState<number>(() => Date.now());
-  
+    
+    const actions: TimerActions = {
+      start: () => dispatch({ type: "START" }),
+      pause: () => dispatch({ type: "PAUSE" }),
+      stop: () => dispatch({ type: "STOP" }),
+      setMode: (mode) => dispatch({ type: "SET_MODE", mode }),
+      clearMode: () => dispatch({ type: "CLEAR_MODE" }),
+    }
     useEffect(() => {
       if (state.status !== "running") return;
   
@@ -113,25 +122,15 @@ import React, {
       return () => window.clearInterval(id);
     }, [state.status]);
   
-    const time = useMemo(() => {
-      void now;
-      return getElapsedMs(state);
-    }, [state, now]);
+    const time = useMemo(() => getElapsedMs(state), [state, now]);
   
     const value: TimerContextValue = {
       state,
       time,
       now,
-  
+      actions,
       getStartedTime: () => state.firstStartedAtMs,
-  
-      startTimer: () => dispatch({ type: "START" }),
-      pauseTimer: () => dispatch({ type: "PAUSE" }),
-      stopTimer: () => dispatch({ type: "STOP" }),
-      setMode: (mode) => dispatch({ type: "SET_MODE", mode }),
-      clearMode: () => dispatch({ type: "CLEAR_MODE" }),
     };
-  
     return <TimerContext.Provider value={value}>{children}</TimerContext.Provider>;
   }
   
