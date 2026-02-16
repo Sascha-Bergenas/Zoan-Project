@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../../components/ui/button/Button";
 import { useAuth } from "../../contexts/useAuth";
+import supabase from "../../supabase/supabase";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ export default function LoginForm() {
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPassWordError] = useState("");
+  const [username, setUserName] = useState("");
 
   const { signIn, signUp, user, isAuthed, signOut } = useAuth();
 
@@ -41,8 +43,17 @@ export default function LoginForm() {
     }
 
     if (action === "signup") {
-      const { error } = await signUp(trimmedEmail, password);
+      const { data, error } = await signUp(trimmedEmail, password);
       if (error) return alert(error.message);
+
+      const userId = data?.user?.id;
+      if (userId) {
+        const { error: profileError } = await supabase
+          .from("user_profile")
+          .upsert({ id: userId, username });
+
+        if (profileError) return alert(profileError.message);
+      }
     }
 
     setEmail("");
@@ -129,6 +140,13 @@ export default function LoginForm() {
             type="password"
             value={password}
             onChange={handleChange}
+          />
+          <input
+            name="username"
+            placeholder="Användarnamn"
+            type="password"
+            value={username}
+            onChange={(e) => setUserName(e.target.value)}
           />
 
           {/* Signup button */}
