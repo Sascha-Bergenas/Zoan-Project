@@ -9,11 +9,10 @@ export default function Timer() {
 
   const {
     time,
+    state,
     startTimer,
     pauseTimer,
     stopTimer,
-    isRunning,
-    hasStarted,
     getStartedTime,
   } = useTimer();
 
@@ -93,25 +92,8 @@ export default function Timer() {
 
       {/* Start / Stop / Pause Buttons */}
       <div className="timer-buttons">
-        {!isRunning && hasStarted && (
-          <Button onClick={startTimer} text="Start" variant="primary" />
-        )}
-
-        {isRunning && (
-          <Button onClick={pauseTimer} text="Pause" variant="secondary" />
-        )}
-
-        {hasStarted && (
-          <Button
-            onClick={handleStopClick}
-            disabled={!hasStarted}
-            text="Stop"
-            variant="primary"
-          />
-        )}
-
-        {/* Mode buttons */}
-        {!hasStarted && selectedMode === null && (
+      {/* Mode buttons */}
+        {state.status === 'idle' && state.mode == null && (
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
             <Button
@@ -131,9 +113,8 @@ export default function Timer() {
             />
           </>
         )}
-
-        {/* Start session / Return button */}
-        {selectedMode !== null && !hasStarted && (
+                {/* Start session / Return button */}
+        {state.status === 'idle' && state.mode != null && state.firstStartedAtMs == null && (
           <>
             <p>Starta en ny session och påbörja timern.</p>
             <Button
@@ -151,7 +132,19 @@ export default function Timer() {
           </>
         )}
 
-        <p>{selectedMode}</p>
+        {state.status !== 'idle' && state.firstStartedAtMs != null && (
+          <>
+          {state.status === "running" ? (
+            <Button onClick={pauseTimer} text="Pause" variant="secondary" />
+          ) : (
+            <Button onClick={startTimer} text="Resume" variant="secondary" />
+          )}
+    
+          <Button onClick={handleStopClick} text="Stop" variant="primary" />
+        </>
+      )}
+
+        <p>{state.mode}</p>
       </div>
     </div>
   );
