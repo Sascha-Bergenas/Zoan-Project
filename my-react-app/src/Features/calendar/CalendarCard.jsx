@@ -63,10 +63,11 @@ function CalendarCard() {
 
   // Mappar mood-värde till CSS-klass för färg
   const moodClassByLabel = {
-    happy: "mood-green",
-    fine: "mood-dark-green",
-    meh: "mood-orange",
-    bad: "mood-blue"
+    1: "mood-red",
+    2: "mood-blue",
+    3: "mood-orange",
+    4: "mood-dark-green",
+    5: "mood-green"
   };
 
   // Skapar ett event per dag (dominerande mood för dagen vinner)
@@ -86,7 +87,8 @@ function CalendarCard() {
 
       // Exakt kalenderdag i formatet YYYY-MM-DD, timmar mm räknas inte med
       const dateKey = date.toISOString().split("T")[0];
-      const mood = session?.mood ?? "unknown";
+      const mood = Number(session?.mood);
+      if (!Number.isInteger(mood) || mood < 1 || mood > 5) return;
 
       // Skapa datum-nyckel om den saknas
       if (!statsByDate[dateKey]) {
@@ -126,7 +128,7 @@ function CalendarCard() {
         id: `${dateKey}-${dominantMood}`,
         title: "",
         start: dateKey,
-        className: moodClassByLabel[dominantMood] || "mood-unknown"
+        className: moodClassByLabel[dominantMood]
       };
     });
   }, [sessions]);

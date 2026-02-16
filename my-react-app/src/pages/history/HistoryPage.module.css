@@ -1,20 +1,24 @@
 h2 {
-    margin-inline: auto;
-    max-width : 90rem;
+  margin-inline: auto;
+  max-width: 90rem;
 }
 
 .wrapper {
-    container-type: inline-size;
-    display: flex;
-    justify-content: center;
+  container-type: inline-size;
+  display: flex;
+  justify-content: center;
 }
 
-
 .container {
-    padding: 1rem;
-    gap: 1rem;
-    margin: 1rem;
-    border-radius: 10px;
-    background-color: var(--primary-light-color);
-    max-width : 90rem;
+  padding: 1rem;
+  gap: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  background-color: var(--primary-light-color);
+  max-width: 90rem;
+}
+
+.list {
+  max-height: 30rem;
+  overflow-y: scroll;
 }
