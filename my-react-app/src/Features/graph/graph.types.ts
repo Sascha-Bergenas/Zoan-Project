@@ -14,14 +14,14 @@ export type Session = {
   startedAt?: unknown;
 };
 
-// Datapunkt för pajdiagrammet (mood-fördelning).
+// Datapunkt för pajdiagrammet
 export type PieDatum = {
   name: string;
   value: number;
   mood: number;
 };
 
-// Datapunkt för stapeldiagrammet (minuter per kategori och veckodag).
+// Datapunkt för stapeldiagrammet
 export type BarDatum = {
   name: string;
   work: number;

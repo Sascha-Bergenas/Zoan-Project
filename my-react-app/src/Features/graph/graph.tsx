@@ -17,9 +17,8 @@ import { buildGraphData } from "./graph.helpers";
 import { PieDatum, Session } from "./graph.types";
 import "./graph.css";
 
-// Används för att räkna ut etikettposition i pajdiagrammet.
 const RADIAN = Math.PI / 180;
-// Färger per mood-nivå (1 = lägst, 5 = högst).
+
 const COLORS: Record<number, string> = {
   1: "rgb(189, 58, 58)",
   2: "rgb(26, 68, 206)",
@@ -68,7 +67,6 @@ const MyCustomPie = (props: PieSectorShapeProps) => (
   />
 );
 
-// Ren presentationskomponent för mood-fördelningen.
 const PieChartWithCustomizedLabel = ({
   data,
   isAnimationActive = true
