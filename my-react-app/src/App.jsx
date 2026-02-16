@@ -21,6 +21,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/history" element={<History />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </>
   );
