@@ -15,6 +15,7 @@ const DEFAULT_AVATAR =
 
 export default function Profile() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadProfile() {
@@ -22,7 +23,10 @@ export default function Profile() {
         data: { user },
       } = await supabase.auth.getUser();
 
-      if (!user) return;
+      if (!user) {
+        setLoading(false);
+        return;
+      }
 
       const { data, error } = await supabase
         .from("user_profile")
@@ -36,6 +40,7 @@ export default function Profile() {
       }
 
       setProfile(data as UserProfile);
+      setLoading(false);
     }
 
     loadProfile();
@@ -75,6 +80,7 @@ export default function Profile() {
     setProfile((p) => (p ? { ...p, avatar_url: avatarUrl } : p));
   }
 
+  if (loading) return <p>Laddar...</p>;
   if (!profile) return <p>Ingen profil hittad</p>;
 
   return (
@@ -91,7 +97,7 @@ export default function Profile() {
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <img
         className="profile-img"
-        src={(profile.avatar_url ?? DEFAULT_AVATAR) + "?t=" + Date.now()}
+        src={profile.avatar_url ?? DEFAULT_AVATAR}
         alt="avatar"
         width={80}
       />
