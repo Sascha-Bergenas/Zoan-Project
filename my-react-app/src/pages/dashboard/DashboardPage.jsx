@@ -2,16 +2,13 @@ import BaseCard from "../../components/ui/cards/Card";
 import styles from "./Dashboard.module.css";
 import Timer from "../../Features/timer/Timer";
 import Topbar from "../../components/layout/Topbar";
-import useTimerLogic from "../../Features/timer/timerLogic";
 import CalendarCard from "../../Features/calendar/CalendarCard";
 import Todo from "../../Features/todo/Todo";
 
 function Dashboard() {
-  const timer = useTimerLogic();
-
   return (
     <>
-      <Topbar timer={timer} />
+      <Topbar />
 
       <div className={styles.wrapper}>
         <div className={styles.container}>
@@ -24,7 +21,7 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.timer} size="card-timer">
-            <Timer timer={timer} />
+            <Timer />
           </BaseCard>
 
           <BaseCard className={styles.card5} size="card-small">

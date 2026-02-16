@@ -1,9 +1,11 @@
 import TopBarCard from "./TopBarCard";
 import styles from "./Topbar.module.css";
 import { calcTime } from "../../utils/formatTime";
+import { useTimer } from "../../contexts/TimerContext";
 
-export default function Topbar({ timer }) {
-  const { getStartedTime, hasStarted, now } = timer;
+
+export default function Topbar() {
+  const { getStartedTime, hasStarted, now } = useTimer();
   const startedAt = getStartedTime();
 
   const totalTimeMs =

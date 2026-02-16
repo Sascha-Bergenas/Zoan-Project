@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import Button from "../../components/ui/button/Button";
 import SessionModal from "../modals/sessionModal/sessionModal";
 import "./Timer.css";
+import { useTimer } from "../../contexts/TimerContext";
 
-export default function Timer({ timer }) {
+export default function Timer() {
   const [selectedMode, setSelectedmode] = useState(null);
 
   const {
@@ -14,7 +15,7 @@ export default function Timer({ timer }) {
     isRunning,
     hasStarted,
     getStartedTime,
-  } = timer;
+  } = useTimer();
 
   const dialogRef = useRef(null);
 
