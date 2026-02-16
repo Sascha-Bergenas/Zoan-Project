@@ -90,6 +90,7 @@ export default function Profile() {
       />
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <img
+        className="profile-img"
         src={(profile.avatar_url ?? DEFAULT_AVATAR) + "?t=" + Date.now()}
         alt="avatar"
         width={80}
