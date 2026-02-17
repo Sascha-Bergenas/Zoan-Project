@@ -5,7 +5,7 @@ import "./Timer.css";
 import { useTimer } from "../../contexts/TimerContext";
 
 export default function Timer() {
-  const [selectedMode, setSelectedmode] = useState(null);
+  // const [selectedMode, setSelectedmode] = useState(null);
 
   const {
     time,
@@ -38,13 +38,13 @@ export default function Timer() {
   const formattedMinutes = result.formattedMinutes;
   const formattedSeconds = result.formattedSeconds;
 
-  function handleModeSelect(mode) {
-    setSelectedmode(mode);
-  }
+  // function handleModeSelect(mode) {
+  //   setSelectedmode(mode);
+  // }
 
-  function resetModeSelect() {
-    setSelectedmode(null);
-  }
+  // function resetModeSelect() {
+  //   setSelectedmode(null);
+  // }
 
   const handleStopClick = () => {
     const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
@@ -65,7 +65,8 @@ export default function Timer() {
 
   const handleCloseModal = () => {
     dialogRef.current.close();
-    resetModeSelect();
+    // resetModeSelect();
+    actions.clearMode();
   };
 
   return (
@@ -95,17 +96,17 @@ export default function Timer() {
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
             <Button
-              onClick={() => handleModeSelect("deep")}
+              onClick={() => actions.setMode("deep")}
               text="Deep Work"
               variant="primary"
             />
             <Button
-              onClick={() => handleModeSelect("meeting")}
+              onClick={() => actions.setMode("meeting")}
               text="Möte"
               variant="secondary"
             />
             <Button
-              onClick={() => handleModeSelect("chill")}
+              onClick={() => actions.setMode("chill")}
               text="Chill"
               variant="primary"
             />
@@ -116,14 +117,14 @@ export default function Timer() {
           <>
             <p>Starta en ny session och påbörja timern.</p>
             <Button
-              onClick={actions.start()}
-              disabled={selectedMode === null}
+              onClick={actions.start}
+              disabled={state.mode === null}
               text="Starta Session"
               variant="primary"
             />
             <Button
-              onClick={actions.clearMode()}
-              disabled={selectedMode === null}
+              onClick={actions.clearMode}
+              disabled={state.mode === null}
               text="Återgå"
               variant="primary"
             />
@@ -133,9 +134,9 @@ export default function Timer() {
         {state.status !== 'idle' && state.firstStartedAtMs != null && (
           <>
           {state.status === "running" ? (
-            <Button onClick={actions.pause()} text="Pause" variant="secondary" />
+            <Button onClick={actions.pause} text="Pause" variant="secondary" />
           ) : (
-            <Button onClick={actions.start()} text="Resume" variant="secondary" />
+            <Button onClick={actions.start} text="Resume" variant="secondary" />
           )}
     
           <Button onClick={handleStopClick} text="Stop" variant="primary" />
