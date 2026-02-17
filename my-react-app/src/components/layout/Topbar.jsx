@@ -5,11 +5,11 @@ import { useTimer } from "../../contexts/TimerContext";
 
 
 export default function Topbar() {
-  const { getStartedTime, hasStarted, now } = useTimer();
-  const startedAt = getStartedTime();
+  const { state, now } = useTimer();
+  const startedAt = state.firstStartedAtMs;
 
   const totalTimeMs =
-    hasStarted && startedAt ? Math.max(0, now - startedAt) : 0;
+    startedAt != null ? Math.max(0, now - startedAt) : 0;
   const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
 
   return (
