@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import supabase from "../../../supabase/supabase";
 import "./Profile.css";
+import RandomQuote from "../../../Features/quotes/RandomQuote";
 
 type UserProfile = {
   id: string;
@@ -81,9 +82,18 @@ export default function Profile() {
   }
 
   if (loading) return <p>Laddar...</p>;
-  if (!profile) return <p>Ingen profil hittad</p>;
 
-  return (
+  return !profile ? (
+    <>
+      <p style={{ paddingTop: "30px" }} className="text-bold text-lg">
+        Ingen profil hittad.
+      </p>
+      <img className="profile-img" src={DEFAULT_AVATAR} alt="" />
+      <p style={{ paddingBottom: "30px" }}>Logga in för att se information.</p>
+
+      <RandomQuote size="25px" />
+    </>
+  ) : (
     <div>
       <input
         type="file"
@@ -101,6 +111,7 @@ export default function Profile() {
         alt="avatar"
         width={80}
       />
+      <RandomQuote size="18px" />
     </div>
   );
 }
