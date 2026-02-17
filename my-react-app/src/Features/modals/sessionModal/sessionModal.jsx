@@ -5,7 +5,6 @@ import Modal from "../../../components/ui/modal/Modal";
 function SessionModal({
   dialogRef,
   handleCloseModal,
-  handleSessionSaved,
   stopTimeFormatted,
   timerData,
 }) {
@@ -15,10 +14,8 @@ function SessionModal({
       <Modal dialogRef={dialogRef}>
         {" "}
         <h3>Logga din session</h3> <p>Sessionens längd: {stopTimeFormatted}</p>{" "}
-        {/* {console.log(timerData)} */}
         <WorkSessionForm
           handleCloseModal={handleCloseModal}
-          handleSessionSaved={handleSessionSaved}
           timerData={timerData}
         />{" "}
       </Modal>{" "}

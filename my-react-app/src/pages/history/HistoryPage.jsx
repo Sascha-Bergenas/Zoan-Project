@@ -3,7 +3,7 @@ import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
 import BaseCard from "../../components/ui/cards/Card"
 import Button from "../../components/ui/button/Button";
-import SessionModal from "../../Features/modals/sessionModal/sessionModal";
+import EditRecordModal from "../../Features/modals/editRecordModal/editRecordModal";
 import { useAuth } from "../../contexts/useAuth";
 import getSessions from "../../supabase/getSessions"; 
 
@@ -14,16 +14,16 @@ export default function History() {
   const [ refreshKey, setRefreshKey ] = useState(0)
   const dialogRef = useRef(null);
 
-  const timerData = {
-    startedAt: 0,
-    endedAt: 0,
-    activeTime: 0
-  }
+  // const timerData = {
+  //   startedAt: 0,
+  //   endedAt: 0,
+  //   activeTime: 0
+  // }
   
+  // Tvinga listan att laddas om när en session har lagts till eller ändrats
   const handleSessionSaved = () => setRefreshKey((k) => k +1)
 
   // Hämta data från Supabase
-
   useEffect(() => {
     let mounted = true
     const fetchSessions = async () => {
@@ -51,10 +51,8 @@ export default function History() {
       <section className={styles.wrapper}>
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
-          <SessionModal 
+          <EditRecordModal
             dialogRef={dialogRef}
-            stopTimeFormatted={"Ange sessionens längd"}
-            timerData={timerData}
             handleCloseModal={() => dialogRef.current.close()}
             handleSessionSaved={handleSessionSaved}
           />
