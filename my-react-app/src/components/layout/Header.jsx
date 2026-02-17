@@ -24,7 +24,7 @@ export default function Header() {
           <li>
             <Link to="/history">Historik</Link>
           </li>
-          <li>
+          <ul>
             {!isAuthed && <LoginModal />}
 
             {isAuthed && (
@@ -42,7 +42,7 @@ export default function Header() {
                 </li>
               </>
             )}
-          </li>
+          </ul>
           <button className="theme-toggle" onClick={toggleTheme}>
             {theme === "dark" ? <Sun size={25} /> : <Moon size={25} />}
           </button>
