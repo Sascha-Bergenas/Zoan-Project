@@ -7,7 +7,7 @@ export default function RandomQuote() {
   useEffect(() => {
     const index = Math.floor(Math.random() * quotes.length);
     setQuote(quotes[index]);
-  });
+  }, []);
 
   return (
     <div>
