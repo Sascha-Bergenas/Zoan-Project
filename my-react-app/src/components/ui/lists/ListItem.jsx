@@ -2,9 +2,11 @@ import styles from "./List.module.css"
 
 export default function ListItem({session, evenOdd}) {
     const {started_at, title, category, ended_at, active_time_ms, comment, mood} = session
+    const startDate = new Date(started_at)
+    const stopDate = new Date(ended_at)
     const date = started_at.slice(0, 10) 
-    const startTime = started_at.slice(11, 16)
-    const stopTime = ended_at.slice(11, 16)
+    const startTime = startDate.getHours().toString().padStart(2, "0") + ":" + startDate.getMinutes().toString().padStart(2, "0")
+    const stopTime = stopDate.getHours().toString().padStart(2, "0") + ":" + stopDate.getMinutes().toString().padStart(2, "0")
     const zoanTime = new Date(active_time_ms).toISOString().slice(11, 16) 
 
     return(

@@ -3,7 +3,7 @@ import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
 import BaseCard from "../../components/ui/cards/Card"
 import Button from "../../components/ui/button/Button";
-import EditRecordModal from "../../Features/modals/editRecordModal/editRecordModal";
+import EditRecordModal from "../../Features/modals/editSessionModal/editSessionModal";
 import { useAuth } from "../../contexts/useAuth";
 import getSessions from "../../supabase/getSessions"; 
 

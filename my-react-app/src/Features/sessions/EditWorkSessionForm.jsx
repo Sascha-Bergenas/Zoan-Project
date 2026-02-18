@@ -1,14 +1,14 @@
 import { useState } from "react";
-import Button from "../button/Button";
-import Input from "../input";
-import Select from "../select/Select";
-import TextArea from "../textArea/TextArea";
-import MoodPicker from "../../../Features/mood/MoodPicker";
-import { useAuth } from "../../../contexts/useAuth";
-import { sessionStore } from "../../../storage/localStorage";
-import saveSession from "../../../supabase/saveSession";
+import Button from "../../components/ui/button/Button";
+import Input from "../../components/ui/input";
+import Select from "../../components/ui/select/Select";
+import TextArea from "../../components/ui/textArea/TextArea";
+import MoodPicker from "../mood/MoodPicker";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import saveSession from "../../supabase/saveSession";
 
-export default function EditRecordForm({ handleCloseModal, handleSessionSaved, sessionData }) {
+export default function EditWorkSessionForm({ handleCloseModal, handleSessionSaved, sessionData }) {
   const { user, isAuthed } = useAuth();
 
   // timerData{
@@ -17,7 +17,7 @@ export default function EditRecordForm({ handleCloseModal, handleSessionSaved, s
     // endedAt: <Number> timestamp vid stopp i ms
     // }
  
-  console.log("sessionData:", sessionData)
+  // console.log("sessionData:", sessionData)
 
   // State för att lagra arbetspassets information 
   const [workSession, setWorkSession] = useState({
@@ -27,23 +27,46 @@ export default function EditRecordForm({ handleCloseModal, handleSessionSaved, s
     title: "",
     category: "",
     comment: "",
-    mood: 0,
+    mood: 0, 
   });
+  
+  console.log(workSession.startingTime);
+  
+  // Funktioner för att begränsa activeTime till tidsspannet mellan start och stopp
+    const toMinutes = (hhmm = "00:00") => {
+      console.log(hhmm);
+      const [h, m] = hhmm.split(":").map(Number);
+      return h * 60 + m;
+    };
 
-  // const toLocalTime = (time) => {
-  //   return new Date(time.getTime() - time.getTimezoneOffset() * 60000).toISOString.slice(0, -5)
-  // }
+    const toHHMM = (mins = 0) => {
+      const h = String(Math.floor(mins / 60)).padStart(2, "0");
+      const m = String(mins % 60).padStart(2, "0");
+      return `${h}:${m}`;
+    };
+
+    const getMaxActiveMinutes = (start, end) => {
+      if (!start || !end) return 0;
+      const diffMs = new Date(end).getTime() - new Date(start).getTime();
+      return Math.max(0, Math.floor(diffMs / 60000));
+    };
+
+    const maxActiveMinutes = getMaxActiveMinutes(workSession.startedAt, workSession.endedAt);
+    const maxActiveHHMM = toHHMM(maxActiveMinutes);
+  // ------------------------------------------------------------------------------
+
   // Hanterar ändringar i input-fält genom att uppdatera state
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value)
+    // console.log(value)
+  
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
-
+  
   // Hanterar formulärskickning - rensar formulär och state
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +74,17 @@ export default function EditRecordForm({ handleCloseModal, handleSessionSaved, s
     const sessionToSave = {
       ...workSession,
     };
+    
+    // Ett nödvändigt ont för att konvertera "HH:MM" till ms för att matcha fältet i databasen:
+    sessionToSave.activeTime = 
+      Number(sessionToSave.activeTime.slice(0, 2)) * 3600000 + 
+      Number(sessionToSave.activeTime.slice(3, 5)) * 60000
+
+    const activeMinutes = toMinutes(sessionToSave.activeTime);
+    if (activeMinutes > maxActiveMinutes) {
+      alert(`Aktiv tid får vara max ${maxActiveHHMM}`);
+      return;
+    }
 
     try {
       if (isAuthed) {
@@ -100,7 +134,6 @@ export default function EditRecordForm({ handleCloseModal, handleSessionSaved, s
         label="Stoptid"
         name="endedAt"
         value={workSession.endedAt}
-        // value={new Date(workSession.endedAt).toISOString().slice(0, -5)}
         onChange={handleChange}
       />
 
@@ -109,11 +142,15 @@ export default function EditRecordForm({ handleCloseModal, handleSessionSaved, s
         type="time" 
         label="Varaktighet"
         name="activeTime"
-        value={new Date(workSession.activeTime).toLocaleTimeString()}
+        // value={new Date(workSession.activeTime).toLocaleTimeString()}
+        value={workSession.activeTime}
         onChange={handleChange} 
-        />
+        min="00:00"
+        max={maxActiveHHMM}
+        step={60}
+      />
 
-        {/* Input-fält för aktivitetens titel */}
+      {/* Input-fält för aktivitetens titel */}
       <Input
         type="text"
         label="Aktivitet"

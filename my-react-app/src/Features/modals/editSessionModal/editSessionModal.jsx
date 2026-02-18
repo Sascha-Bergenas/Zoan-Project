@@ -1,6 +1,6 @@
 // import { useMemo, useState } from "react";
 // import type {ReactNode, RefObject} from "react"
-import EditRecordForm from "../../../components/ui/form/editRecordForm"
+import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
 import Modal from "../../../components/ui/modal/Modal";
 
 // Modal-komponent för att manuellt logga en arbetsession eller redigera en redan loggad session.
@@ -10,12 +10,20 @@ export default function EditRecordModal({ dialogRef, record = null }) {
 
   if(record) {newSession = {...record}} 
   else {newSession = {
-    startedAt: new Date(),
+    startedAt: new Date().toLocaleString(),
+    endedAt: new Date().toLocaleString(),
+    activeTime: 0,
+    title: "",
+    category: "",
+    comment: "",
+    mood: 0,
   }}
   
+  // newSession.activeTime = new Date(newSession.activeTime)
+  newSession.activeTime = new Date(newSession.activeTime)
+    .toISOString()
+    .slice(11, 16)
   const sessionData = newSession
-  if(!sessionData.startedAt) console.log("sessionData is empty");
-  else console.log(sessionData);
 
   return (
     <>
@@ -76,14 +84,7 @@ export default function EditRecordModal({ dialogRef, record = null }) {
               </label> 
               */}
         </>
-        {/*  Objektet som ska skickas in som timerData in i WorkSessionForm
-            const timerData = {
-              activeTime: Number, ms
-              startedAt, Date-objekt
-              endedAt: Date-objekt,
-            }; 
-          */}
-        <EditRecordForm
+        <EditWorkSessionForm
           handleCloseModal={() => dialogRef.current.close()}
           sessionData={sessionData}
         />{" "}
