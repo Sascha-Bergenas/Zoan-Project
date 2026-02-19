@@ -6,6 +6,7 @@ import supabase from "../../supabase/supabase";
 export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPassWordError] = useState("");
@@ -16,6 +17,12 @@ export default function LoginForm() {
   //Switch between loginmode and signup mode
   function loginSignupToggle() {
     setIsSignedUp((prev) => !prev);
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    setEmailError("");
+    setPassWordError("");
+    setRepeatPassword("");
   }
 
   function handleChange(e) {
@@ -81,6 +88,13 @@ export default function LoginForm() {
       return false;
     }
 
+    if (!isSignedUp) {
+      if (password !== repeatPassword) {
+        setPassWordError("Lösenorden matchar inte.");
+        return false;
+      }
+    }
+
     return true;
   }
 
@@ -126,28 +140,38 @@ export default function LoginForm() {
           />
         </>
       ) : (
+        /* Sign up */
         <>
-          <input
-            name="email"
-            placeholder="E-post"
-            type="email"
-            value={email}
-            onChange={handleChange}
-          />
-          <input
-            name="password"
-            placeholder="Lösenord"
-            type="password"
-            value={password}
-            onChange={handleChange}
-          />
-          <input
-            name="username"
-            placeholder="Användarnamn"
-            type="password"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-          />
+          <div>
+            <input
+              name="email"
+              placeholder="E-post"
+              type="email"
+              value={email}
+              onChange={handleChange}
+            />
+            <input
+              name="password"
+              placeholder="Lösenord"
+              type="password"
+              value={password}
+              onChange={handleChange}
+            />
+            <input
+              name="password"
+              placeholder="Upprepa lösenord"
+              type="password"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+            />
+            <input
+              name="username"
+              placeholder="Användarnamn"
+              type="text"
+              value={username}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
 
           {/* Signup button */}
           <Button
