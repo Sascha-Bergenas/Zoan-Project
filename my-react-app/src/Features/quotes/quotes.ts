@@ -29,5 +29,8 @@ export const quotes: string[] = [
   "Om stress brände kalorier skulle jag vara en superhjälte.",
   "Multitasking = röra till flera saker samtidigt.",
   "Behåll lugnet och låtsas att det är på planeringen.",
-  "Bara fantasin sätter gränser",
+  "Bara fantasin sätter gränser!",
+  "Lev, skratta, älska",
+  "Fånga dagen",
+  "Kärleken är som en fis. Om du måste tvinga fram den, är det nog bara skit.",
 ];
