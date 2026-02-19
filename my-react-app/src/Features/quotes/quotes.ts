@@ -32,5 +32,7 @@ export const quotes: string[] = [
   "Bara fantasin sätter gränser!",
   "Lev, skratta, älska",
   "Fånga dagen",
-  "Kärleken är som en fis. Om du måste tvinga fram den, är det nog bara skit.",
+  "Det är en hel del saker som inte är så bra, men det är inte mitt fel",
+  "Kom alltid ihåg att du är helt unik. Precis som alla andra",
+  "Det man inte gör idag slipper man göra om imorgon",
 ];
