@@ -5,11 +5,10 @@ import supabase from "../../supabase/supabase";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
-  /*   const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState(""); */
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPassWordError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [username, setUserName] = useState("");
 
   const passwordRef = useRef(null);
@@ -45,7 +44,7 @@ export default function LoginForm() {
     const password = passwordRef.current.value;
     const repeatPassword = repeatPasswordRef.current?.value;
 
-    const trimmedEmail = email.trim();
+    const trimmedEmail = email.trim().toLowerCase();
     if (!validateForm(trimmedEmail, password, repeatPassword)) return;
 
     if (action === "login") {
@@ -62,13 +61,10 @@ export default function LoginForm() {
         const { error: profileError } = await supabase
           .from("user_profile")
           .upsert({ id: userId, username });
-
-        if (profileError) return alert(profileError.message);
       }
     }
 
     setEmail("");
-    setPassword("");
     passwordRef.current.value = "";
     repeatPasswordRef.current.value = "";
   }
@@ -94,6 +90,20 @@ export default function LoginForm() {
 
     if (password.length < 6) {
       setPassWordError("Ditt lösenord måste vara minst 6 tecken.");
+      return false;
+    }
+
+    if (!username.trim()) {
+      setUsernameError("Skriv in ett användarnamn");
+      return false;
+    } else if (username.trim().length < 6) {
+      setUsernameError("Ditt användarnamn måste vara minst 6 tecken.");
+      return false;
+    } else if (username.trim().length > 15) {
+      setUsernameError("Användarnamnet får vara max 15 tecken.");
+      return false;
+    } else if (!/^[a-zA-ZåäöÅÄÖ]+$/.test(username)) {
+      setUsernameError("Användarnamnet får endast innehålla bokstäver");
       return false;
     }
 
@@ -176,7 +186,10 @@ export default function LoginForm() {
               placeholder="Användarnamn"
               type="text"
               value={username}
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={(e) => {
+                setUserName(e.target.value);
+                setUsernameError("");
+              }}
             />
           </div>
 
@@ -194,6 +207,7 @@ export default function LoginForm() {
           />
           {emailError && <p>{emailError}</p>}
           {passwordError && <p>{passwordError}</p>}
+          {usernameError && <p>{usernameError}</p>}
         </>
       )}
     </form>
