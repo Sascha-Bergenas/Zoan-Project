@@ -14,8 +14,9 @@ export default function Header() {
   return (
     <header>
       <nav className="flex">
-        {/* <h1 className="text-lg">Zoan</h1> */}
-        <img src="src/img/zoan-logo.png" />
+        <Link to="/">
+          <img src="src/img/zoan-logo.png" alt="Logo" />
+        </Link>
         <ul className="text-md flex">
           <li>
             <Link to="/">Dashboard</Link>
