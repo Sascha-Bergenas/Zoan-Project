@@ -6,6 +6,7 @@ import Header from "./components/layout/Header";
 import { useContext } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { useEffect } from "react";
+import SettingsPage from "./pages/settings/SettingsPage";
 
 export default function App() {
   const { theme } = useContext(ThemeContext);

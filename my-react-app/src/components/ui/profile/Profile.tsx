@@ -3,11 +3,8 @@ import supabase from "../../../supabase/supabase";
 import "./Profile.css";
 
 type UserProfile = {
-  id: string;
   username: string | null;
   avatar_url: string | null;
-  break_length: number | null;
-  break_frequency: number | null;
 };
 
 const DEFAULT_AVATAR =
@@ -19,7 +16,7 @@ export default function Profile() {
   useEffect(() => {
     async function loadProfile() {
       const {
-        data: { user },
+        data: { user }
       } = await supabase.auth.getUser();
 
       if (!user) return;
@@ -41,53 +38,10 @@ export default function Profile() {
     loadProfile();
   }, []);
 
-  async function uploadAvatar(file: File) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) return;
-
-    // upload image to storage
-    const filePath = `${user.id}.png`;
-
-    const { error } = await supabase.storage
-      .from("avatars")
-      .upload(filePath, file, { upsert: true });
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    // get public URL
-    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-
-    const avatarUrl = data.publicUrl;
-
-    // save URL to database
-    await supabase
-      .from("user_profile")
-      .update({ avatar_url: avatarUrl })
-      .eq("id", user.id);
-
-    // update UI
-    setProfile((p) => (p ? { ...p, avatar_url: avatarUrl } : p));
-  }
-
   if (!profile) return <p>Ingen profil hittad</p>;
 
   return (
     <div>
-      <input
-        type="file"
-        accept="image/*"
-        style={{ color: "transparent" }}
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) uploadAvatar(file);
-        }}
-      />
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <img
         className="profile-img"

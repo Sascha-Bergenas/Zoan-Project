@@ -25,6 +25,9 @@ export default function Header() {
             <Link to="/history">Historik</Link>
           </li>
           <li>
+            <Link to="/settings">Settings</Link>
+          </li>
+          <li>
             {!isAuthed && <LoginModal />}
 
             {isAuthed && (
