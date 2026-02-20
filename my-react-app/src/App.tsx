@@ -9,8 +9,10 @@ import { useEffect } from "react";
 import SettingsPage from "./pages/settings/SettingsPage";
 
 export default function App() {
-  const { theme } = useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("ThemeContext must be used inside ThemeProvider");
 
+  const { theme } = context;
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);

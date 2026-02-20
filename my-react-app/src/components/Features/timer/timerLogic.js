@@ -22,6 +22,21 @@
 //   const [isRunning, setIsRunning] = useState(false);
 //   const [hasStarted, setHasStarted] = useState(false);
 //   const [now, setNow] = useState(0);
+//   const [settings, setSettings] = useState({
+
+//     default: {
+//       workTimeMs: 45000,
+//       breakTimeMs: 10000,
+//     },
+//     pomodoro: {
+//       workTimeMs: 25000,
+//       breakTimeMs: 5000,
+//     },
+//     noBreak: {
+//       workTimeMs: 60000,
+//       breakTimeMs: 0,
+//     },
+//   });
 
 //   const startTimeRef = useRef(null);
 //   const elapsedRef = useRef(0);
@@ -92,5 +107,7 @@
 //     hasStarted,
 //     getStartedTime,
 //     now,
+//     nextBreak,
+//     nextWork,
 //   };
 // }

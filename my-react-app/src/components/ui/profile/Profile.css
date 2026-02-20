@@ -1,7 +1,20 @@
+.profile-wrapper {
+  width: 150px;
+  height: 150px;
+  margin: 2rem;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #ddd;
+}
+
 .profile-img {
   margin: 2rem;
   width: 150px;
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.profile-card {
+  min-height: 400px;
 }

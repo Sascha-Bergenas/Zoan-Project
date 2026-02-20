@@ -2,19 +2,17 @@ import { useRef, useState } from "react";
 import Button from "../../components/ui/button/Button";
 import SessionModal from "../modals/sessionModal/sessionModal";
 import "./Timer.css";
+import { useTimer } from "../../contexts/TimerContext";
 
-export default function Timer({ timer }) {
-  const [selectedMode, setSelectedmode] = useState(null);
+export default function Timer() {
+  // const [selectedMode, setSelectedmode] = useState(null);
 
   const {
     time,
-    startTimer,
-    pauseTimer,
-    stopTimer,
-    isRunning,
-    hasStarted,
+    state,
+    actions,
     getStartedTime,
-  } = timer;
+  } = useTimer();
 
   const dialogRef = useRef(null);
 
@@ -40,13 +38,13 @@ export default function Timer({ timer }) {
   const formattedMinutes = result.formattedMinutes;
   const formattedSeconds = result.formattedSeconds;
 
-  function handleModeSelect(mode) {
-    setSelectedmode(mode);
-  }
+  // function handleModeSelect(mode) {
+  //   setSelectedmode(mode);
+  // }
 
-  function resetModeSelect() {
-    setSelectedmode(null);
-  }
+  // function resetModeSelect() {
+  //   setSelectedmode(null);
+  // }
 
   const handleStopClick = () => {
     const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
@@ -61,13 +59,14 @@ export default function Timer({ timer }) {
 
     setTimerData(data);
     setStopTimeFormatted(formattedTime);
-    stopTimer();
+    actions.stop();
     dialogRef.current.showModal();
   };
 
   const handleCloseModal = () => {
     dialogRef.current.close();
-    resetModeSelect();
+    // resetModeSelect();
+    actions.clearMode();
   };
 
   return (
@@ -92,65 +91,59 @@ export default function Timer({ timer }) {
 
       {/* Start / Stop / Pause Buttons */}
       <div className="timer-buttons">
-        {!isRunning && hasStarted && (
-          <Button onClick={startTimer} text="Start" variant="primary" />
-        )}
-
-        {isRunning && (
-          <Button onClick={pauseTimer} text="Pause" variant="secondary" />
-        )}
-
-        {hasStarted && (
-          <Button
-            onClick={handleStopClick}
-            disabled={!hasStarted}
-            text="Stop"
-            variant="primary"
-          />
-        )}
-
-        {/* Mode buttons */}
-        {!hasStarted && selectedMode === null && (
+      {/* Mode buttons */}
+        {state.status === 'idle' && state.mode == null && (
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
             <Button
-              onClick={() => handleModeSelect("deep")}
+              onClick={() => actions.setMode("deep")}
               text="Deep Work"
               variant="primary"
             />
             <Button
-              onClick={() => handleModeSelect("meeting")}
+              onClick={() => actions.setMode("meeting")}
               text="Möte"
               variant="secondary"
             />
             <Button
-              onClick={() => handleModeSelect("chill")}
+              onClick={() => actions.setMode("chill")}
               text="Chill"
               variant="primary"
             />
           </>
         )}
-
-        {/* Start session / Return button */}
-        {selectedMode !== null && !hasStarted && (
+                {/* Start session / Return button */}
+        {state.status === 'idle' && state.mode != null && state.firstStartedAtMs == null && (
           <>
             <p>Starta en ny session och påbörja timern.</p>
             <Button
-              onClick={startTimer}
-              disabled={selectedMode === null}
+              onClick={actions.start}
+              disabled={state.mode === null}
               text="Starta Session"
               variant="primary"
             />
             <Button
-              onClick={resetModeSelect}
-              disabled={selectedMode === null}
+              onClick={actions.clearMode}
+              disabled={state.mode === null}
               text="Återgå"
               variant="primary"
             />
           </>
         )}
 
-        <p>{selectedMode}</p>
+        {state.status !== 'idle' && state.firstStartedAtMs != null && (
+          <>
+          {state.status === "running" ? (
+            <Button onClick={actions.pause} text="Pause" variant="secondary" />
+          ) : (
+            <Button onClick={actions.start} text="Resume" variant="secondary" />
+          )}
+    
+          <Button onClick={handleStopClick} text="Stop" variant="primary" />
+        </>
+      )}
+
+        <p>{state.mode}</p>
       </div>
     </div>
   );
