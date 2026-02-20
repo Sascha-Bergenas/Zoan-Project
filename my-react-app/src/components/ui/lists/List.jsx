@@ -2,7 +2,7 @@ import ListHeader from "./ListHeader"
 import ListItem from "./ListItem"
 
 
-function List({sessions = []}) {
+function List({sessions = [], handleEditClick}) {
     const headers = [
         "Datum",
         "Aktivitet",

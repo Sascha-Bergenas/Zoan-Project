@@ -3,7 +3,7 @@ import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
 import BaseCard from "../../components/ui/cards/Card"
 import Button from "../../components/ui/button/Button";
-import EditRecordModal from "../../Features/modals/editSessionModal/editSessionModal";
+import EditSessionModal from "../../Features/modals/editSessionModal/editSessionModal";
 import { useAuth } from "../../contexts/useAuth";
 import getSessions from "../../supabase/getSessions"; 
 
@@ -11,6 +11,7 @@ import getSessions from "../../supabase/getSessions";
 export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
+  const [ selectedRecord, setSelectedRecord] = useState(null)
   const [ refreshKey, setRefreshKey ] = useState(0)
   const dialogRef = useRef(null);
 
@@ -42,7 +43,15 @@ export default function History() {
 
   }, [isAuthed, user?.id, refreshKey])
 
-  const handleAddClick = () => dialogRef.current.showModal()
+  const handleAddClick = () => {
+    setSelectedRecord(null)
+    dialogRef.current.showModal()
+  }
+
+  const handleEditClick = record => {
+    setSelectedRecord(record)
+    dialogRef.current.showModal()
+  }
 
   return (
     <>
@@ -51,15 +60,16 @@ export default function History() {
       <section className={styles.wrapper}>
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
-          <EditRecordModal
+          <EditSessionModal
             dialogRef={dialogRef}
-            handleCloseModal={() => dialogRef.current.close()}
+            record={selectedRecord}
+            // handleCloseModal={() => dialogRef.current.close()}
             handleSessionSaved={handleSessionSaved}
           />
           {/* Knapp för manuell loggning */}
           <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
           <BaseCard>
-            <List sessions={sessions} />
+            <List sessions={sessions} handleEditClick={handleEditClick}/>
           </BaseCard>
           {/* Put eventuellt knapp för manuell loggning here */}
         </div>

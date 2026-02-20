@@ -5,7 +5,7 @@ import Modal from "../../../components/ui/modal/Modal";
 
 // Modal-komponent för att manuellt logga en arbetsession eller redigera en redan loggad session.
 
-export default function EditRecordModal({ dialogRef, record = null }) {
+export default function EditSessionModal({ dialogRef, record = null, handleSessionSaved }) {
   let newSession = {}
 
   if(record) {newSession = {...record}} 
@@ -85,7 +85,9 @@ export default function EditRecordModal({ dialogRef, record = null }) {
               */}
         </>
         <EditWorkSessionForm
+          key={record?.id ?? "new"}
           handleCloseModal={() => dialogRef.current.close()}
+          handleSessionSaved={handleSessionSaved}
           sessionData={sessionData}
         />{" "}
       </Modal>{" "}

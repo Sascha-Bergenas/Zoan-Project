@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
@@ -24,17 +24,14 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
     startedAt: sessionData?.startedAt,
     endedAt: sessionData?.endedAt,
     activeTime: sessionData?.activeTime,
-    title: "",
-    category: "",
-    comment: "",
-    mood: 0, 
+    title: sessionData?.title ?? "",
+    category: sessionData?.category ?? "",
+    comment: sessionData?.comment ?? "",
+    mood: sessionData?.mood ?? 0,
   });
-  
-  console.log(workSession.startingTime);
   
   // Funktioner för att begränsa activeTime till tidsspannet mellan start och stopp
     const toMinutes = (hhmm = "00:00") => {
-      console.log(hhmm);
       const [h, m] = hhmm.split(":").map(Number);
       return h * 60 + m;
     };
@@ -54,6 +51,7 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
     const maxActiveMinutes = getMaxActiveMinutes(workSession.startedAt, workSession.endedAt);
     const maxActiveHHMM = toHHMM(maxActiveMinutes);
   // ------------------------------------------------------------------------------
+
 
   // Hanterar ändringar i input-fält genom att uppdatera state
   const handleChange = (e) => {
@@ -75,16 +73,16 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
       ...workSession,
     };
     
-    // Ett nödvändigt ont för att konvertera "HH:MM" till ms för att matcha fältet i databasen:
-    sessionToSave.activeTime = 
-      Number(sessionToSave.activeTime.slice(0, 2)) * 3600000 + 
-      Number(sessionToSave.activeTime.slice(3, 5)) * 60000
-
     const activeMinutes = toMinutes(sessionToSave.activeTime);
     if (activeMinutes > maxActiveMinutes) {
       alert(`Aktiv tid får vara max ${maxActiveHHMM}`);
       return;
     }
+    
+    // Ett nödvändigt ont för att konvertera "HH:MM" till ms för att matcha fältet i databasen:
+    sessionToSave.activeTime = 
+      Number(sessionToSave.activeTime.slice(0, 2)) * 3600000 + 
+      Number(sessionToSave.activeTime.slice(3, 5)) * 60000
 
     try {
       if (isAuthed) {
@@ -98,9 +96,9 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
 
       // Nollställer state
       setWorkSession({ 
-        endedAt: 0, 
-        startedAt: 0, 
-        activeTime: 0, 
+        endedAt: new Date(0).toLocaleString(), 
+        startedAt: new Date(0).toLocaleString(), 
+        activeTime: "00:00", 
         title: "", 
         category: "", 
         comment: "", 
