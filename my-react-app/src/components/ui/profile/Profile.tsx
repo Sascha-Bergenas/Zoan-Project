@@ -106,7 +106,7 @@ export default function Profile() {
     </div>
   ) : (
     <div className="profile-card">
-      <input
+      {/* <input
         type="file"
         accept="image/*"
         style={{ color: "transparent" }}
@@ -114,7 +114,7 @@ export default function Profile() {
           const file = e.target.files?.[0];
           if (file) uploadAvatar(file);
         }}
-      />
+      /> */}
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <div className="avatar-wrapper">
         <img
