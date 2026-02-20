@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { quotes } from "./quotes";
+import "./RandomQuote.css";
 
 type RandomQuoteProps = {
   size?: string;
@@ -15,7 +16,9 @@ export default function RandomQuote({ size = "16px" }: RandomQuoteProps) {
 
   return (
     <div>
-      <p style={{ fontSize: size }}>{quote}</p>
+      <p className="random-quote" style={{ fontSize: size }}>
+        {quote}
+      </p>
     </div>
   );
 }

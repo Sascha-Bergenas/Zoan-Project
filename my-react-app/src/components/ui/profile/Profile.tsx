@@ -88,17 +88,21 @@ export default function Profile() {
   if (loading) return <p>Laddar...</p>;
 
   return !profile ? (
-    <>
+    <div className="profile-card">
       <p>{formattedDate}</p>
       <p style={{ paddingTop: "30px" }} className="text-bold text-lg">
         Ingen profil hittad.
       </p>
-      <img className="profile-img" src={DEFAULT_AVATAR} alt="" />
-      <p style={{ paddingBottom: "30px" }}>Logga in för att se information.</p>
+      <div className="avatar-wrapper">
+        <img className="profile-img" src={DEFAULT_AVATAR} alt="" />
+        <p style={{ paddingBottom: "30px" }}>
+          Logga in för att se information.
+        </p>
+      </div>
       <RandomQuote size="20px" />
-    </>
+    </div>
   ) : (
-    <div>
+    <div className="profile-card">
       <input
         type="file"
         accept="image/*"
@@ -109,12 +113,14 @@ export default function Profile() {
         }}
       />
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
-      <img
-        className="profile-img"
-        src={profile.avatar_url ?? DEFAULT_AVATAR}
-        alt="avatar"
-        width={80}
-      />
+      <div className="avatar-wrapper">
+        <img
+          className="profile-img"
+          src={profile.avatar_url ?? DEFAULT_AVATAR}
+          alt="avatar"
+          width={80}
+        />
+      </div>
       <RandomQuote size="18px" />
     </div>
   );
