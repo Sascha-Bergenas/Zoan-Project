@@ -26,7 +26,7 @@ export default function Profile() {
         //Hämtar specifikt username och avatar från supabase
         .select("username, avatar_url")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error(error);
