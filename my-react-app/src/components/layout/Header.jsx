@@ -27,25 +27,25 @@ export default function Header() {
           <li>
             <Link to="/settings">Settings</Link>
           </li>
-          <li>
-            {!isAuthed && <LoginModal />}
 
-            {isAuthed && (
-              <>
-                <li className="logged-in flex">
-                  <p className="text-sm">
-                    Hej <span className="text-bold">{user.email}!</span>
-                  </p>
-                  <Button
-                    text="Logga ut"
-                    type="login"
-                    onClick={signOut}
-                    variant="login"
-                  />
-                </li>
-              </>
-            )}
-          </li>
+          {!isAuthed && <LoginModal />}
+
+          {isAuthed && (
+            <>
+              <li className="logged-in flex">
+                <p className="text-sm">
+                  Hej <span className="text-bold">{user.email}!</span>
+                </p>
+                <Button
+                  text="Logga ut"
+                  type="login"
+                  onClick={signOut}
+                  variant="login"
+                />
+              </li>
+            </>
+          )}
+
           <button className="theme-toggle" onClick={toggleTheme}>
             {theme === "dark" ? <Sun size={25} /> : <Moon size={25} />}
           </button>
