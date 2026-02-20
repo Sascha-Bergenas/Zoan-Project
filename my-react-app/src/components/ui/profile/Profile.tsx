@@ -6,8 +6,11 @@ import "./Profile.css";
 import RandomQuote from "../../../Features/quotes/RandomQuote";
 
 type UserProfile = {
+  id: string;
   username: string | null;
   avatar_url: string | null;
+  break_length: number | null;
+  break_frequency: number | null;
 };
 
 const DEFAULT_AVATAR =
@@ -34,11 +37,6 @@ export default function Profile() {
 
   useEffect(() => {
     async function loadProfile() {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-
-      if (!user) return;
       if (!user) {
         setProfile(null);
         setLoading(false);
@@ -47,10 +45,9 @@ export default function Profile() {
 
       const { data, error } = await supabase
         .from("user_profile")
-        //Hämtar specifikt username och avatar från supabase
-        .select("username, avatar_url")
+        .select("*")
         .eq("id", user.id)
-        .maybeSingle();
+        .single();
 
       if (error) {
         console.error(error);
@@ -119,7 +116,7 @@ export default function Profile() {
       <div className="avatar-wrapper">
         <img
           className="profile-img"
-          src={profile.avatar_url ?? DEFAULT_AVATAR}
+          src={(profile.avatar_url ?? DEFAULT_AVATAR) + "?t=" + Date.now()}
           alt="avatar"
           width={80}
         />
