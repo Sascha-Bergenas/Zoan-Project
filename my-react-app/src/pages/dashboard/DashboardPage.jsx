@@ -5,6 +5,7 @@ import Topbar from "../../components/layout/Topbar";
 import CalendarCard from "../../Features/calendar/CalendarCard";
 import Todo from "../../Features/todo/Todo";
 import Profile from "../../components/ui/profile/Profile";
+import SmartRecommendations from "../../components/AItest";
 
 function Dashboard() {
   return (
@@ -18,7 +19,7 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.card2} size="card-medium">
-            <h3>CARD 2 Smarta rekommendationer</h3>
+            <SmartRecommendations />
           </BaseCard>
 
           <BaseCard className={styles.timer} size="card-timer">
