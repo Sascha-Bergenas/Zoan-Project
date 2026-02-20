@@ -144,7 +144,7 @@ export default function LoginForm() {
           <input
             name="username"
             placeholder="Användarnamn"
-            type="password"
+            type="text"
             value={username}
             onChange={(e) => setUserName(e.target.value)}
           />
