@@ -6,11 +6,8 @@ import "./Profile.css";
 import RandomQuote from "../../../Features/quotes/RandomQuote";
 
 type UserProfile = {
-  id: string;
   username: string | null;
   avatar_url: string | null;
-  break_length: number | null;
-  break_frequency: number | null;
 };
 
 const DEFAULT_AVATAR =
@@ -31,12 +28,17 @@ export default function Profile() {
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric",
+      day: "numeric"
     })
     .replace(/^\p{L}/u, (letter) => letter.toUpperCase());
 
   useEffect(() => {
     async function loadProfile() {
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      if (!user) return;
       if (!user) {
         setProfile(null);
         setLoading(false);
@@ -45,9 +47,10 @@ export default function Profile() {
 
       const { data, error } = await supabase
         .from("user_profile")
-        .select("*")
+        //Hämtar specifikt username och avatar från supabase
+        .select("username, avatar_url")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
 
       if (error) {
         console.error(error);
@@ -103,7 +106,7 @@ export default function Profile() {
     </div>
   ) : (
     <div className="profile-card">
-      <input
+      {/* <input
         type="file"
         accept="image/*"
         style={{ color: "transparent" }}
@@ -111,7 +114,7 @@ export default function Profile() {
           const file = e.target.files?.[0];
           if (file) uploadAvatar(file);
         }}
-      />
+      /> */}
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <div className="avatar-wrapper">
         <img
