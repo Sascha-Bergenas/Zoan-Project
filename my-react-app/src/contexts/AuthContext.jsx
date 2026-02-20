@@ -6,6 +6,8 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
+  const [isAuthed, setIsAuthed] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -43,8 +45,17 @@ export function AuthProvider({ children }) {
         return { data, error };
       },
 
-      signIn: (email, password) =>
-        supabase.auth.signInWithPassword({ email, password }),
+      signIn: async (email, password) => {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        if (!error && data.session) {
+          setSession(data.session);
+        }
+
+        return { data, error };
+      },
 
       signOut: () => supabase.auth.signOut(),
     };

@@ -93,23 +93,18 @@ export default function LoginForm() {
       return false;
     }
 
-    if (!username.trim()) {
-      setUsernameError("Skriv in ett användarnamn");
-      return false;
-    } else if (username.trim().length < 6) {
-      setUsernameError("Ditt användarnamn måste vara minst 6 tecken.");
-      return false;
-    } else if (username.trim().length > 15) {
-      setUsernameError("Användarnamnet får vara max 15 tecken.");
-      return false;
-    } else if (!/^[a-zA-ZåäöÅÄÖ]+$/.test(username)) {
-      setUsernameError("Användarnamnet får endast innehålla bokstäver");
-      return false;
-    }
-
     if (!isSignedUp) {
-      if (password !== repeatPassword) {
-        setPassWordError("Lösenorden matchar inte.");
+      if (!username.trim()) {
+        setUsernameError("Skriv in ett användarnamn");
+        return false;
+      } else if (username.trim().length < 6) {
+        setUsernameError("Ditt användarnamn måste vara minst 6 tecken.");
+        return false;
+      } else if (username.trim().length > 15) {
+        setUsernameError("Användarnamnet får vara max 15 tecken.");
+        return false;
+      } else if (!/^[a-zA-ZåäöÅÄÖ]+$/.test(username)) {
+        setUsernameError("Användarnamnet får endast innehålla bokstäver");
         return false;
       }
     }
