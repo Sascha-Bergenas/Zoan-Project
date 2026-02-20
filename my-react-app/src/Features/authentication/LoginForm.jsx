@@ -1,21 +1,28 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Button from "../../components/ui/button/Button";
 import { useAuth } from "../../contexts/useAuth";
 import supabase from "../../supabase/supabase";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isSignedUp, setIsSignedUp] = useState(true);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPassWordError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [username, setUserName] = useState("");
+
+  const passwordRef = useRef(null);
+  const repeatPasswordRef = useRef(null);
 
   const { signIn, signUp, user, isAuthed, signOut } = useAuth();
 
   //Switch between loginmode and signup mode
   function loginSignupToggle() {
     setIsSignedUp((prev) => !prev);
+    setEmail("");
+    setUserName("");
+    setEmailError("");
+    setPassWordError("");
   }
 
   function handleChange(e) {
@@ -34,8 +41,11 @@ export default function LoginForm() {
   async function handleSubmit(e, action) {
     e.preventDefault();
 
-    const trimmedEmail = email.trim();
-    if (!validateForm(trimmedEmail)) return;
+    const password = passwordRef.current.value;
+    const repeatPassword = repeatPasswordRef.current?.value;
+
+    const trimmedEmail = email.trim().toLowerCase();
+    if (!validateForm(trimmedEmail, password, repeatPassword)) return;
 
     if (action === "login") {
       const { error } = await signIn(trimmedEmail, password);
@@ -51,16 +61,18 @@ export default function LoginForm() {
         const { error: profileError } = await supabase
           .from("user_profile")
           .upsert({ id: userId, username });
-
-        if (profileError) return alert(profileError.message);
       }
     }
 
     setEmail("");
-    setPassword("");
+    passwordRef.current.value = "";
+    repeatPasswordRef.current.value = "";
   }
 
-  function validateForm(trimmedEmail) {
+  function validateForm(trimmedEmail, password, repeatPassword) {
+    setEmailError("");
+    setPassWordError("");
+
     if (trimmedEmail === "") {
       setEmailError("Skriv in en e-postadress");
       return false;
@@ -79,6 +91,22 @@ export default function LoginForm() {
     if (password.length < 6) {
       setPassWordError("Ditt lösenord måste vara minst 6 tecken.");
       return false;
+    }
+
+    if (!isSignedUp) {
+      if (!username.trim()) {
+        setUsernameError("Skriv in ett användarnamn");
+        return false;
+      } else if (username.trim().length < 6) {
+        setUsernameError("Ditt användarnamn måste vara minst 6 tecken.");
+        return false;
+      } else if (username.trim().length > 15) {
+        setUsernameError("Användarnamnet får vara max 15 tecken.");
+        return false;
+      } else if (!/^[a-zA-ZåäöÅÄÖ]+$/.test(username)) {
+        setUsernameError("Användarnamnet får endast innehålla bokstäver");
+        return false;
+      }
     }
 
     return true;
@@ -102,8 +130,7 @@ export default function LoginForm() {
               name="password"
               placeholder="Lösenord"
               type="password"
-              value={password}
-              onChange={handleChange}
+              ref={passwordRef}
             />
           </div>
           {emailError && <p>{emailError}</p>}
@@ -126,28 +153,40 @@ export default function LoginForm() {
           />
         </>
       ) : (
+        /* Sign up */
         <>
-          <input
-            name="email"
-            placeholder="E-post"
-            type="email"
-            value={email}
-            onChange={handleChange}
-          />
-          <input
-            name="password"
-            placeholder="Lösenord"
-            type="password"
-            value={password}
-            onChange={handleChange}
-          />
-          <input
-            name="username"
-            placeholder="Användarnamn"
-            type="password"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-          />
+          <div>
+            <input
+              name="email"
+              placeholder="E-post"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <input
+              name="password"
+              placeholder="Lösenord"
+              type="password"
+              ref={passwordRef}
+            />
+            <input
+              name="repeatPassword"
+              placeholder="Upprepa lösenord"
+              type="password"
+              ref={repeatPasswordRef}
+            />
+            <input
+              name="username"
+              placeholder="Användarnamn"
+              type="text"
+              value={username}
+              onChange={(e) => {
+                setUserName(e.target.value);
+                setUsernameError("");
+              }}
+            />
+          </div>
 
           {/* Signup button */}
           <Button
@@ -163,6 +202,7 @@ export default function LoginForm() {
           />
           {emailError && <p>{emailError}</p>}
           {passwordError && <p>{passwordError}</p>}
+          {usernameError && <p>{usernameError}</p>}
         </>
       )}
     </form>

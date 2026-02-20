@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../../../contexts/useAuth";
 import supabase from "../../../supabase/supabase";
+import { User } from "@supabase/supabase-js";
 import "./Profile.css";
 import RandomQuote from "../../../Features/quotes/RandomQuote";
 
@@ -18,13 +20,25 @@ export default function Profile() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const { user, isAuthed } = useAuth() as {
+    user: User | null;
+    isAuthed: boolean;
+  };
+
+  const date = new Date();
+  const formattedDate = date
+    .toLocaleDateString("sv-SE", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+    .replace(/^\p{L}/u, (letter) => letter.toUpperCase());
+
   useEffect(() => {
     async function loadProfile() {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
       if (!user) {
+        setProfile(null);
         setLoading(false);
         return;
       }
@@ -37,6 +51,7 @@ export default function Profile() {
 
       if (error) {
         console.error(error);
+        setLoading(false);
         return;
       }
 
@@ -44,40 +59,29 @@ export default function Profile() {
       setLoading(false);
     }
 
+    setLoading(true);
     loadProfile();
-  }, []);
+  }, [user]);
 
   async function uploadAvatar(file: File) {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
     if (!user) return;
 
-    // upload image to storage
     const filePath = `${user.id}.png`;
 
     const { error } = await supabase.storage
       .from("avatars")
       .upload(filePath, file, { upsert: true });
 
-    if (error) {
-      console.error(error);
-      return;
-    }
+    if (error) return console.error(error);
 
-    // get public URL
     const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-
     const avatarUrl = data.publicUrl;
 
-    // save URL to database
     await supabase
       .from("user_profile")
       .update({ avatar_url: avatarUrl })
       .eq("id", user.id);
 
-    // update UI
     setProfile((p) => (p ? { ...p, avatar_url: avatarUrl } : p));
   }
 
@@ -85,13 +89,13 @@ export default function Profile() {
 
   return !profile ? (
     <>
+      <p>{formattedDate}</p>
       <p style={{ paddingTop: "30px" }} className="text-bold text-lg">
         Ingen profil hittad.
       </p>
       <img className="profile-img" src={DEFAULT_AVATAR} alt="" />
       <p style={{ paddingBottom: "30px" }}>Logga in för att se information.</p>
-
-      <RandomQuote size="25px" />
+      <RandomQuote size="20px" />
     </>
   ) : (
     <div>
