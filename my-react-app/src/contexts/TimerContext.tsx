@@ -15,6 +15,7 @@ import React, {
     stop: () => void; 
     setMode: (mode: TimerMode) => void;
     clearMode: () => void;
+    setBreakIn: (min: number | null) => void;
   }
   
   type TimerState = {
@@ -23,6 +24,9 @@ import React, {
       accumulatedMs: number;
       startedAtMs: number | null;
       firstStartedAtMs: number | null;
+
+      nextBreakIn: number | null;
+
   };
   
   type TimerAction =
@@ -30,7 +34,9 @@ import React, {
     | { type: "PAUSE" }
     | { type: "STOP" }
     | { type: "SET_MODE"; mode: TimerState["mode"] }
-    | { type: "CLEAR_MODE" };
+    | { type: "CLEAR_MODE" }
+    | { type: "SET_BREAK_IN"; min: number | null };
+
   
   const initialState: TimerState = {
     status: "idle",
@@ -38,6 +44,7 @@ import React, {
     accumulatedMs: 0,
     startedAtMs: null,
     firstStartedAtMs: null,
+    nextBreakIn: null,
   };
   
   function timerReducer(state: TimerState, action: TimerAction): TimerState {
@@ -81,6 +88,9 @@ import React, {
         if (state.status !== "idle" || state.firstStartedAtMs != null) return state;
         return { ...state, mode: null };
       }
+      case "SET_BREAK_IN": {
+        return { ...state, nextBreakIn: action.min };
+      }
       default: return state;
     }
   }
@@ -91,7 +101,7 @@ import React, {
     }
     return state.accumulatedMs;
   }
-  
+
   type TimerContextValue = {
     time: number;
     now: number;
@@ -105,15 +115,15 @@ import React, {
   
   export function TimerProvider({ children }: { children: React.ReactNode }) {
     const [state, dispatch] = useReducer(timerReducer, initialState);
-  
     const [now, setNow] = useState<number>(() => Date.now());
-    
+  
     const actions: TimerActions = {
       start: () => dispatch({ type: "START" }),
       pause: () => dispatch({ type: "PAUSE" }),
       stop: () => dispatch({ type: "STOP" }),
       setMode: (mode) => dispatch({ type: "SET_MODE", mode }),
       clearMode: () => dispatch({ type: "CLEAR_MODE" }),
+      setBreakIn: (min) => dispatch({ type: "SET_BREAK_IN", min }),
     }
     useEffect(() => {
       if (state.status !== "running") return;
