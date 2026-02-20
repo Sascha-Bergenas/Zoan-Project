@@ -23,7 +23,8 @@ export default function Profile() {
 
       const { data, error } = await supabase
         .from("user_profile")
-        .select("*")
+        //Hämtar specifikt username och avatar från supabase
+        .select("username, avatar_url")
         .eq("id", user.id)
         .single();
 
@@ -45,7 +46,7 @@ export default function Profile() {
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <img
         className="profile-img"
-        src={(profile.avatar_url ?? DEFAULT_AVATAR) + "?t=" + Date.now()}
+        src={profile.avatar_url ?? DEFAULT_AVATAR}
         alt="avatar"
         width={80}
       />
