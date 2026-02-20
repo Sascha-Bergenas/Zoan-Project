@@ -18,6 +18,16 @@ export default function Profile() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const date = new Date();
+  const formattedDate = date
+    .toLocaleDateString("sv-SE", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+    .replace(/^\p{L}/u, (letter) => letter.toUpperCase());
+
   useEffect(() => {
     async function loadProfile() {
       const {
@@ -85,13 +95,14 @@ export default function Profile() {
 
   return !profile ? (
     <>
+      <p>{formattedDate}</p>
       <p style={{ paddingTop: "30px" }} className="text-bold text-lg">
         Ingen profil hittad.
       </p>
       <img className="profile-img" src={DEFAULT_AVATAR} alt="" />
       <p style={{ paddingBottom: "30px" }}>Logga in för att se information.</p>
 
-      <RandomQuote size="25px" />
+      <RandomQuote size="20px" />
     </>
   ) : (
     <div>
