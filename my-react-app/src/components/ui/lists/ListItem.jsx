@@ -1,6 +1,6 @@
 import styles from "./List.module.css"
 
-export default function ListItem({session, evenOdd}) {
+export default function ListItem({session, evenOdd, onSelect}) {
     const {started_at, title, category, ended_at, active_time_ms, comment, mood} = session
     const startDate = new Date(started_at)
     const stopDate = new Date(ended_at)
@@ -10,7 +10,9 @@ export default function ListItem({session, evenOdd}) {
     const zoanTime = new Date(active_time_ms).toISOString().slice(11, 16) 
 
     return(
-        <li className={`${styles.listItem} ${evenOdd === "even" ? styles.even : styles.odd}`}>
+        <li 
+            className={`${styles.listItem} ${evenOdd === "even" ? styles.even : styles.odd}`} 
+            onClick={onSelect}>
             <span>{date}</span>
             <span className={styles.cutLine}>{title}</span>
             <span>{category}</span>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
 import BaseCard from "../../components/ui/cards/Card"
@@ -12,8 +12,8 @@ export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
   const [ selectedRecord, setSelectedRecord] = useState(null)
+  const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ refreshKey, setRefreshKey ] = useState(0)
-  const dialogRef = useRef(null);
 
   // const timerData = {
   //   startedAt: 0,
@@ -45,12 +45,13 @@ export default function History() {
 
   const handleAddClick = () => {
     setSelectedRecord(null)
-    dialogRef.current.showModal()
+    setIsModalOpen(true)
   }
 
   const handleEditClick = record => {
+    console.log(record);
     setSelectedRecord(record)
-    dialogRef.current.showModal()
+    setIsModalOpen(true)
   }
 
   return (
@@ -60,12 +61,13 @@ export default function History() {
       <section className={styles.wrapper}>
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
-          <EditSessionModal
-            dialogRef={dialogRef}
-            record={selectedRecord}
-            // handleCloseModal={() => dialogRef.current.close()}
-            handleSessionSaved={handleSessionSaved}
-          />
+          {isModalOpen && (
+            <EditSessionModal
+              record={selectedRecord}
+              handleSessionSaved={handleSessionSaved}
+              onRequestClose={() => setIsModalOpen(false)}
+            />
+          )}
           {/* Knapp för manuell loggning */}
           <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
           <BaseCard>

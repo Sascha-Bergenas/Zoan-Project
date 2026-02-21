@@ -17,8 +17,15 @@ function List({sessions = [], handleEditClick}) {
         <ul>
             <ListHeader headers={headers} />
             {  
-                sessions.map((e, i) => {
-                return <ListItem session={e} key={i} evenOdd={i % 2 > 0 ? "odd" : "even"}/>
+                sessions.map((session, i) => {
+                return <ListItem 
+                    session={session} 
+                    key={i} 
+                    evenOdd={session.id % 2 > 0 ? "odd" : "even"} 
+                    onSelect={() => {
+                        console.log(session);
+                        handleEditClick(session)
+                    }}/>
                 })
             }
         </ul>

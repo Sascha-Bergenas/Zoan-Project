@@ -1,11 +1,12 @@
-// import { useMemo, useState } from "react";
+import { useEffect, useRef } from "react";
 // import type {ReactNode, RefObject} from "react"
 import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
 import Modal from "../../../components/ui/modal/Modal";
 
 // Modal-komponent för att manuellt logga en arbetsession eller redigera en redan loggad session.
 
-export default function EditSessionModal({ dialogRef, record = null, handleSessionSaved }) {
+export default function EditSessionModal({ record = null, handleSessionSaved, onRequestClose }) {
+  const dialogRef = useRef(null);
   let newSession = {}
 
   if(record) {newSession = {...record}} 
@@ -21,72 +22,28 @@ export default function EditSessionModal({ dialogRef, record = null, handleSessi
   
   // newSession.activeTime = new Date(newSession.activeTime)
   newSession.activeTime = new Date(newSession.activeTime)
-    .toISOString()
+    .toLocaleString()
     .slice(11, 16)
   const sessionData = newSession
+
+  useEffect(() => {
+    dialogRef.current?.showModal();
+  }, []);
+
+  const handleCloseModal = () => {
+    dialogRef.current?.close();
+    onRequestClose?.();
+  };
 
   return (
     <>
       {" "}
-      <Modal dialogRef={dialogRef}>
+      <Modal dialogRef={dialogRef} onClose={onRequestClose}>
         {" "}
         <h3>Logga din session</h3>
-        <>
-          {/* <label>
-          Start:
-          <input
-          type="datetime-local"
-          name="start"
-          value={startValue}
-          onChange={(e) => {
-              const nextStart = e.target.value;
-              setStartValue(nextStart);
-              updateDurationFromDates(nextStart, stopValue);
-            }}
-          />
-          </label>
-
-          <label>
-          Slut:
-          <input
-          type="datetime-local"
-          name="stop"
-          value={stopValue}
-          onChange={(e) => {
-            const nextStop = e.target.value;
-            setStopValue(nextStop);
-            updateDurationFromDates(startValue, nextStop);
-            }}
-            />
-            </label>
-
-            <label>
-            Varaktighet:
-            <div>
-            <input
-            type="number"
-              name="durationHours"
-              min="0"
-              value={durationHours}
-              onChange={(e) => setDurationHours(e.target.value)}
-              />
-              <span>timmar</span>
-              <input
-              type="number"
-              name="durationMinutes"
-              min="0"
-              max="59"
-              value={durationMinutes}
-              onChange={(e) => setDurationMinutes(e.target.value)}
-              />
-              <span>minuter</span>
-              </div>
-              </label> 
-              */}
-        </>
         <EditWorkSessionForm
           key={record?.id ?? "new"}
-          handleCloseModal={() => dialogRef.current.close()}
+          handleCloseModal={handleCloseModal}
           handleSessionSaved={handleSessionSaved}
           sessionData={sessionData}
         />{" "}
