@@ -6,7 +6,11 @@ import { useState, useEffect } from "react";
 
 
 export default function Topbar() {
-  const { state } = useTimer();
+  const {
+    state,
+    isBreakTime,
+    acknowledgeBreak,
+  } = useTimer();
   const startedAt = state.firstStartedAtMs;
   const [now, setNow] = useState(() => Date.now());
 
@@ -17,7 +21,18 @@ export default function Topbar() {
     const id = setInterval(() => setNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, [state.firstStartedAtMs]);
+  
+  let timeLabel = "-";
 
+  if (state.nextBreakAtMs != null) {
+    const msLeft = Math.max(0, state.nextBreakAtMs - now);
+  
+    if (msLeft >= 60000) {
+      timeLabel = `om ${Math.floor(msLeft / 60000)} min`;
+    } else {
+      timeLabel = `om ${Math.floor(msLeft / 1000)} sek`;
+    }
+  }
   const totalTimeMs =
     startedAt != null ? Math.max(0, now - startedAt) : 0;
   const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
@@ -47,7 +62,14 @@ export default function Topbar() {
         <p>Gla som sjutton</p>
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
-        <p>om 45min</p>
+      {isBreakTime ? (
+        <div className="break-banner">
+          <p>Time for a break!</p>
+          <button onClick={acknowledgeBreak}>OK</button>
+        </div>
+      ) : (
+        <p>{timeLabel}</p>
+      )}
       </TopBarCard>
       <TopBarCard title="Nuvarande mode" className={styles.card4}>
         <p>{formatMode(state.mode)}</p>

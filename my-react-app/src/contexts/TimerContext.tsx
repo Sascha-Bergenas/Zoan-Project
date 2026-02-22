@@ -8,7 +8,7 @@ import React, {
   } from "react";
   import { useBreakTimer } from "../Features/timer/useBreakTimer";
   import { BreakSettings } from "../storage/breakSettings";
-  import { loadBreakSettings } from "../storage/breakSettingStorage";
+  import { loadBreakSettings, saveBreakSettings } from "../storage/breakSettingStorage";
 
   
   export type TimerStatus = "idle" | "running" | "paused";
