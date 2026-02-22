@@ -14,7 +14,8 @@ export default function History() {
   const [ selectedRecord, setSelectedRecord] = useState(null)
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ refreshKey, setRefreshKey ] = useState(0)
-
+  
+  console.log(selectedRecord); 
   // const timerData = {
   //   startedAt: 0,
   //   endedAt: 0,
@@ -29,27 +30,31 @@ export default function History() {
     let mounted = true
     const fetchSessions = async () => {
       if(!isAuthed) return
-
+      
       try {
-          const data = await getSessions()
-          if(mounted) setSessions(data || [])
-      } catch (err) {
-        console.log(err)
+        const data = await getSessions()
+        if(mounted) setSessions(data || [])
+        } catch (err) {
+      console.log(err)
       }
     }
     
     fetchSessions()
     return () => { mounted = false}
-
+    
   }, [isAuthed, user?.id, refreshKey])
-
+  
   const handleAddClick = () => {
     setSelectedRecord(null)
     setIsModalOpen(true)
   }
-
+  
   const handleEditClick = record => {
-    console.log(record);
+    // console.log(record); 
+
+    // Om jag får in bara id-strängen från "record" här, är det bättre att välja rätt session här istället
+    // och skicka in det till editWorkSessionModal?
+
     setSelectedRecord(record)
     setIsModalOpen(true)
   }
