@@ -30,7 +30,10 @@ import React, {
       firstStartedAtMs: number | null;
 
       nextBreakAtMs: number | null;
-      breakEveryMs: number | null
+      breakEveryMs: number | null;
+
+      pausedAtMs: number | null; 
+
   };
   
   type TimerAction =
@@ -50,7 +53,8 @@ import React, {
     startedAtMs: null,
     firstStartedAtMs: null,
     nextBreakAtMs: null,
-    breakEveryMs: null
+    breakEveryMs: null,
+    pausedAtMs: null,
   };
   
   function timerReducer(state: TimerState, action: TimerAction): TimerState {
@@ -61,19 +65,25 @@ import React, {
   
         const now = Date.now();
 
-        const nextBreakAtMs =
-        state.nextBreakAtMs ??
-        (state.breakEveryMs != null ? now + state.breakEveryMs : null);
+        const pausedDurationMs =
+        state.status === "paused" && state.pausedAtMs != null
+          ? now - state.pausedAtMs
+          : 0;
     
-
-        return {
-          ...state,
-          status: "running",
-          firstStartedAtMs: state.firstStartedAtMs ?? now,
-          startedAtMs: now,
-          nextBreakAtMs,
-        };
-      }
+      const nextBreakAtMs =
+        state.nextBreakAtMs == null
+          ? (state.breakEveryMs != null ? now + state.breakEveryMs : null)
+          : state.nextBreakAtMs + pausedDurationMs;
+    
+      return {
+        ...state,
+        status: "running",
+        firstStartedAtMs: state.firstStartedAtMs ?? now,
+        startedAtMs: now,
+        nextBreakAtMs,
+        pausedAtMs: null,
+      };
+    }
   
       case "PAUSE": {
         if (state.status !== "running" || state.startedAtMs == null) return state;
@@ -86,6 +96,7 @@ import React, {
           status: "paused",
           accumulatedMs: state.accumulatedMs + lastElapsed,
           startedAtMs: null,
+          pausedAtMs: now,
         };
       }
   
@@ -134,6 +145,9 @@ import React, {
 
     isBreakTime: boolean,
     acknowledgeBreak: () => void,
+
+    breakSettings: BreakSettings;
+    setBreakSettings: React.Dispatch<React.SetStateAction<BreakSettings>>;
   };
   
   const TimerContext = createContext<TimerContextValue | undefined>(undefined);
@@ -200,6 +214,9 @@ import React, {
 
       isBreakTime,
       acknowledgeBreak,
+
+      breakSettings,       
+      setBreakSettings, 
     };
     return <TimerContext.Provider value={value}>{children}</TimerContext.Provider>;
   }

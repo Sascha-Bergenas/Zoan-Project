@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import supabase from "../../supabase/supabase";
 import BaseCard from "../../components/ui/cards/Card";
+import { useTimer } from "../../contexts/TimerContext";
 import "./SettingsPage.css";
 
 type UserProfile = {
@@ -22,6 +23,8 @@ const SettingsPage = () => {
   const [avatarVersion, setAvatarVersion] = useState<number>(Date.now());
   // Sparad feedback på ändrat användarnamn
   const [savedMessage, setSavedMessage] = useState<string>("");
+
+  const { breakSettings, setBreakSettings } = useTimer();
 
   useEffect(() => {
     // Hämtar användarens profildata när sidan laddas.
@@ -136,6 +139,29 @@ const SettingsPage = () => {
     setPreviewUrl(nextPreviewUrl);
   };
 
+  const handleBreakDeep = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setBreakSettings((prev) => ({ ...prev, deepMin: val }));
+  };
+  
+  const handleBreakMeeting = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setBreakSettings((prev) => ({ ...prev, meetingMin: val }));
+  };
+  
+  const handleBreakChillToggle = (e: ChangeEvent<HTMLInputElement>) => {
+    const enabled = e.target.checked;
+    setBreakSettings((prev) => ({
+      ...prev,
+      chillMin: enabled ? (prev.chillMin ?? 15) : null,
+    }));
+  };
+  
+  const handleBreakChillMinutes = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = Number(e.target.value);
+    setBreakSettings((prev) => ({ ...prev, chillMin: val }));
+  };
+
   const persistedImageSrc = profile?.avatar_url
     ? `${profile.avatar_url}${profile.avatar_url.includes("?") ? "&" : "?"}t=${avatarVersion}`
     : DEFAULT_AVATAR;
@@ -199,6 +225,39 @@ const SettingsPage = () => {
             {savedMessage && (
               <p className="settings-save-message">{savedMessage}</p>
             )}
+          </div>
+
+          {/* Uppdatering av rast-inställningar */}
+
+          <div className="settings-break-section">
+            <h3>Inställning för rast</h3>
+
+            <label className="settings-break-label">
+              Deep Work
+              <input
+                type="number"
+                min={1}
+                max={240}
+                value={breakSettings.deepMin}
+                onChange={handleBreakDeep}
+                className="settings-break-input"
+              />
+            </label>
+
+            <label className="settings-break-label">
+              Meeting
+              <input
+                type="number"
+                min={1}
+                max={240}
+                value={breakSettings.meetingMin}
+                onChange={handleBreakMeeting}
+                className="settings-break-input"
+              />
+            </label>
+            <p className="settings-break-hint">
+              Sparas automatiskt och används när du väljer mode.
+            </p>
           </div>
         </BaseCard>
       </div>
