@@ -31,7 +31,7 @@ export default function Profile() {
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric",
+      day: "numeric"
     })
     .replace(/^\p{L}/u, (letter) => letter.toUpperCase());
 
@@ -103,7 +103,7 @@ export default function Profile() {
     </div>
   ) : (
     <div className="profile-card">
-      <input
+      {/* <input
         type="file"
         accept="image/*"
         style={{ color: "transparent" }}
@@ -111,12 +111,12 @@ export default function Profile() {
           const file = e.target.files?.[0];
           if (file) uploadAvatar(file);
         }}
-      />
+      /> */}
       <h3 className="text-lg">Välkommen, {profile.username}!</h3>
       <div className="avatar-wrapper">
         <img
           className="profile-img"
-          src={profile.avatar_url ?? DEFAULT_AVATAR}
+          src={(profile.avatar_url ?? DEFAULT_AVATAR) + "?t=" + Date.now()}
           alt="avatar"
           width={80}
         />

@@ -6,6 +6,7 @@ import Header from "./components/layout/Header";
 import { useContext } from "react";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { useEffect } from "react";
+import SettingsPage from "./pages/settings/SettingsPage";
 
 export default function App() {
   const context = useContext(ThemeContext);
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/history" element={<History />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Routes>
     </>
   );
