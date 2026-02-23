@@ -23,3 +23,6 @@
 .card4 {
   background: var(--card-4);
 }
+.card2 h3 {
+  padding-bottom: 0;
+}

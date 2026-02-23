@@ -6,6 +6,9 @@ import { useState, useEffect, useMemo } from "react";
 import { useAuth } from "../../contexts/useAuth";
 import { sessionStore } from "../../storage/localStorage";
 import supabase from "../../supabase/supabase";
+import { TbBatteryAutomotive } from "react-icons/tb";
+import { EnergyDisplay } from "../../Features/mood/EnergyDisplay";
+
 
 export default function Topbar() {
   const {
@@ -52,11 +55,14 @@ export default function Topbar() {
     if (!session?.length) return null;
   
     const valid = session.filter(s => typeof s.mood === "number");
-  
     if (!valid.length) return null;
+
+    const isFriday = new Date().getDay() === 5;
   
     const sum = valid.reduce((acc, s) => acc + s.mood, 0);
-    return sum / valid.length;
+    const result = isFriday ? (sum / valid.length)+1 : (sum / valid.length)
+
+    return result;
   }, [session]);
 
   const breakNow =
@@ -105,7 +111,7 @@ export default function Topbar() {
         </p>
       </TopBarCard>
       <TopBarCard title="Energiprognos" className={styles.card2}>
-        <p>{avgMood}</p>
+        <EnergyDisplay avgMood={avgMood} />
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
       {isBreakTime ? (
