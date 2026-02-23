@@ -109,6 +109,14 @@
   font-size: 0.95rem;
   color: var(--black-color);
 }
+.settings-break-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.settings-break-input {
+  margin-left: 8px;
+}
 
 @container (inline-size < 650px) {
   .settings-container {

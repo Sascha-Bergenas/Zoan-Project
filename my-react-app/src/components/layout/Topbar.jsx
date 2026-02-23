@@ -4,23 +4,39 @@ import { calcTime } from "../../utils/formatTime";
 import { useTimer } from "../../contexts/TimerContext";
 import { useState, useEffect } from "react";
 
-
 export default function Topbar() {
-  const { state } = useTimer();
-  const startedAt = state.firstStartedAtMs;
-  const [now, setNow] = useState(() => Date.now());
+  const {
+    state,
+    isBreakTime,
+    acknowledgeBreak,
+  } = useTimer();
 
-  // Calculate and display total time
+  const [wallNow, setWallNow] = useState(() => Date.now());
+
+  const breakNow =
+  state.status === "paused" && state.pausedAtMs != null
+    ? state.pausedAtMs
+    : wallNow;
+
+
   useEffect(() => {
     if (state.firstStartedAtMs == null) return;
-  
-    const id = setInterval(() => setNow(Date.now()), 1000);
+
+    const id = setInterval(() => setWallNow(Date.now()), 1000);
     return () => clearInterval(id);
   }, [state.firstStartedAtMs]);
 
-  const totalTimeMs =
-    startedAt != null ? Math.max(0, now - startedAt) : 0;
+  const startedAt = state.firstStartedAtMs;
+  const totalTimeMs = startedAt != null ? Math.max(0, wallNow - startedAt) : 0;
   const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
+
+  let timeLabel = "-";
+  if (state.nextBreakAtMs != null) {
+    const msLeft = Math.max(0, state.nextBreakAtMs - breakNow);
+
+    if (msLeft >= 60000) timeLabel = `om ${Math.floor(msLeft / 60000)} min`;
+    else timeLabel = `om ${Math.floor(msLeft / 1000)} sek`;
+  }
 
   // Display mode
   function formatMode(mode) {
@@ -47,7 +63,14 @@ export default function Topbar() {
         <p>Gla som sjutton</p>
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
-        <p>om 45min</p>
+      {isBreakTime ? (
+        <div className="break-container">
+          <p>Dags for rast!</p>
+          <button onClick={acknowledgeBreak}>OK</button>
+        </div>
+      ) : (
+        <p>{timeLabel}</p>
+      )}
       </TopBarCard>
       <TopBarCard title="Nuvarande mode" className={styles.card4}>
         <p>{formatMode(state.mode)}</p>

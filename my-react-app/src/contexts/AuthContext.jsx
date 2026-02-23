@@ -6,8 +6,6 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
-  const [isAuthed, setIsAuthed] = useState(false);
 
   useEffect(() => {
     let mounted = true;

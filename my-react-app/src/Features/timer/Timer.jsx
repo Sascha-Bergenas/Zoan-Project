@@ -96,17 +96,17 @@ export default function Timer() {
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
             <Button
-              onClick={() => actions.setMode("deep")}
+              onClick={() => actions.selectMode("deep")}
               text="Deep Work"
               variant="primary"
             />
             <Button
-              onClick={() => actions.setMode("meeting")}
+              onClick={() => actions.selectMode("meeting")}
               text="Möte"
               variant="secondary"
             />
             <Button
-              onClick={() => actions.setMode("chill")}
+              onClick={() => actions.selectMode("chill")}
               text="Chill"
               variant="primary"
             />
