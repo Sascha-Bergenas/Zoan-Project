@@ -1,58 +1,46 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import supabase from "../../supabase/supabase";
 import BaseCard from "../../components/ui/cards/Card";
 import { useTimer } from "../../contexts/TimerContext";
-import "./SettingsPage.css";
+import {
+  getCurrentUser,
+  updateUsername,
+  uploadAvatar,
+  getUserProfile
+} from "./settingComponents/userService";
 
-type UserProfile = {
-  avatar_url: string | null;
-};
+import "./SettingsPage.css";
 
 const DEFAULT_AVATAR =
   "https://m.media-amazon.com/images/S/pv-target-images/7ca14fe3bd272e79963756a241fc66840ba860e01239407378e3c67e82477f16._SX1080_FMjpg_.jpg";
 
 const SettingsPage = () => {
-  const [username, setUsername] = useState<string>("");
-  // Sparar aktuell profilbilds-URL från databasen.
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  // Håller filen som användaren har valt men ännu inte laddat upp.
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // Tillfällig lokal URL för förhandsgranskning av vald bild.
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  // Används som cache-buster så nyuppladdad bild visas direkt.
+  const [username, setUsername] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [avatarVersion, setAvatarVersion] = useState<number>(Date.now());
-  // Sparad feedback på ändrat användarnamn
-  const [savedMessage, setSavedMessage] = useState<string>("");
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [savedMessage, setSavedMessage] = useState("");
+  const [userId, setUserId] = useState<string | null>(null);
   const { breakSettings, setBreakSettings } = useTimer();
 
+  // Hämta userId
   useEffect(() => {
-    // Hämtar användarens profildata när sidan laddas.
-    async function loadProfile() {
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
-
+    async function loadUser() {
+      const user = await getCurrentUser();
       if (!user) return;
 
-      const { data, error } = await supabase
-        .from("user_profile")
-        .select("username, avatar_url")
-        .eq("id", user.id)
-        .single();
+      setUserId(user.id);
 
-      if (error) {
-        console.error(error);
-        return;
-      }
+      const profile = await getUserProfile(user.id);
 
-      setProfile({ avatar_url: data.avatar_url });
-      setUsername(data.username ?? "");
+      setUsername(profile.username ?? "");
+      setAvatarUrl(profile.avatar_url ?? null);
     }
 
-    loadProfile();
+    loadUser();
   }, []);
 
+  // Cleanup preview
   useEffect(() => {
     return () => {
       if (previewUrl?.startsWith("blob:")) {
@@ -61,71 +49,21 @@ const SettingsPage = () => {
     };
   }, [previewUrl]);
 
-  async function uploadAvatar(file: File) {
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-
-    if (!user) return;
-
-    // upload image to storage
-    const filePath = `${user.id}.png`;
-
-    const { error } = await supabase.storage
-      .from("avatars")
-      .upload(filePath, file, { upsert: true });
-
-    if (error) {
-      console.error(error);
-      return;
-    }
-
-    // get public URL
-    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-
-    const avatarUrl = data.publicUrl;
-
-    // save URL to database
-    await supabase
-      .from("user_profile")
-      .update({ avatar_url: avatarUrl })
-      .eq("id", user.id);
-
-    // update UI
-    setProfile((p) =>
-      p ? { ...p, avatar_url: avatarUrl } : { avatar_url: avatarUrl }
-    );
-    setAvatarVersion(Date.now());
-    setSelectedFile(null);
-    setPreviewUrl(null);
-  }
-
+  //  ändra Username
   const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
 
-  async function updateUsername() {
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
+  const handleSaveUsername = async () => {
+    if (!userId) return;
 
-    if (!user) return;
-
-    const { error } = await supabase
-      .from("user_profile")
-      .update({ username })
-      .eq("id", user.id);
-
-    if (error) {
-      console.error(error);
-      return;
-    }
+    await updateUsername(userId, username);
 
     setSavedMessage("Sparat!");
-    window.setTimeout(() => setSavedMessage(""), 2000);
-  }
+    setTimeout(() => setSavedMessage(""), 2000);
+  };
 
-  // Skapar en lokal preview när en ny bild väljs.
+  //  Ändra Avatar
   const handleSelectImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -134,39 +72,43 @@ const SettingsPage = () => {
       URL.revokeObjectURL(previewUrl);
     }
 
-    const nextPreviewUrl = URL.createObjectURL(file);
+    const nextPreview = URL.createObjectURL(file);
+
     setSelectedFile(file);
-    setPreviewUrl(nextPreviewUrl);
+    setPreviewUrl(nextPreview);
   };
 
+  // Ladda upp Avatar
+  const handleUploadAvatar = async () => {
+    if (!userId || !selectedFile) return;
+
+    const newAvatarUrl = await uploadAvatar(userId, selectedFile);
+
+    setAvatarUrl(newAvatarUrl);
+    setAvatarVersion(Date.now());
+    setSelectedFile(null);
+    setPreviewUrl(null);
+  };
+
+  // Break settings
   const handleBreakDeep = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = Number(e.target.value);
-    setBreakSettings((prev) => ({ ...prev, deepMin: val }));
-  };
-  
-  const handleBreakMeeting = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = Number(e.target.value);
-    setBreakSettings((prev) => ({ ...prev, meetingMin: val }));
-  };
-  
-  const handleBreakChillToggle = (e: ChangeEvent<HTMLInputElement>) => {
-    const enabled = e.target.checked;
     setBreakSettings((prev) => ({
       ...prev,
-      chillMin: enabled ? (prev.chillMin ?? 15) : null,
+      deepMin: Number(e.target.value)
     }));
   };
-  
-  const handleBreakChillMinutes = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = Number(e.target.value);
-    setBreakSettings((prev) => ({ ...prev, chillMin: val }));
+
+  const handleBreakMeeting = (e: ChangeEvent<HTMLInputElement>) => {
+    setBreakSettings((prev) => ({
+      ...prev,
+      meetingMin: Number(e.target.value)
+    }));
   };
 
-  const persistedImageSrc = profile?.avatar_url
-    ? `${profile.avatar_url}${profile.avatar_url.includes("?") ? "&" : "?"}t=${avatarVersion}`
+  const persistedImageSrc = avatarUrl
+    ? `${avatarUrl}?t=${avatarVersion}`
     : DEFAULT_AVATAR;
 
-  // Visar preview om den finns, annars sparad profilbild.
   const imageSrc = previewUrl ?? persistedImageSrc;
 
   return (
@@ -199,7 +141,7 @@ const SettingsPage = () => {
           <button
             className="settings-upload-button"
             type="button"
-            onClick={() => selectedFile && uploadAvatar(selectedFile)}
+            onClick={handleUploadAvatar}
             disabled={!selectedFile}
           >
             Ladda upp vald bild
@@ -210,6 +152,7 @@ const SettingsPage = () => {
             <label htmlFor="username">Användarnamn</label>
             <input
               id="username"
+              data-testid="username-input"
               className="settings-username-input"
               type="text"
               value={username}
@@ -218,12 +161,18 @@ const SettingsPage = () => {
             <button
               className="settings-username-button"
               type="button"
-              onClick={updateUsername}
+              data-testid="save-username-button"
+              onClick={handleSaveUsername}
             >
               Spara användarnamn
             </button>
             {savedMessage && (
-              <p className="settings-save-message">{savedMessage}</p>
+              <p
+                data-testid="success-username-message"
+                className="settings-save-message"
+              >
+                {savedMessage}
+              </p>
             )}
           </div>
 
