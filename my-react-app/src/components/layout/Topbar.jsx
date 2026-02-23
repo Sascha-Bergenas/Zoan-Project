@@ -2,7 +2,10 @@ import TopBarCard from "./TopBarCard";
 import styles from "./Topbar.module.css";
 import { calcTime } from "../../utils/formatTime";
 import { useTimer } from "../../contexts/TimerContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import supabase from "../../supabase/supabase";
 
 export default function Topbar() {
   const {
@@ -11,13 +14,55 @@ export default function Topbar() {
     acknowledgeBreak,
   } = useTimer();
 
+  const [session, setSession] = useState(null);
+  const { user, isAuthed } = useAuth();
   const [wallNow, setWallNow] = useState(() => Date.now());
+
+  useEffect(() => {
+      async function loadSession() {
+      if (!isAuthed) {
+        const local = sessionStore.load();
+        console.log("loaded local session:", local);
+         setSession(local ?? null);
+        return;
+      }
+  
+      const { data, error } = await supabase
+        .from("sessions")
+        .select("*")
+        .eq('user_id', user?.id)
+        .order("created_at", { ascending: false })
+        .limit(4)
+  
+      if (error) {
+        console.error("supabase sessions load error:", error);
+        setSession(null);
+        return;
+      }
+  
+      console.log("loaded supabase session:", data);
+        setSession(data ?? null);
+    }
+  
+    loadSession();
+  
+  }, [isAuthed, user?.id]);
+
+  const avgMood = useMemo(() => {
+    if (!session?.length) return null;
+  
+    const valid = session.filter(s => typeof s.mood === "number");
+  
+    if (!valid.length) return null;
+  
+    const sum = valid.reduce((acc, s) => acc + s.mood, 0);
+    return sum / valid.length;
+  }, [session]);
 
   const breakNow =
   state.status === "paused" && state.pausedAtMs != null
     ? state.pausedAtMs
     : wallNow;
-
 
   useEffect(() => {
     if (state.firstStartedAtMs == null) return;
@@ -60,7 +105,7 @@ export default function Topbar() {
         </p>
       </TopBarCard>
       <TopBarCard title="Energiprognos" className={styles.card2}>
-        <p>Gla som sjutton</p>
+        <p>{avgMood}</p>
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
       {isBreakTime ? (
