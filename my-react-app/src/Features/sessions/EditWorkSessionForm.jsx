@@ -11,14 +11,6 @@ import saveSession from "../../supabase/saveSession";
 export default function EditWorkSessionForm({ handleCloseModal, handleSessionSaved, sessionData }) {
   const { user, isAuthed } = useAuth();
 
-  // timerData{
-    // activeTime: <Number> klockad tid i ms
-    // startedAt: <Number> timestamp vid start i ms
-    // endedAt: <Number> timestamp vid stopp i ms
-    // }
- 
-  // console.log("sessionData:", sessionData)
-
   // State för att lagra arbetspassets information 
   const [workSession, setWorkSession] = useState({
     startedAt: sessionData?.startedAt,
@@ -56,7 +48,6 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
   // Hanterar ändringar i input-fält genom att uppdatera state
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // console.log(value)
   
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setWorkSession((prev) => ({
@@ -65,7 +56,7 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
     }));
   };
   
-  // Hanterar formulärskickning - rensar formulär och state
+  // Hanterar formulär - rensar formulär och state
   const handleSubmit = async (e) => {
     e.preventDefault();
 

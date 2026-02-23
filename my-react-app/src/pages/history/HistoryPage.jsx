@@ -11,16 +11,8 @@ import getSessions from "../../supabase/getSessions";
 export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
-  const [ selectedRecord, setSelectedRecord] = useState(null)
   const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ refreshKey, setRefreshKey ] = useState(0)
-  
-  console.log(selectedRecord); 
-  // const timerData = {
-  //   startedAt: 0,
-  //   endedAt: 0,
-  //   activeTime: 0
-  // }
   
   // Tvinga listan att laddas om när en session har lagts till eller ändrats
   const handleSessionSaved = () => setRefreshKey((k) => k +1)
@@ -45,20 +37,9 @@ export default function History() {
   }, [isAuthed, user?.id, refreshKey])
   
   const handleAddClick = () => {
-    setSelectedRecord(null)
     setIsModalOpen(true)
   }
   
-  const handleEditClick = record => {
-    // console.log(record); 
-
-    // Om jag får in bara id-strängen från "record" här, är det bättre att välja rätt session här istället
-    // och skicka in det till editWorkSessionModal?
-
-    setSelectedRecord(record)
-    setIsModalOpen(true)
-  }
-
   return (
     <>
       <h2 className="text-lg">Statserinos</h2>
@@ -68,7 +49,6 @@ export default function History() {
           <h3>Loggade sessioner</h3>
           {isModalOpen && (
             <EditSessionModal
-              record={selectedRecord}
               handleSessionSaved={handleSessionSaved}
               onRequestClose={() => setIsModalOpen(false)}
             />
@@ -76,14 +56,10 @@ export default function History() {
           {/* Knapp för manuell loggning */}
           <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
           <BaseCard>
-            <List sessions={sessions} handleEditClick={handleEditClick}/>
+            <List sessions={sessions}/>
           </BaseCard>
-          {/* Put eventuellt knapp för manuell loggning here */}
         </div>
       </section>
-
-      {/* Put en najsig graf here (OBS! INTE en Graaf) */}
-
     </>
   );
 }
