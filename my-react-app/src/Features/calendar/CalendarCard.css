@@ -67,6 +67,7 @@ button:focus-visible {
   border: 1px solid var(--white);
 }
 
+/* Höjd och padding styr hur mycket plats prickarna får */
 .fc-daygrid-day-frame {
   min-height: 52px;
   padding: 0.15rem;
@@ -92,4 +93,47 @@ button:focus-visible {
 
 .fc .fc-daygrid-day-frame {
   height: 3rem;
+}
+
+/* Mood för dag */
+.fc-daygrid-day-events {
+  margin-top: 0.1rem;
+}
+
+.fc-daygrid-event {
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0 0.1rem;
+}
+
+.fc-daygrid-event .fc-event-title {
+  display: none;
+}
+
+.fc-daygrid-event .fc-event-title-container,
+.fc-daygrid-event .fc-event-time {
+  display: none;
+}
+
+/* Gör varje event till en liten färgad prick (currentColor styrs av mood-klass) */
+.fc-daygrid-event {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: currentColor;
+  border: none;
+  margin: 0.1rem 0 0;
+  padding: 0;
+}
+
+.fc-daygrid-event .fc-event-title,
+.fc-daygrid-event .fc-event-title-container,
+.fc-daygrid-event .fc-event-time {
+  display: none;
+}
+
+/* Döljer "+N"-länken när flera events finns samma dag */
+.fc-daygrid-more-link,
+.fc-more-link {
+  display: none;
 }

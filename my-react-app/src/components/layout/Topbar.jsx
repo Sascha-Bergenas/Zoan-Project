@@ -1,14 +1,107 @@
 import TopBarCard from "./TopBarCard";
 import styles from "./Topbar.module.css";
 import { calcTime } from "../../utils/formatTime";
+import { useTimer } from "../../contexts/TimerContext";
+import { useState, useEffect, useMemo } from "react";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import supabase from "../../supabase/supabase";
+import { TbBatteryAutomotive } from "react-icons/tb";
+import { EnergyDisplay } from "../../Features/mood/EnergyDisplay";
 
-export default function Topbar({ timer }) {
-  const { getStartedTime, hasStarted, now } = timer;
-  const startedAt = getStartedTime();
 
-  const totalTimeMs =
-    hasStarted && startedAt ? Math.max(0, now - startedAt) : 0;
+export default function Topbar() {
+  const {
+    state,
+    isBreakTime,
+    acknowledgeBreak,
+  } = useTimer();
+
+  const [session, setSession] = useState(null);
+  const { user, isAuthed } = useAuth();
+  const [wallNow, setWallNow] = useState(() => Date.now());
+
+  useEffect(() => {
+      async function loadSession() {
+      if (!isAuthed) {
+        const local = sessionStore.load();
+        console.log("loaded local session:", local);
+         setSession(local ?? null);
+        return;
+      }
+  
+      const { data, error } = await supabase
+        .from("sessions")
+        .select("*")
+        .eq('user_id', user?.id)
+        .order("created_at", { ascending: false })
+        .limit(4)
+  
+      if (error) {
+        console.error("supabase sessions load error:", error);
+        setSession(null);
+        return;
+      }
+  
+      console.log("loaded supabase session:", data);
+        setSession(data ?? null);
+    }
+  
+    loadSession();
+  
+  }, [isAuthed, user?.id]);
+
+  const avgMood = useMemo(() => {
+    if (!session?.length) return null;
+  
+    const valid = session.filter(s => typeof s.mood === "number");
+    if (!valid.length) return null;
+
+    const isFriday = new Date().getDay() === 5;
+  
+    const sum = valid.reduce((acc, s) => acc + s.mood, 0);
+    const result = isFriday ? (sum / valid.length)+1 : (sum / valid.length)
+
+    return result;
+  }, [session]);
+
+  const breakNow =
+  state.status === "paused" && state.pausedAtMs != null
+    ? state.pausedAtMs
+    : wallNow;
+
+  useEffect(() => {
+    if (state.firstStartedAtMs == null) return;
+
+    const id = setInterval(() => setWallNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [state.firstStartedAtMs]);
+
+  const startedAt = state.firstStartedAtMs;
+  const totalTimeMs = startedAt != null ? Math.max(0, wallNow - startedAt) : 0;
   const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
+
+  let timeLabel = "-";
+  if (state.nextBreakAtMs != null) {
+    const msLeft = Math.max(0, state.nextBreakAtMs - breakNow);
+
+    if (msLeft >= 60000) timeLabel = `om ${Math.floor(msLeft / 60000)} min`;
+    else timeLabel = `om ${Math.floor(msLeft / 1000)} sek`;
+  }
+
+  // Display mode
+  function formatMode(mode) {
+    if (!mode) return "-";
+  
+    switch (mode) {
+      case "deep":
+        return "Deep Work";
+      case "meeting":
+        return "Meeting";
+      case "chill":
+        return "Chill";
+    }
+  }
 
   return (
     <aside className={styles.container}>
@@ -18,13 +111,20 @@ export default function Topbar({ timer }) {
         </p>
       </TopBarCard>
       <TopBarCard title="Energiprognos" className={styles.card2}>
-        <p>Gla som sjutton</p>
+        <EnergyDisplay avgMood={avgMood} />
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
-        <p>om 45min</p>
+      {isBreakTime ? (
+        <div className="break-container">
+          <p>Dags for rast!</p>
+          <button onClick={acknowledgeBreak}>OK</button>
+        </div>
+      ) : (
+        <p>{timeLabel}</p>
+      )}
       </TopBarCard>
       <TopBarCard title="Nuvarande mode" className={styles.card4}>
-        <p>Deep work</p>
+        <p>{formatMode(state.mode)}</p>
       </TopBarCard>
     </aside>
   );

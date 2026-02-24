@@ -1,4 +1,5 @@
 dialog[open] {
+  background-color: var(--white-color);
   display: flex;
   flex-direction: column;
   justify-self: center;
@@ -6,6 +7,7 @@ dialog[open] {
   border: none;
   border-radius: 8px;
   padding: 1.5rem;
+  color: var(--black-color);
 }
 dialog::backdrop {
   background: rgba(0, 0, 0, 0.4);

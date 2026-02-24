@@ -7,10 +7,6 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "target": "esnext",
-    "noEmit": true,
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -40,7 +36,22 @@
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
+
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": true,
+
     "skipLibCheck": true,
-  }
+    "isolatedModules": true,
+    "moduleDetection": "force"
+  },
+  "include": ["src"]
 }

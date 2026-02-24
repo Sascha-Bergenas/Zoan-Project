@@ -1,6 +1,7 @@
 import "./mood.css";
 import { MdMood, MdMoodBad } from "react-icons/md";
 import {
+  TbMoodWrrrFilled,
   TbMoodHappyFilled,
   TbMoodSmileFilled,
   TbMoodEmptyFilled,
@@ -12,13 +13,13 @@ export default function MoodPicker({
   moodOptions = [
     {
       id: 1,
-      label: 1,
+      label: 5,
       emoji: TbMoodHappyFilled,
       color: "green",
     },
     {
       id: 2,
-      label: 2,
+      label: 4,
       emoji: TbMoodSmileFilled,
       color: "dark-green",
     },
@@ -30,9 +31,15 @@ export default function MoodPicker({
     },
     {
       id: 4,
-      label: 4,
+      label: 2,
       emoji: TbMoodSadFilled,
       color: "blue",
+    },
+    {
+      id: 5,
+      label: 1,
+      emoji: TbMoodWrrrFilled,
+      color: "red",
     },
   ], value, onChange,
 }) {

@@ -1,0 +1,126 @@
+.settings-wrapper {
+  container-type: inline-size;
+  display: flex;
+  justify-content: center;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  background-color: var(--primary-light-color);
+  max-width: 90rem;
+  width: 100%;
+}
+
+.settings-card {
+  width: min(100%, 30rem);
+  min-width: 0;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: left;
+}
+
+.settings-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.settings-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gray-light-color);
+}
+
+.settings-avatar-text {
+  margin: 0;
+  color: var(--black-color);
+  font-size: 0.95rem;
+}
+
+.settings-file-label {
+  font-weight: 600;
+}
+
+.settings-file-input {
+  width: 100%;
+}
+
+.settings-upload-button {
+  align-self: flex-start;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  background-color: var(--primary-light-color);
+  color: var(--black-color);
+  box-shadow: rgba(0, 0, 0, 0.425) 0 1px 3px 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.settings-upload-button:hover {
+  background-color: var(--primary-color);
+}
+
+.settings-upload-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settings-username-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-username-input {
+  padding: 0.5rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 4px;
+  font-size: 1rem;
+  max-width: 15rem;
+}
+
+.settings-username-button {
+  align-self: flex-start;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  background-color: var(--primary-light-color);
+  color: var(--black-color);
+  box-shadow: rgba(0, 0, 0, 0.425) 0 1px 3px 0;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.settings-username-button:hover {
+  background-color: var(--primary-color);
+}
+
+.settings-save-message {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--black-color);
+}
+.settings-break-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.settings-break-input {
+  margin-left: 8px;
+}
+
+@container (inline-size < 650px) {
+  .settings-container {
+    margin: 0.5rem;
+    padding: 0.75rem;
+  }
+}

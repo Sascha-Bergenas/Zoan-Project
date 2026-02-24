@@ -5,11 +5,10 @@ h2 {
 }
 
 .wrapper {
-    container-type: inline-size;
-    display: flex;
-    justify-content: center;
+  container-type: inline-size;
+  display: flex;
+  justify-content: center;
 }
-
 
 .container {
     padding: 1rem;
@@ -19,4 +18,9 @@ h2 {
     background-color: var(--primary-light-color);
     width: 100%;
     max-width : 90rem;
+}
+
+.list {
+  max-height: 30rem;
+  overflow-y: scroll;
 }
