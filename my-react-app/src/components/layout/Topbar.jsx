@@ -8,13 +8,14 @@ import { sessionStore } from "../../storage/localStorage";
 import supabase from "../../supabase/supabase";
 import { TbBatteryAutomotive } from "react-icons/tb";
 import { EnergyDisplay } from "../../Features/mood/EnergyDisplay";
+import Button from "../ui/button/Button";
 
 
 export default function Topbar() {
   const {
     state,
-    isBreakTime,
     acknowledgeBreak,
+    actions,
   } = useTimer();
 
   const [session, setSession] = useState(null);
@@ -81,13 +82,28 @@ export default function Topbar() {
   const totalTimeMs = startedAt != null ? Math.max(0, wallNow - startedAt) : 0;
   const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
 
-  let timeLabel = "-";
-  if (state.nextBreakAtMs != null) {
-    const msLeft = Math.max(0, state.nextBreakAtMs - breakNow);
+  // För att visa nästa rast korrekt
+  const nextBreakAt = state.nextBreakAtMs;
 
-    if (msLeft >= 60000) timeLabel = `om ${Math.floor(msLeft / 60000)} min`;
-    else timeLabel = `om ${Math.floor(msLeft / 1000)} sek`;
-  }
+  const DUE_EARLY_MS = 200;
+  const isBreakDue =
+  nextBreakAt != null && breakNow + DUE_EARLY_MS >= nextBreakAt;
+
+  let displayBreak = "countdown";
+
+    if (state.onBreak) displayBreak = "onBreak";
+    else if (isBreakDue) displayBreak = "due";
+
+    let timeLabel = "-";
+
+if (displayBreak === "countdown" && nextBreakAt != null) {
+  const msLeft = nextBreakAt - breakNow;
+
+  timeLabel =
+    msLeft > 60000
+      ? `om ${Math.floor(msLeft / 60000)} min`
+      : `om ${Math.ceil(msLeft / 1000)} sek`;
+}
 
   // Display mode
   function formatMode(mode) {
@@ -114,14 +130,34 @@ export default function Topbar() {
         <EnergyDisplay avgMood={avgMood} />
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
-      {isBreakTime ? (
-        <div className="break-container">
-          <p>Dags for rast!</p>
-          <button onClick={acknowledgeBreak}>OK</button>
-        </div>
-      ) : (
-        <p>{timeLabel}</p>
-      )}
+{displayBreak === "due" ? (
+  <div className="break-container">
+    <p>Dags för rast!</p>
+    <div className="break-actions">
+      <button
+        onClick={() => {
+          acknowledgeBreak();
+          actions.pause();
+          actions.takeBreak();
+        }}
+      >
+        Ta rast
+      </button>
+
+      <button
+        onClick={() => {
+          acknowledgeBreak();
+        }}
+      >
+        Inte nu
+      </button>
+    </div>
+  </div>
+) : displayBreak === "onBreak" ? (
+  <p>Nu</p>
+) : (
+  <p>{timeLabel}</p>
+)}
       </TopBarCard>
       <TopBarCard title="Nuvarande mode" className={styles.card4}>
         <p>{formatMode(state.mode)}</p>
