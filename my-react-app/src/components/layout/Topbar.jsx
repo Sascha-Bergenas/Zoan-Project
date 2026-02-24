@@ -13,6 +13,7 @@ import Button from "../ui/button/Button";
 
 export default function Topbar() {
   const {
+    now,
     state,
     acknowledgeBreak,
     actions,
@@ -21,6 +22,16 @@ export default function Topbar() {
   const [session, setSession] = useState(null);
   const { user, isAuthed } = useAuth();
   const [wallNow, setWallNow] = useState(() => Date.now());
+
+  // To calculate 
+  const ONE_AND_HALF_HOUR = 1.5 * 60 * 60 * 1000;
+
+  const baselinePauseMs = state.pausedAtMs ?? state.firstStartedAtMs;
+  const sincePauseMs =
+    baselinePauseMs != null ? Math.max(0, now - baselinePauseMs) : 0;
+  
+  const noPauseTooLong =
+    state.firstStartedAtMs != null && sincePauseMs >= ONE_AND_HALF_HOUR;
 
   useEffect(() => {
       async function loadSession() {
@@ -52,6 +63,8 @@ export default function Topbar() {
   
   }, [isAuthed, user?.id]);
 
+  
+
   const avgMood = useMemo(() => {
     if (!session?.length) return null;
   
@@ -61,10 +74,13 @@ export default function Topbar() {
     const isFriday = new Date().getDay() === 5;
   
     const sum = valid.reduce((acc, s) => acc + s.mood, 0);
-    const result = isFriday ? (sum / valid.length)+1 : (sum / valid.length)
+    let result = sum / valid.length;
+  
+    if (isFriday) result += 1;
+    if (noPauseTooLong) result -= 1;
 
     return result;
-  }, [session]);
+  }, [session, noPauseTooLong]);
 
   const breakNow =
   state.status === "paused" && state.pausedAtMs != null
@@ -134,22 +150,16 @@ if (displayBreak === "countdown" && nextBreakAt != null) {
   <div className="break-container">
     <p>Dags för rast!</p>
     <div className="break-actions">
-      <button
-        onClick={() => {
+      <Button text={'Ta rast'} variant="primary" className="take-break" onClick={() => {
           acknowledgeBreak();
           actions.pause();
           actions.takeBreak();
-        }}
-      >
-        Ta rast
-      </button>
-
-      <button
-        onClick={() => {
+        }}>
+        </Button>
+      
+      <button className={styles.skipBtn} onClick={() => {
           acknowledgeBreak();
-        }}
-      >
-        Inte nu
+        }}>Skippa
       </button>
     </div>
   </div>
