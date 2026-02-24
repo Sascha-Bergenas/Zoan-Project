@@ -1,6 +1,7 @@
 .input {
   padding: 0.5rem;
   margin-right: 13px;
+  margin-bottom: 1rem;
   border: 1px solid #d0d0d0;
   border-radius: 4px;
   font-size: 1rem;
@@ -36,3 +37,8 @@
 .input-wrapper span {
   display: none;
 }
+
+.input-wrapper label:has(input[type="datetime-local"]) span{
+  display: block;
+}
+

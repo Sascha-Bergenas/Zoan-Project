@@ -1,5 +1,6 @@
 import ListHeader from "./ListHeader"
 import ListItem from "./ListItem"
+import styles from "./List.module.css" 
 
 
 function List({sessions = []}) {
@@ -14,7 +15,7 @@ function List({sessions = []}) {
         "Mood"
     ]
     return(
-        <ul>
+        <ul className={styles.list}>
             <ListHeader headers={headers} />
             {  
                 sessions.map((session, i) => {

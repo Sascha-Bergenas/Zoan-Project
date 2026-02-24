@@ -15,7 +15,7 @@ const Input = ({
   return (
     <div className="input-wrapper">
       <label>
-          {label}
+        <span>{label}</span>
         <input
           className={className ? `input ${className}` : "input"}
           type={type}
@@ -23,9 +23,9 @@ const Input = ({
           onChange={onChange}
           placeholder={placeholder}
           name={name}
-          min={type === "time" ? min : null}
-          max={type === "time" ? max : null}
-          step={type === "time" ? step : null}
+          min={min}
+          max={max}
+          step={step}
         />
       </label>
     </div>

@@ -120,7 +120,7 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
 
       <Input
         type="datetime-local"
-        label="Stoptid"
+        label="Stopptid"
         name="endedAt"
         value={workSession.endedAt}
         onChange={handleChange}
@@ -131,7 +131,6 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
         type="time" 
         label="Varaktighet"
         name="activeTime"
-        // value={new Date(workSession.activeTime).toLocaleTimeString()}
         value={workSession.activeTime}
         onChange={handleChange} 
         min="00:00"

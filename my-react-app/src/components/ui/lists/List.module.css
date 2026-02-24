@@ -1,6 +1,10 @@
-ul {
+.list {
     display: grid;
     grid-template-columns: max-content auto repeat(4, max-content) auto max-content;
+    max-height: 30rem;
+    overflow-y:scroll;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
     color: var(--primary-color);
 }
 
