@@ -20,6 +20,7 @@ import React, {
     clearMode: () => void;
     setBreakEvery: (ms: number | null) => void;  
     selectMode: (mode: "deep" | "meeting" | "chill") => void;
+    takeBreak: () => void;
   }
   
   type TimerState = {
@@ -33,7 +34,7 @@ import React, {
       breakEveryMs: number | null;
 
       pausedAtMs: number | null; 
-
+      onBreak: boolean;
   };
   
   type TimerAction =
@@ -43,7 +44,8 @@ import React, {
     | { type: "SET_MODE"; mode: TimerState["mode"] }
     | { type: "CLEAR_MODE" }
     | { type: "SET_BREAK_EVERY"; ms: number | null }
-    | { type: "ACK_BREAK" };
+    | { type: "ACK_BREAK" }
+    | { type : "TAKE_BREAK"};
     
   
   const initialState: TimerState = {
@@ -55,6 +57,7 @@ import React, {
     nextBreakAtMs: null,
     breakEveryMs: null,
     pausedAtMs: null,
+    onBreak: false,
   };
   
   function timerReducer(state: TimerState, action: TimerAction): TimerState {
@@ -82,6 +85,7 @@ import React, {
         startedAtMs: now,
         nextBreakAtMs,
         pausedAtMs: null,
+        onBreak: false,
       };
     }
   
@@ -124,6 +128,9 @@ import React, {
           nextBreakAtMs: now + state.breakEveryMs,
         };
       }
+      case "TAKE_BREAK": {
+        return { ...state, onBreak: true}
+      }
       default: return state;
     }
   }
@@ -143,7 +150,6 @@ import React, {
     actions: TimerActions;
     state: TimerState;
 
-    isBreakTime: boolean,
     acknowledgeBreak: () => void,
 
     breakSettings: BreakSettings;
@@ -160,13 +166,6 @@ import React, {
     useEffect(() => {
       saveBreakSettings(breakSettings);
     }, [breakSettings]);
-
-
-    const { isBreakTime } = useBreakTimer({
-      status: state.status,
-      now,
-      nextBreakAtMs: state.nextBreakAtMs,
-    });
 
     function breakMsForMode(mode: "deep" | "meeting" | "chill", s: BreakSettings) {
       const min =
@@ -194,6 +193,7 @@ import React, {
 
       clearMode: () => dispatch({ type: "CLEAR_MODE" }),
       setBreakEvery: (ms) => dispatch({ type: "SET_BREAK_EVERY", ms }),    
+      takeBreak: () => dispatch({ type: "TAKE_BREAK"})
     }
 
     useEffect(() => {
@@ -212,7 +212,6 @@ import React, {
       actions,
       getStartedTime: () => state.firstStartedAtMs,
 
-      isBreakTime,
       acknowledgeBreak,
 
       breakSettings,       

@@ -26,21 +26,11 @@
 .card2 h3 {
   padding-bottom: 0;
 }
-
-@keyframes pulseGlow {
-  0% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 0px gold);
-  }
-  50% {
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 12px gold);
-  }
-  100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 0px gold);
-  }
+.skipBtn {
+  border: none;
+  border-radius: 4px;
+  padding: 4px;
 }
-.legendary-pulse {
-  animation: pulseGlow 1.5s ease-in-out infinite;
+.skipBtn:hover {
+  transform: translateY(-1px);
 }

@@ -10,7 +10,7 @@ import "./mood.css";
   type MoodBatteryProps = { avgMood: number };
   
   export function EnergyDisplay({ avgMood }: MoodBatteryProps) {
-    if (avgMood >= 7) {
+    if (avgMood >= 5.1) {
       return (
         <IoBeerOutline size={72} className="legendary-pulse" color="gold" style={{ paddingTop: "2px" }} />
       );
