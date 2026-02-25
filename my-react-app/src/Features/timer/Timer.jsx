@@ -16,8 +16,9 @@ export default function Timer() {
 
   const dialogRef = useRef(null);
 
-  const [timerData, setTimerData] = useState(null);
-
+  const [timerData, setTimerData] = useState({activeTime: 0, startedAt: 0, endedAt: 0});
+  console.log(timerData)
+  
   const [stopTimeFormatted, setStopTimeFormatted] = useState("");
 
   function calcTime(ms) {
@@ -71,6 +72,7 @@ export default function Timer() {
 
   return (
     <div className="timer-fill">
+      {/* {console.log(timerData)} */}
       <SessionModal
         dialogRef={dialogRef}
         stopTimeFormatted={stopTimeFormatted}

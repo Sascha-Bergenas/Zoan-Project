@@ -1,5 +1,6 @@
 import ListHeader from "./ListHeader"
 import ListItem from "./ListItem"
+import styles from "./List.module.css" 
 
 
 function List({sessions = []}) {
@@ -10,16 +11,19 @@ function List({sessions = []}) {
         "Start",
         "Stopp",
         "Aktiv tid",
-        "Paus tid",
         "Kommentar",
         "Mood"
     ]
     return(
-        <ul>
+        <ul className={styles.list}>
             <ListHeader headers={headers} />
             {  
-                sessions.map((e, i) => {
-                return <ListItem session={e} key={i} evenOdd={i % 2 > 0 ? "odd" : "even"}/>
+                sessions.map((session, i) => {
+                    return <ListItem 
+                        session={session} 
+                        key={i} 
+                        evenOdd={i % 2 > 0 ? "odd" : "even"} 
+                    />
                 })
             }
         </ul>
