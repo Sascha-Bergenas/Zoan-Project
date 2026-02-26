@@ -5,7 +5,7 @@ import Topbar from "../../components/layout/Topbar";
 import CalendarCard from "../../Features/calendar/CalendarCard";
 import Todo from "../../Features/todo/Todo";
 import Profile from "../../components/ui/profile/Profile";
-import SmartRecommendations from "../../components/AItest";
+import SmartRecommendations from "../../components/ui/smartRecommendations/SmartRecommendations";
 
 function Dashboard() {
   return (

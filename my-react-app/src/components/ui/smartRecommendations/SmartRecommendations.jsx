@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import Button from "../button/Button";
+import TextArea from "../textArea/TextArea";
+import "./smartRecommendations.css";
 
 const SmartRecommendations = () => {
   const [userInput, setUserInput] = useState("");
   const [mode, setMode] = useState("");
   const [comment, setComment] = useState("");
+  const [time, setTime] = useState("");
 
   const getRecommendation = async () => {
     try {
@@ -13,9 +17,10 @@ const SmartRecommendations = () => {
         body: JSON.stringify({ userInput }),
       });
       const text = await res.text();
-      const [m, c] = text.split("–").map((s) => s.trim());
-      setMode(m);
-      setComment(c || "");
+      const parts = text.split("-").map((s) => s.trim());
+      setMode(parts[0] || "");
+      setTime(parts[1] || "");
+      setComment(parts[2] || "");
     } catch (err) {
       console.error(err);
       setMode("Deep Work");
@@ -25,19 +30,22 @@ const SmartRecommendations = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h2>Smart Work Mode Recommendation</h2>
-      <textarea
-        placeholder="Skriv hur du känner dig eller din situation"
+      <h3>Smarta rekommendationer</h3>
+      <TextArea
+        placeholder="Skriv hur ditt humör är idag och få en rekommendation."
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
-        rows={2}
       />
-      <br />
-      <button onClick={getRecommendation}>Få rekommendation</button>
-      <p>
-        <strong>Mode:</strong> {mode}
-      </p>
-      <p>{comment}</p>
+      <Button text="Få rekommendation" onClick={getRecommendation}>
+        Få rekommendation
+      </Button>
+      {(mode || time || comment) && (
+        <div style={{ marginTop: "16px" }}>
+          {mode && <h4> {mode}</h4>}
+          {time && <p>Föreslagen arbetstid: {time}</p>}
+          {comment && <p> {comment}</p>}
+        </div>
+      )}
     </div>
   );
 };
