@@ -15,15 +15,21 @@ const DEFAULT_AVATAR =
 
 const SettingsPage = () => {
   const [username, setUsername] = useState("");
+  // Sparar aktuell profilbilds-URL från databasen.
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  // Används som cache-buster så nyuppladdad bild visas direkt.
   const [avatarVersion, setAvatarVersion] = useState<number>(Date.now());
+  // Håller filen som användaren har valt men ännu inte laddat upp.
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // Tillfällig lokal URL för förhandsgranskning av vald bild.
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  // Sparad feedback på ändrat användarnamn
   const [savedMessage, setSavedMessage] = useState("");
   const [userId, setUserId] = useState<string | null>(null);
+  // Paus inställningar
   const { breakSettings, setBreakSettings } = useTimer();
 
-  // Hämta userId
+  // Hämtar användarens profildata när sidan laddas.
   useEffect(() => {
     async function loadUser() {
       const user = await getCurrentUser();
@@ -63,7 +69,7 @@ const SettingsPage = () => {
     setTimeout(() => setSavedMessage(""), 2000);
   };
 
-  //  Ändra Avatar
+  // Skapar en lokal preview när en ny bild väljs.
   const handleSelectImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -109,6 +115,7 @@ const SettingsPage = () => {
     ? `${avatarUrl}?t=${avatarVersion}`
     : DEFAULT_AVATAR;
 
+  // Visar preview om den finns, annars sparad profilbild.
   const imageSrc = previewUrl ?? persistedImageSrc;
 
   return (
