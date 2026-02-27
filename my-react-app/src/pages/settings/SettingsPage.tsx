@@ -137,6 +137,8 @@ const SettingsPage = () => {
             Välj ny profilbild
           </label>
           <input
+            // test id
+            data-testid="choose-file-input"
             id="avatarUpload"
             className="settings-file-input"
             type="file"
@@ -149,6 +151,8 @@ const SettingsPage = () => {
             className="settings-upload-button"
             type="button"
             onClick={handleUploadAvatar}
+            //Test Id
+            data-testid="disable-btn"
             disabled={!selectedFile}
           >
             Ladda upp vald bild
@@ -159,6 +163,7 @@ const SettingsPage = () => {
             <label htmlFor="username">Användarnamn</label>
             <input
               id="username"
+              //Test Id
               data-testid="username-input"
               className="settings-username-input"
               type="text"
@@ -168,6 +173,7 @@ const SettingsPage = () => {
             <button
               className="settings-username-button"
               type="button"
+              //Test Id
               data-testid="save-username-button"
               onClick={handleSaveUsername}
             >
@@ -175,6 +181,7 @@ const SettingsPage = () => {
             </button>
             {savedMessage && (
               <p
+                //Test Id
                 data-testid="success-username-message"
                 className="settings-save-message"
               >
