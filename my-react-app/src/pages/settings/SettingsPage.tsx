@@ -149,19 +149,6 @@ const SettingsPage = () => {
     setBreakSettings((prev) => ({ ...prev, meetingMin: val }));
   };
   
-  const handleBreakChillToggle = (e: ChangeEvent<HTMLInputElement>) => {
-    const enabled = e.target.checked;
-    setBreakSettings((prev) => ({
-      ...prev,
-      chillMin: enabled ? (prev.chillMin ?? 15) : null,
-    }));
-  };
-  
-  const handleBreakChillMinutes = (e: ChangeEvent<HTMLInputElement>) => {
-    const val = Number(e.target.value);
-    setBreakSettings((prev) => ({ ...prev, chillMin: val }));
-  };
-
   const persistedImageSrc = profile?.avatar_url
     ? `${profile.avatar_url}${profile.avatar_url.includes("?") ? "&" : "?"}t=${avatarVersion}`
     : DEFAULT_AVATAR;
@@ -230,30 +217,34 @@ const SettingsPage = () => {
           {/* Uppdatering av rast-inställningar */}
 
           <div className="settings-break-section">
-            <h3>Inställning för rast</h3>
+            <h3>Längd på arbetspass</h3>
 
             <label className="settings-break-label">
               Deep Work
               <input
-                type="number"
-                min={1}
-                max={240}
+                type="range"
+                min={5}
+                max={120}
+                step={5}
                 value={breakSettings.deepMin}
                 onChange={handleBreakDeep}
                 className="settings-break-input"
               />
+              <p> {breakSettings.deepMin} min</p>
             </label>
 
             <label className="settings-break-label">
-              Meeting
+              Möte
               <input
-                type="number"
-                min={1}
-                max={240}
+                type="range"
+                min={5}
+                max={120}
+                step={5}
                 value={breakSettings.meetingMin}
                 onChange={handleBreakMeeting}
                 className="settings-break-input"
               />
+                 <p> {breakSettings.meetingMin} min</p>
             </label>
             <p className="settings-break-hint">
               Sparas automatiskt och används när du väljer mode.

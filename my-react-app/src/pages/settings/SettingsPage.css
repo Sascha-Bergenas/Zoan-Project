@@ -114,8 +114,18 @@
   flex-direction: column;
   gap: 10px;
 }
-.settings-break-input {
-  margin-left: 8px;
+.settings-break-label {
+  display: flex;
+  gap: 10px;
+  max-width: 300px;
+  white-space: nowrap;
+}
+.settings-break-label p {
+  min-width: 60px;
+}
+.settings-break-label input {
+  margin-left: auto;
+  accent-color: var(--primary-color);
 }
 
 @container (inline-size < 650px) {
