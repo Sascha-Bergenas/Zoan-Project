@@ -20,6 +20,7 @@ export function loadBreakSettings(): BreakSettings {
         parsed.chillMin === null || typeof parsed.chillMin === "number"
           ? parsed.chillMin
           : DEFAULT_BREAK_SETTINGS.chillMin,
+      beerOnFriday: typeof parsed.beerOnFriday === 'boolean' ? parsed.beerOnFriday : DEFAULT_BREAK_SETTINGS.beerOnFriday,
     };
   } catch {
     return DEFAULT_BREAK_SETTINGS;
