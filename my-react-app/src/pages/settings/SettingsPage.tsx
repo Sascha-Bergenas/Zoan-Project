@@ -250,6 +250,33 @@ const SettingsPage = () => {
               Sparas automatiskt och används när du väljer mode.
             </p>
           </div>
+          <div className="settings-beer-section">
+            <h3>Öl på fredag?</h3>
+            <div className="beer-options">
+            <label>
+              <input
+                type="radio"
+                name="beerOnFriday"
+                checked={breakSettings.beerOnFriday === true}
+                onChange={() =>
+                  setBreakSettings((prev) => ({ ...prev, beerOnFriday: true }))
+                }
+              />
+              Ja
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="beerOnFriday"
+                checked={breakSettings.beerOnFriday === false}
+                onChange={() =>
+                  setBreakSettings((prev) => ({ ...prev, beerOnFriday: false }))
+                }
+              />
+              Nej
+            </label>
+            </div>
+          </div>
         </BaseCard>
       </div>
     </section>

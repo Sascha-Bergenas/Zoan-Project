@@ -127,6 +127,16 @@
   margin-left: auto;
   accent-color: var(--primary-color);
 }
+.beer-options {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  padding: 4px 0px;
+}
+.beer-options input {
+  accent-color: var(--primary-color);
+  margin: 4px;
+}
 
 @container (inline-size < 650px) {
   .settings-container {
