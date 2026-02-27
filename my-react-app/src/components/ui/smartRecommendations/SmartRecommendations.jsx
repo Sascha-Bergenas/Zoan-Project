@@ -16,8 +16,18 @@ const SmartRecommendations = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userInput }),
       });
+
       const text = await res.text();
-      const parts = text.split("-").map((s) => s.trim());
+
+      if (text === "IRRELEVANT") {
+        setMode("Skriv hur du mår!");
+        setTime("");
+        setComment("T.ex. 'jag är trött' eller 'jag känner mig pigg'.");
+        return;
+      }
+
+      const parts = text.split("-").map((s) => s.trim()); //splits string into an array every time it hits a "-"
+
       setMode(parts[0] || "");
       setTime(parts[1] || "");
       setComment(parts[2] || "");
@@ -39,10 +49,13 @@ const SmartRecommendations = () => {
       <Button text="Få rekommendation" onClick={getRecommendation}>
         Få rekommendation
       </Button>
-      {(mode || time || comment) && (
+      {(mode || time || comment) && ( // only shows results div if one of the three has a value
         <div style={{ marginTop: "16px" }}>
-          {mode && <h4> {mode}</h4>}
-          {time && <p>Föreslagen arbetstid: {time}</p>}
+          <div className="pb-1">
+            {mode && <h4> {mode}</h4>}
+            {time && <p>Föreslagen arbetstid: {time}</p>}
+          </div>
+          <span className="text-bold">Tips:</span>{" "}
           {comment && <p> {comment}</p>}
         </div>
       )}

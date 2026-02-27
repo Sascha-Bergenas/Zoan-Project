@@ -1,47 +1,49 @@
-import express from "express"; //create server and define routes
-import fetch from "node-fetch"; //lets server make https requests
-import cors from "cors"; // allwaos react forntend to talk to  your server
-import dotenv from "dotenv"; // lets server read the env file
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
+import dotenv from "dotenv";
 
-dotenv.config(); //loads .env file so key is accessible
-const app = express(); // creates server
-app.use(cors()); // tells the server to accept requests from your react frontend
-app.use(express.json()); //tells the server to understand json data that gets sent
+dotenv.config();
+const app = express();
+app.use(cors());
+app.use(express.json());
 
 app.post("/recommend", async (req, res) => {
-  //creates an endpoint that listens for POST requests at http://localhost:5000/recommend
-  const { userInput } = req.body; //grabs the userInput text that react sent over
+  const { userInput } = req.body;
 
   try {
     const response = await fetch(
-      // sends the request and waits for the response
       "https://openrouter.ai/api/v1/chat/completions",
       {
         method: "POST",
         headers: {
-          //metadata
           Authorization: `Bearer ${process.env.OPENROUTER_KEY}`, // reads env file for API key. OpenRouter reads headers first to verify auth
-          "Content-Type": "application/json", // sending json data
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           model: "openai/gpt-4o-mini",
           messages: [
             {
               role: "user",
-              content: `Du får ett meddelande från en användare. Klassificera det som antingen "Deep Work" eller "Chill".
+              content: `Du får ett meddelande från en användare.
 
-Klassificera som "Chill" om meddelandet innehåller något av: trött, trött, seg, orkeslös, stressad, jobbig, tung, svår, överväldigad, inte orkar, behöver paus, har ont, mår dåligt, ledsen, ångest.
+Först: Handlar meddelandet om hur användaren mår eller känner sig just nu?
+Om NEJ, svara bara med ordet: IRRELEVANT
 
-Klassificera som "Deep Work" om meddelandet innehåller något av: pigg, energisk, fokuserad, motiverad, redo, stark, bra, glad, sugen.
+Om JA, klassificera som "Deep Work" eller "Chill":
+- "Chill" om användaren verkar trött, stressad, ledsen eller orkeslös
+- "Deep Work" om användaren verkar pigg, motiverad eller energisk
 
-För Deep Work, föreslå mellan 25-90 min baserat på hur energisk användaren verkar.
-För Chill, föreslå mellan 10-30 min baserat på hur trött användaren verkar.
+För Deep Work, föreslå ett tal mellan 25 och 90 min baserat på hur energisk användaren verkar.
+För Chill, föreslå ett tal mellan 10 och 30 min baserat på hur trött användaren verkar.
 
-Om meddelandet inte passar in på något av ovanstående, välj "Chill".
+Ge ett kort, kreativt och oväntat tips. Det ska inte vara det första du tänker på.
 
-Användarens meddelande: "${userInput}" /* From userinput state */
+Användarens meddelande: "${userInput}"
 
-Svara i exakt detta format och inget annat:
+Svara i exakt ett av dessa format:
+IRRELEVANT
+eller
 <Mode> - <tid> min - <kort tips på svenska>`,
             },
           ],
@@ -54,11 +56,11 @@ Svara i exakt detta format och inget annat:
     console.log("OpenRouter response:", data);
 
     const recommendation =
-      data?.choices?.[0]?.message?.content?.trim() || "Deep Work – Kör på!";
+      data?.choices?.[0]?.message?.content?.trim() || "Deep Work - Kör på!"; //if it exists, keep going (optional chaining)
     res.send(recommendation);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Deep Work – Fel vid generering av rekommendation.");
+    res.status(500).send("Deep Work - Fel vid generering av rekommendation.");
   }
 });
 
