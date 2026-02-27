@@ -1,6 +1,7 @@
 h2 {
-  margin-inline: auto;
-  max-width: 90rem;
+    margin-inline: auto;
+    max-width : 90rem;
+    padding-inline: 2rem;
 }
 
 .wrapper {
@@ -10,12 +11,13 @@ h2 {
 }
 
 .container {
-  padding: 1rem;
-  gap: 1rem;
-  margin: 1rem;
-  border-radius: 10px;
-  background-color: var(--primary-light-color);
-  max-width: 90rem;
+    padding: 1rem;
+    gap: 1rem;
+    margin: 1rem;
+    border-radius: 10px;
+    background-color: var(--primary-light-color);
+    width: 100%;
+    max-width : 90rem;
 }
 
 .list {

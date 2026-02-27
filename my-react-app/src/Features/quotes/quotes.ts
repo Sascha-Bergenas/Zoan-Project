@@ -35,4 +35,6 @@ export const quotes: string[] = [
   "Det är en hel del saker som inte är så bra, men det är inte mitt fel",
   "Kom alltid ihåg att du är helt unik. Precis som alla andra",
   "Det man inte gör idag slipper man göra om imorgon",
+  "Nej, det var inte jag. Och förresten så var det inte meningen!",
+  "För det första så har jag aldrig lånat den, för det andra så var den trasig redan när jag fick den och för det tredje så har jag lämnat tillbaka den för lääääänge sen!",
 ];
