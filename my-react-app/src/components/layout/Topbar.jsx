@@ -139,7 +139,9 @@ if (displayBreak === "countdown" && nextBreakAt != null) {
     <aside className={styles.container}>
       <TopBarCard title="Total tid" className={styles.card1}>
         <p>
-          {formattedHours}h {formattedMinutes}min
+        {formattedHours < 1
+        ? `${formattedMinutes} min`
+        : `${formattedHours}h ${formattedMinutes}min`}
         </p>
       </TopBarCard>
       <TopBarCard title="Energiprognos" className={styles.card2}>
