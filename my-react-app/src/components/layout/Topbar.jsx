@@ -2,22 +2,90 @@ import TopBarCard from "./TopBarCard";
 import styles from "./Topbar.module.css";
 import { calcTime } from "../../utils/formatTime";
 import { useTimer } from "../../contexts/TimerContext";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import supabase from "../../supabase/supabase";
+import { TbBatteryAutomotive } from "react-icons/tb";
+import { EnergyDisplay } from "../../Features/mood/EnergyDisplay";
+import Button from "../ui/button/Button";
+
 
 export default function Topbar() {
   const {
+    now,
     state,
-    isBreakTime,
     acknowledgeBreak,
+    actions,
   } = useTimer();
 
+  const [session, setSession] = useState(null);
+  const { user, isAuthed } = useAuth();
   const [wallNow, setWallNow] = useState(() => Date.now());
+
+  // To calculate 
+  const ONE_AND_HALF_HOUR = 1.5 * 60 * 60 * 1000;
+
+  const baselinePauseMs = state.pausedAtMs ?? state.firstStartedAtMs;
+  const sincePauseMs =
+    baselinePauseMs != null ? Math.max(0, now - baselinePauseMs) : 0;
+  
+  const noPauseTooLong =
+    state.firstStartedAtMs != null && sincePauseMs >= ONE_AND_HALF_HOUR;
+
+  useEffect(() => {
+      async function loadSession() {
+      if (!isAuthed) {
+        const local = sessionStore.load();
+        console.log("loaded local session:", local);
+         setSession(local ?? null);
+        return;
+      }
+  
+      const { data, error } = await supabase
+        .from("sessions")
+        .select("*")
+        .eq('user_id', user?.id)
+        .order("created_at", { ascending: false })
+        .limit(4)
+  
+      if (error) {
+        console.error("supabase sessions load error:", error);
+        setSession(null);
+        return;
+      }
+  
+      console.log("loaded supabase session:", data);
+        setSession(data ?? null);
+    }
+  
+    loadSession();
+  
+  }, [isAuthed, user?.id]);
+
+  
+
+  const avgMood = useMemo(() => {
+    if (!session?.length) return null;
+  
+    const valid = session.filter(s => typeof s.mood === "number");
+    if (!valid.length) return null;
+
+    const isFriday = new Date().getDay() === 5;
+  
+    const sum = valid.reduce((acc, s) => acc + s.mood, 0);
+    let result = sum / valid.length;
+  
+    if (isFriday) result += 1;
+    if (noPauseTooLong) result -= 1;
+
+    return result;
+  }, [session, noPauseTooLong]);
 
   const breakNow =
   state.status === "paused" && state.pausedAtMs != null
     ? state.pausedAtMs
     : wallNow;
-
 
   useEffect(() => {
     if (state.firstStartedAtMs == null) return;
@@ -30,13 +98,28 @@ export default function Topbar() {
   const totalTimeMs = startedAt != null ? Math.max(0, wallNow - startedAt) : 0;
   const { formattedHours, formattedMinutes } = calcTime(totalTimeMs);
 
-  let timeLabel = "-";
-  if (state.nextBreakAtMs != null) {
-    const msLeft = Math.max(0, state.nextBreakAtMs - breakNow);
+  // För att visa nästa rast korrekt
+  const nextBreakAt = state.nextBreakAtMs;
 
-    if (msLeft >= 60000) timeLabel = `om ${Math.floor(msLeft / 60000)} min`;
-    else timeLabel = `om ${Math.floor(msLeft / 1000)} sek`;
-  }
+  const DUE_EARLY_MS = 200;
+  const isBreakDue =
+  nextBreakAt != null && breakNow + DUE_EARLY_MS >= nextBreakAt;
+
+  let displayBreak = "countdown";
+
+    if (state.onBreak) displayBreak = "onBreak";
+    else if (isBreakDue) displayBreak = "due";
+
+    let timeLabel = "-";
+
+if (displayBreak === "countdown" && nextBreakAt != null) {
+  const msLeft = nextBreakAt - breakNow;
+
+  timeLabel =
+    msLeft > 60000
+      ? `om ${Math.floor(msLeft / 60000)} min`
+      : `om ${Math.ceil(msLeft / 1000)} sek`;
+}
 
   // Display mode
   function formatMode(mode) {
@@ -60,17 +143,31 @@ export default function Topbar() {
         </p>
       </TopBarCard>
       <TopBarCard title="Energiprognos" className={styles.card2}>
-        <p>Gla som sjutton</p>
+        <EnergyDisplay avgMood={avgMood} />
       </TopBarCard>
       <TopBarCard title="Nästa rast" className={styles.card3}>
-      {isBreakTime ? (
-        <div className="break-container">
-          <p>Dags for rast!</p>
-          <button onClick={acknowledgeBreak}>OK</button>
-        </div>
-      ) : (
-        <p>{timeLabel}</p>
-      )}
+{displayBreak === "due" ? (
+  <div className="break-container">
+    <p>Dags för rast!</p>
+    <div className="break-actions">
+      <Button text={'Ta rast'} variant="primary" className="take-break" onClick={() => {
+          acknowledgeBreak();
+          actions.pause();
+          actions.takeBreak();
+        }}>
+        </Button>
+      
+      <button className={styles.skipBtn} onClick={() => {
+          acknowledgeBreak();
+        }}>Skippa
+      </button>
+    </div>
+  </div>
+) : displayBreak === "onBreak" ? (
+  <p>Nu</p>
+) : (
+  <p>{timeLabel}</p>
+)}
       </TopBarCard>
       <TopBarCard title="Nuvarande mode" className={styles.card4}>
         <p>{formatMode(state.mode)}</p>
