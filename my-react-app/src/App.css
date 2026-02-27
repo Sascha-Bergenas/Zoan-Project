@@ -199,3 +199,7 @@ ul {
   align-items: center;
   justify-content: center;
 }
+
+.pb-1 {
+  padding-bottom: 1rem;
+}
