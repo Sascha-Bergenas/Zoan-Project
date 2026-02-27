@@ -15,7 +15,7 @@ const DEFAULT_AVATAR =
 
 const SettingsPage = () => {
   const [username, setUsername] = useState("");
-  // Sparar aktuell profilbilds-URL från databasen.
+  // Sparar aktuell profilbilds-URL från databasen. Ändrat från profile till avatarUrl för tydlighet
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   // Används som cache-buster så nyuppladdad bild visas direkt.
   const [avatarVersion, setAvatarVersion] = useState<number>(Date.now());
