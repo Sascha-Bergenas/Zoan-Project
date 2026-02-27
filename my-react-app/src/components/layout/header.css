@@ -22,7 +22,10 @@ nav li {
 .logged-in {
   align-items: center;
 }
-
+.link-active {
+  color: var(--primary-light-color);
+  font-weight: bold;
+}
 .theme-toggle {
   /*   background: var(--primary-dark-color);
   width: 40px;

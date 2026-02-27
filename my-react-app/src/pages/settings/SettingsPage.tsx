@@ -98,17 +98,13 @@ const SettingsPage = () => {
 
   // Break settings
   const handleBreakDeep = (e: ChangeEvent<HTMLInputElement>) => {
-    setBreakSettings((prev) => ({
-      ...prev,
-      deepMin: Number(e.target.value)
-    }));
+    const val = Number(e.target.value);
+    setBreakSettings((prev) => ({ ...prev, deepMin: val }));
   };
 
   const handleBreakMeeting = (e: ChangeEvent<HTMLInputElement>) => {
-    setBreakSettings((prev) => ({
-      ...prev,
-      meetingMin: Number(e.target.value)
-    }));
+    const val = Number(e.target.value);
+    setBreakSettings((prev) => ({ ...prev, meetingMin: val }));
   };
 
   const persistedImageSrc = avatarUrl
@@ -193,34 +189,71 @@ const SettingsPage = () => {
           {/* Uppdatering av rast-inställningar */}
 
           <div className="settings-break-section">
-            <h3>Inställning för rast</h3>
+            <h3>Längd på arbetspass</h3>
 
             <label className="settings-break-label">
               Deep Work
               <input
-                type="number"
-                min={1}
-                max={240}
+                type="range"
+                min={5}
+                max={120}
+                step={5}
                 value={breakSettings.deepMin}
                 onChange={handleBreakDeep}
                 className="settings-break-input"
               />
+              <p> {breakSettings.deepMin} min</p>
             </label>
 
             <label className="settings-break-label">
-              Meeting
+              Möte
               <input
-                type="number"
-                min={1}
-                max={240}
+                type="range"
+                min={5}
+                max={120}
+                step={5}
                 value={breakSettings.meetingMin}
                 onChange={handleBreakMeeting}
                 className="settings-break-input"
               />
+              <p> {breakSettings.meetingMin} min</p>
             </label>
             <p className="settings-break-hint">
               Sparas automatiskt och används när du väljer mode.
             </p>
+          </div>
+          <div className="settings-beer-section">
+            <h3>Öl på fredag?</h3>
+            <div className="beer-options">
+              <label>
+                <input
+                  type="radio"
+                  name="beerOnFriday"
+                  checked={breakSettings.beerOnFriday === true}
+                  onChange={() =>
+                    setBreakSettings((prev) => ({
+                      ...prev,
+                      beerOnFriday: true
+                    }))
+                  }
+                />
+                Ja
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="beerOnFriday"
+                  checked={breakSettings.beerOnFriday === false}
+                  onChange={() =>
+                    setBreakSettings((prev) => ({
+                      ...prev,
+                      beerOnFriday: false
+                    }))
+                  }
+                />
+                Nej
+              </label>
+            </div>
           </div>
         </BaseCard>
       </div>

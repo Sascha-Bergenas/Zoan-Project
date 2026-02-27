@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import LoginModal from "../../Features/modals/loginModal/loginModal";
 import { useAuth } from "../../contexts/useAuth";
 import Button from "../ui/button/Button";
@@ -14,19 +14,27 @@ export default function Header() {
   return (
     <header>
       <nav className="flex">
-        <Link to="/">
+        <NavLink
+            to="/"
+            end>
           <img src="src/img/zoan-logo.png" alt="Logo" />
-        </Link>
+        </NavLink>
         <ul className="text-md flex">
           <li>
-            <Link to="/">Dashboard</Link>
+            <NavLink to="/" end className={ ({ isActive }) => 
+              isActive ? 'link-active' : ''
+            }>Dashboard</NavLink>
           </li>
 
           <li>
-            <Link to="/history">Historik</Link>
+            <NavLink to="/history" className={({ isActive }) => 
+            isActive ? 'link-active' : ''
+            }>Historik</NavLink>
           </li>
           <li>
-            <Link to="/settings">Settings</Link>
+            <NavLink to="/settings" className={({ isActive }) => 
+            isActive ? 'link-active' : ''
+            }>Settings</NavLink>
           </li>
 
           {!isAuthed && <LoginModal />}
