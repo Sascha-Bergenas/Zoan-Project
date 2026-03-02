@@ -1,4 +1,4 @@
-// This file contains the Context contract
+// Detta utgör kontraktet för SessionContext
 
 import type { SessionData } from "../../types/sessions";
 
@@ -9,11 +9,12 @@ export type SessionsList = SessionData[]
 export type ListStatus = 
     | {type: "isLoading" }
     | {type: "isFailed" }
+    | {type: "isOk "}
 
 // Actions > Skapa ny post | Uppdatera befintlig post | Ta bort post | Ladda om poster 
 export type DataActions = {
-    saveSession: (sessionData: SessionData) => void,
-    updateSession: (sesstionData: SessionData) => void,
-    deleteSession: (sesstionData: SessionData) => void,
-    loadSession: (sesstionData: SessionData) => void,
+    saveSession: (newSession: SessionData) => void,
+    updateSession: (sessionData: SessionData) => void,
+    deleteSession: (sessionId: SessionData["session_id"]) => void,
+    loadSessions: () => void,
 }

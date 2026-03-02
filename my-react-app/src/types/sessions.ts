@@ -1,4 +1,5 @@
 export type SessionData = {
+    session_id: string,
     user_id: string, // TESTA OM DETTA STÄMMER!!
     title: string,
     category: "Arbete" | "Möte" | "Studier" | "",
