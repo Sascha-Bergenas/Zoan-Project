@@ -62,7 +62,9 @@ const renderCustomizedLabel = ({
 // Sätter segmentfärg i pajdiagrammet utifrån mood-värdet i datapunkten.
 const MyCustomPie = (props: PieSectorShapeProps) => (
   <Sector
-    {...props}
+    {...Object.fromEntries(
+      Object.entries(props).filter(([, value]) => value !== undefined)
+    )}
     fill={COLORS[(props.payload as { mood?: number })?.mood ?? 0] ?? COLORS[0]}
   />
 );
@@ -112,11 +114,14 @@ const RangedStackedBarChart = ({
     [sessions]
   );
 
+  const tooltipProps =
+    defaultIndex != null ? { defaultIndex } : ({} as Record<string, never>);
+
   return (
     <>
-      <p>Data: senaste 7 dagarna</p>
       <div className="graph-row">
         <div className="graph-wrapper">
+          <p> Sessioner senaste 7 dagarna</p>
           <BarChart
             style={{
               width: "100%",
@@ -136,7 +141,7 @@ const RangedStackedBarChart = ({
           >
             <XAxis dataKey="name" />
             <Tooltip
-              defaultIndex={defaultIndex}
+              {...tooltipProps}
               cursor={{ fill: "transparent" }}
               // Formaterar tooltip-värdet till heltalsminuter.
               formatter={(value, name) => [
@@ -179,6 +184,7 @@ const RangedStackedBarChart = ({
           </BarChart>
         </div>
         <div className="graph-wrapper">
+          <p>Dagens Mood </p>
           <PieChartWithCustomizedLabel
             data={pieData}
             isAnimationActive={isAnimationActive}
