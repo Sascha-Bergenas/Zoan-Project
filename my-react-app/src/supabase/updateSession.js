@@ -1,10 +1,11 @@
 import supabase from "./supabase";
 
-export default async function saveSession(user, payload) {
+export default async function updateSession(user, payload) {
   if (!user) return;
 
   const sessionData = {
-    user_id: user, 
+    user_id: payload.user_id,
+    session_id: payload.session_id,
     title: payload.title,
     category: payload.category,
     mood: payload.mood,
@@ -15,10 +16,9 @@ export default async function saveSession(user, payload) {
   };
   const { data, error } = await supabase
     .from("sessions")
-    .insert(sessionData)
-    .select()
-    .single();
-  if (error) throw error;
+    .update(sessionData)
+    .eq("session_id", sessionData.session_id) 
+    if (error) throw error;
 
   return data;
 }

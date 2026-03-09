@@ -1,8 +1,11 @@
 import supabase from "./supabase";
 
 export default async function getSessions() {
-  let { data: sessions, error } = await supabase.from("sessions").select("*");
+  let { data, error } = await supabase
+    .from("sessions")
+    .select("*")
+    .order("started_at", {ascending: false});
 
   if (error) console.log(error);
-  return sessions;
+  return data;
 }
