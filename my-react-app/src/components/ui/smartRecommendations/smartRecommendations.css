@@ -1,0 +1,22 @@
+h3 {
+  padding-bottom: 1.5rem;
+}
+
+textarea {
+  border-radius: 10px;
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid var(--gray-color);
+  resize: none;
+  outline: none;
+  font-family: inherit;
+}
+
+@media (max-width: 480px) {
+  textarea {
+    min-width: unset;
+    font-size: 0.9rem;
+  }
+}

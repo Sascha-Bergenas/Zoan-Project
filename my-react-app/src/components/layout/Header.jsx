@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import LoginModal from "../../Features/modals/loginModal/loginModal";
 import { useAuth } from "../../contexts/useAuth";
 import Button from "../ui/button/Button";
@@ -14,35 +14,47 @@ export default function Header() {
   return (
     <header>
       <nav className="flex">
-        {/* <h1 className="text-lg">Zoan</h1> */}
-        <img src="src/img/zoan-logo.png" />
+        <NavLink
+            to="/"
+            end>
+          <img src="src/img/zoan-logo.png" alt="Logo" />
+        </NavLink>
         <ul className="text-md flex">
           <li>
-            <Link to="/">Dashboard</Link>
+            <NavLink to="/" end className={ ({ isActive }) => 
+              isActive ? 'link-active' : ''
+            }>Dashboard</NavLink>
           </li>
 
           <li>
-            <Link to="/history">Historik</Link>
+            <NavLink to="/history" className={({ isActive }) => 
+            isActive ? 'link-active' : ''
+            }>Historik</NavLink>
           </li>
           <li>
-            {!isAuthed && <LoginModal />}
-
-            {isAuthed && (
-              <>
-                <li className="logged-in flex">
-                  <p className="text-sm">
-                    Hej <span className="text-bold">{user.email}!</span>
-                  </p>
-                  <Button
-                    text="Logga ut"
-                    type="login"
-                    onClick={signOut}
-                    variant="login"
-                  />
-                </li>
-              </>
-            )}
+            <NavLink to="/settings" className={({ isActive }) => 
+            isActive ? 'link-active' : ''
+            }>Settings</NavLink>
           </li>
+
+          {!isAuthed && <LoginModal />}
+
+          {isAuthed && (
+            <>
+              <li className="logged-in flex">
+                <p className="text-sm">
+                  Hej <span className="text-bold">{user.email}!</span>
+                </p>
+                <Button
+                  text="Logga ut"
+                  type="login"
+                  onClick={signOut}
+                  variant="login"
+                />
+              </li>
+            </>
+          )}
+
           <button className="theme-toggle" onClick={toggleTheme}>
             {theme === "dark" ? <Sun size={25} /> : <Moon size={25} />}
           </button>

@@ -8,6 +8,9 @@ const Input = ({
   value,
   onChange,
   className,
+  min,
+  max,
+  step
 }) => {
   return (
     <div className="input-wrapper">
@@ -20,6 +23,9 @@ const Input = ({
           onChange={onChange}
           placeholder={placeholder}
           name={name}
+          min={min}
+          max={max}
+          step={step}
         />
       </label>
     </div>

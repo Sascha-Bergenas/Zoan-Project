@@ -2,18 +2,24 @@ import { useState, useEffect } from "react";
 import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
 import BaseCard from "../../components/ui/cards/Card"
+import Button from "../../components/ui/button/Button";
+import EditSessionModal from "../../Features/modals/editSessionModal/editSessionModal";
 import { useAuth } from "../../contexts/useAuth";
-import getSessions from "../../supabase/getSessions"; 
-
+import getSessions from "../../supabase/getSessions";
+import Graph from "../../Features/graph/graph";
 
 export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
+  const [ isModalOpen, setIsModalOpen ] = useState(false)
+  const [ refreshKey, setRefreshKey ] = useState(0)  
   
-  // Hämta data från Supabase/localStorage
+  // Tvinga listan att laddas om när en session har lagts till eller ändrats
+  const handleSessionSaved = () => setRefreshKey((k) => k +1)
 
+  // Hämta data från Supabase
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     const fetchSessions = async () => {
       if(!isAuthed) return
 
@@ -30,6 +36,9 @@ export default function History() {
 
   }, [isAuthed, user?.id])
 
+   const handleAddClick = () => { 
+    setIsModalOpen(true)
+  }
 
   return (
     <>
@@ -37,11 +46,15 @@ export default function History() {
 
       <section className={styles.wrapper}>
         <div className={styles.container}>
-          <h2>Loggade sessioner</h2>
-          {/* Put antingen... 
-              -knapp för manuell loggning eller
-              -knappar för sortering och filter 
-            ...here, inline med h2 eller på ny rad */}
+          <h3>Loggade sessioner</h3>
+          {isModalOpen && (
+            <EditSessionModal
+              handleSessionSaved={handleSessionSaved}
+              onRequestClose={() => setIsModalOpen(false)}
+            />
+          )}
+          {/* Knapp för manuell loggning */}
+          <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
             <BaseCard>
               <List sessions={sessions} />
             </BaseCard>
@@ -49,7 +62,7 @@ export default function History() {
         </div>
       </section>
 
-      {/* Put en najsig graf here (OBS! INTE en Graaf) */}
+      <Graph sessions={sessions} />
 
     </>
   );
