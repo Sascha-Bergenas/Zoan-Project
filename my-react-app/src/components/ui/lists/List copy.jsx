@@ -1,9 +1,11 @@
+import { }
 import ListHeader from "./ListHeader"
 import ListItem from "./ListItem"
 import styles from "./List.module.css" 
 
 
-function List({sessions = []}) {
+// function List({sessions = []}) {
+function List() {
     const headers = [
         "Datum",
         "Aktivitet",

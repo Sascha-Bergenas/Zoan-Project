@@ -1,15 +1,19 @@
 import { useState } from "react";
+import { useAuth } from "../../contexts/useAuth";
+import { sessionStore } from "../../storage/localStorage";
+import useSessions from "../../contexts/sessions/useSessions";
+import { SessionData } from "../../types/sessions";
+// import saveSession from "../../supabase/saveSession";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
-import { useAuth } from "../../contexts/useAuth";
-import { sessionStore } from "../../storage/localStorage";
-import saveSession from "../../supabase/saveSession";
 
-export default function EditWorkSessionForm({ handleCloseModal, handleSessionSaved, sessionData }) {
+export default function EditWorkSessionForm(/*handleCloseModal*/) {
   const { user, isAuthed } = useAuth();
+  const { sessions, actions } = useSessions()
+  const { }
 
   // State för att lagra arbetspassets information 
   const [workSession, setWorkSession] = useState({
@@ -100,7 +104,7 @@ export default function EditWorkSessionForm({ handleCloseModal, handleSessionSav
       e.target.reset();
 
       // Stänger modalen efter inlämning
-      handleCloseModal();
+      // handleCloseModal();
     } catch (err) {
       console.log(err);
     }

@@ -10,9 +10,9 @@ import getSessions from "../../supabase/getSessions";
 
 export function SessionsProvider({ children }: {children: React.ReactNode}) {
     //   const { user, isAuthed } = useAuth();
-    const [sessionsList, setSessionsList] = useState<SessionsList>([]) 
+    const [sessions, setSessions] = useState<SessionsContextValue["sessions"]>([]) 
+    // const [sessionsList, setSessionsList] = useState<SessionsList>([]) 
     // Är det här alternativet vettigt??
-    // const [sessionsList, setSessionsList] = useState<SessionsContextValue["sessionsList"]>() 
     
     const [status, setStatus] = useState<SessionsStatus>({type: "isLoading"})
     
@@ -30,7 +30,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             try {
                 await saveSession(newSession.user_id, newSession) // TODO: Ersätt user_id med det från auth
                 setStatus({type: "isOk"})
-                setSessionsList(prev => [...prev, newSession])
+                setSessions(prev => [...prev, newSession])
             } catch (error) {
                 setStatus({type: "isFailed"})
                 throw error
@@ -44,7 +44,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             try {
                 await updateSession(sessionData.user_id, sessionData) // TODO: Ersätt user_id med det från auth
                 setStatus({type: "isOk"})
-                setSessionsList(prev => prev.map(session => 
+                setSessions(prev => prev.map(session => 
                     session.session_id === sessionData.session_id
                         ? sessionData
                         : session
@@ -62,7 +62,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             try {
                 await deleteSession(session_id)// TODO: lägg till check av user_id från auth
                 setStatus({type: "isOk"})
-                setSessionsList(prev => 
+                setSessions(prev => 
                     prev.filter(session => session.session_id !== session_id)
                 )
             } catch (error) {
@@ -77,7 +77,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             
             try {
                 const sessions = await getSessions()
-                setSessionsList(sessions)
+                setSessions(sessions)
                 setStatus({type: "isOk"})
             } catch (error) {
                 setStatus({type: "isFailed"})
@@ -87,7 +87,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
     }
     
     const value: SessionsContextValue = {
-        sessionsList, status, actions
+        sessions: sessions, status, actions
     }
 
 

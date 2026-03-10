@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { SessionsList, SessionsStatus, DataActions } from "./types";
 
 export type SessionsContextValue = {
-    sessionsList: SessionsList,
+    sessions: SessionsList,
     status: SessionsStatus,
     actions: DataActions,
 }
