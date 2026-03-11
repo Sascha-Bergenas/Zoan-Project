@@ -2,7 +2,7 @@ h3 {
   padding-bottom: 1.5rem;
 }
 
-textarea {
+.smart-textArea {
   border-radius: 10px;
   width: 100%;
   max-width: 300px;
@@ -12,6 +12,7 @@ textarea {
   resize: none;
   outline: none;
   font-family: inherit;
+  border: none;
 }
 
 @media (max-width: 480px) {

@@ -1,8 +1,7 @@
 .li-item {
   list-style: none;
-  padding: 0.75rem;
-  margin: 0 1rem 0.5rem 1.75rem;
-
+  padding: 0.5rem;
+  margin: 0.3rem 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,16 +10,25 @@
   border-radius: 8px;
 }
 
+.todo-header {
+  margin: 0;
+  padding: 0 0 0.5rem 0;
+}
+
 .todo-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: row;
-  padding: 0.5rem 0 0.5rem 0;
+  margin-bottom: 0.3rem;
+}
+
+.todo-input {
+  padding: 0.6rem;
 }
 
 .li-wrapper {
   overflow-y: scroll;
-  max-height: 11rem;
+  max-height: 10rem;
   display: flex;
   flex-direction: column;
 }
@@ -43,6 +51,5 @@
 }
 
 .todo-add-btn {
-  min-width: auto;
   margin: 0;
 }

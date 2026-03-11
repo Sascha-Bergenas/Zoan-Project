@@ -21,8 +21,10 @@ const Todo = () => {
 
   return (
     <>
+      <h3 className="todo-header">Todo</h3>
       <div className="todo-wrapper">
         <Input
+          className="todo-input"
           type="text"
           label="Kom ihåg"
           name="todo"
