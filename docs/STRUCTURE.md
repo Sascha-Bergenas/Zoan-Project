@@ -1,3 +1,7 @@
+## Projektstruktur
+
+```
+
 Boilerroom-proj2/
 |
 └── my-react-app/
@@ -64,6 +68,8 @@ Boilerroom-proj2/
 │ └── timeEntry.js
 └── utils/
 └── formatTime.js
+
+```
 
 ### Beskrivning
 
