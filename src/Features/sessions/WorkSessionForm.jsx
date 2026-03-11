@@ -7,6 +7,7 @@ import MoodPicker from "../mood/MoodPicker";
 import { useAuth } from "../../contexts/useAuth";
 import { sessionStore } from "../../storage/localStorage";
 import saveSession from "../../supabase/saveSession";
+import "./WorkSessionForm.modal.css";
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
   const { user, isAuthed } = useAuth();
@@ -90,6 +91,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
       </Select>
 
       <TextArea
+        className="sessionText"
         label="Kommentar"
         name="comment"
         value={workSession.comment}

@@ -1,3 +1,5 @@
+/*styla om responsiviteten*/
+
 .wrapper {
   container-type: inline-size;
   display: flex;
