@@ -187,18 +187,20 @@ npm -v
    npm install
    ```
 
-   ### Starta applikationen
-   1. Starta frontend-utvecklingsservern
+### Starta applikationen
 
-   ```sh
-   npm run dev
-   ```
+1.  Starta frontend-utvecklingsservern
+
+```sh
+npm run dev
+```
 
 4. Starta backend-servern (körs separat)
-   ```sh
-   cd backend
-   npm start
-   ```
+
+```sh
+cd backend
+npm start
+```
 
 **API-åtkomst**
 
