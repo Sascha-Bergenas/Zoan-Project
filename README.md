@@ -223,7 +223,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Huvudkomponenter / Moduler
 
-See the documentation: [Test](docs/test.md)
+See the documentation: [Test](docs/TECHNICAL.md)
 
 ## Funktionalitet
 
