@@ -31,7 +31,6 @@ function Dashboard() {
           </BaseCard>
 
           <BaseCard className={styles.card4} size="card-small">
-            <h3>Todo</h3>
             <Todo />
           </BaseCard>
         </div>

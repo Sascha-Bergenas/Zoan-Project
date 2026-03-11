@@ -94,7 +94,7 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         name="comment"
         value={workSession.comment}
         onChange={handleChange}
-        placeholder="Skriv en kommentar"
+        placeholder=" Skriv en kommentar"
       />
       <MoodPicker
         value={workSession.mood}
