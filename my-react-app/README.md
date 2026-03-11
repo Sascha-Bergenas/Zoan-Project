@@ -1,7 +1,5 @@
 <a id="readme-top"></a>
 
-<!-- PROJECT LOGO -->
-<br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="src/img/zoan-logo.png" alt="Logo" width="80" height="80">
@@ -268,7 +266,7 @@ Responsiv design: Flexbox + grid-layouts, media queries för mobil
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: my-react-app\src\img\screenshot.png
+[product-screenshot]: my-react-app/src/img/screenshot.png
 [React.js]: https://img.shields.io/badge/react-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://react.dev/
 [Supabase.io]: https://img.shields.io/badge/supabase-181818?style=for-the-badge&logo=supabase&logoColor=3ECF8E
