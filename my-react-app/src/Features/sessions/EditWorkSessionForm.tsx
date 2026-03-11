@@ -1,31 +1,32 @@
 import { useState } from "react";
-import { useAuth } from "../../contexts/useAuth";
-import { sessionStore } from "../../storage/localStorage";
-import useSessions from "../../contexts/sessions/useSessions";
-import { SessionData } from "../../types/sessions";
-// import saveSession from "../../supabase/saveSession";
+import type { SessionFormData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
 
-export default function EditWorkSessionForm(/*handleCloseModal*/) {
-  const { user, isAuthed } = useAuth();
-  const { sessions, actions } = useSessions()
-  const { }
+export default function EditWorkSessionForm(handleSubmit: () => void, initialData?: unknown) {
 
   // State för att lagra arbetspassets information 
-  const [workSession, setWorkSession] = useState({
-    startedAt: sessionData?.startedAt,
-    endedAt: sessionData?.endedAt,
-    activeTime: sessionData?.activeTime,
-    title: sessionData?.title ?? "",
-    category: sessionData?.category ?? "",
-    comment: sessionData?.comment ?? "",
-    mood: sessionData?.mood ?? 0,
+  const [formData, setFormData] = useState(
+    initialData ?? {  
+      started_at: new Date().toLocaleString(),
+      ended_at: new Date().toLocaleString(),
+      active_time_ms: undefined, 
+      title: "",
+      category: "",
+      comment: "",
+      mood: null,
   });
   
+  const calculateActiveTime = (started_at: string, ended_at: string, pause: number) => {
+    const start = new Date(started_at).getMilliseconds()
+    const end = new Date(ended_at).getMilliseconds()
+    const time = end - start - pause * 10000
+    return time
+  }
+
   // Funktioner för att begränsa activeTime till tidsspannet mellan start och stopp
     const toMinutes = (hhmm = "00:00") => {
       const [h, m] = hhmm.split(":").map(Number);
@@ -44,7 +45,7 @@ export default function EditWorkSessionForm(/*handleCloseModal*/) {
       return Math.max(0, Math.floor(diffMs / 60000));
     };
 
-    const maxActiveMinutes = getMaxActiveMinutes(workSession.startedAt, workSession.endedAt);
+    const maxActiveMinutes = getMaxActiveMinutes(formData.startedAt, formData.endedAt);
     const maxActiveHHMM = toHHMM(maxActiveMinutes);
   // ------------------------------------------------------------------------------
 
@@ -54,88 +55,39 @@ export default function EditWorkSessionForm(/*handleCloseModal*/) {
     const { name, value } = e.target;
   
     // Uppdaterar state med det nya värdet från det ändrade fältet
-    setWorkSession((prev) => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
   
-  // Hanterar formulär - rensar formulär och state
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const sessionToSave = {
-      ...workSession,
-    };
-    
-    const activeMinutes = toMinutes(sessionToSave.activeTime);
-    if (activeMinutes > maxActiveMinutes) {
-      alert(`Aktiv tid får vara max ${maxActiveHHMM}`);
-      return;
-    }
-    
-    // Ett nödvändigt ont för att konvertera "HH:MM" till ms för att matcha fältet i databasen:
-    sessionToSave.activeTime = 
-      Number(sessionToSave.activeTime.slice(0, 2)) * 3600000 + 
-      Number(sessionToSave.activeTime.slice(3, 5)) * 60000
-
-    try {
-      if (isAuthed) {
-        await saveSession(user.id, sessionToSave);
-        handleSessionSaved?.()
-        console.log("sparat till db");
-      } else {
-        sessionStore.add(sessionToSave);
-        console.log("sparat till local");
-      }
-
-      // Nollställer state
-      setWorkSession({ 
-        endedAt: new Date(0).toLocaleString(), 
-        startedAt: new Date(0).toLocaleString(), 
-        activeTime: "00:00", 
-        title: "", 
-        category: "", 
-        comment: "", 
-        mood: 0 
-      });
-
-      // Nollställer formulärets HTML-element
-      e.target.reset();
-
-      // Stänger modalen efter inlämning
-      // handleCloseModal();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     // Formulär för att logga arbetspass-aktiviteter
     <form onSubmit={handleSubmit}>
     {/* Fält för att ange sessionens tider */}
-      <Input
+      <label>Starttid</label>
+      <input type="datetime-local" name="startedAt" value={formData.started_at} onChange={handleChange}/>
+      {/* <Input
         type="datetime-local"
         label="Starttid"
         name="startedAt"
-        value={workSession.startedAt}
+        value={formData.startedAt}
         onChange={handleChange}
-      />
+      /> */}
 
-      <Input
+      <label>Stopptid</label>
+      <input
         type="datetime-local"
-        label="Stopptid"
         name="endedAt"
-        value={workSession.endedAt}
+        value={formData.ended_at}
         onChange={handleChange}
       />
 
-        
-      <Input 
+      <label>Paus (minuter)</label>  
+      <input 
         type="time" 
-        label="Varaktighet"
         name="activeTime"
-        value={workSession.activeTime}
+        value={formData.activeTime}
         onChange={handleChange} 
         min="00:00"
         max={maxActiveHHMM}
@@ -148,14 +100,14 @@ export default function EditWorkSessionForm(/*handleCloseModal*/) {
         label="Aktivitet"
         name="title"
         placeholder="Vad har du jobbat med?"
-        value={workSession.title}
+        value={formData.title}
         onChange={handleChange}
       />
       {/* Dropdown för att välja aktivitetens kategori */}
       <Select
         label="Kategori"
         name="category"
-        value={workSession.category}
+        value={formData.category}
         onChange={handleChange}
       >
         <option value="">Välj Kategori</option>
@@ -167,13 +119,13 @@ export default function EditWorkSessionForm(/*handleCloseModal*/) {
       <TextArea
         label="Kommentar"
         name="comment"
-        value={workSession.comment}
+        value={formData.comment}
         onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
       <MoodPicker
-        value={workSession.mood}
-        onChange={(mood) => setWorkSession((prev) => ({ ...prev, mood }))}
+        value={formData.mood}
+        onChange={(mood) => setFormData((prev) => ({ ...prev, mood }))}
       ></MoodPicker>
       <Button type="submit" text="Logga" />
     </form>

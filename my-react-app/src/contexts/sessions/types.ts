@@ -1,9 +1,28 @@
 // Detta utgör kontraktet för SessionContext
 
-import type { SessionData } from "../../types/sessions";
+// Datamodell för databasen
+export type SessionData = {
+    session_id: string,
+    user_id: string,
+    title: string,
+    category: "Arbete" | "Möte" | "Studier" | "",
+    mood: 1 | 2 | 3 | 4 | 5 | null,
+    comment: string,
+    active_time_ms: number,
+    started_at: string,
+    ended_at: string,
+}
 
-// Data > Lista med poster
+// Lista med poster
 export type SessionsList = SessionData[]
+
+// Formulärdatamodell
+export type SessionFormData = {
+  title: string
+  duration: number
+  notes: string
+}
+
 
 // Info till UI-komponenter >  Visa "Loading" | Visa "Failed" | Visa listan
 export type SessionsStatus = 

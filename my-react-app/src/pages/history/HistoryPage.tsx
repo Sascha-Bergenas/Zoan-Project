@@ -51,15 +51,13 @@ export default function History() {
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
           {isModalOpen && (
-            <EditSessionModal /* onRequestClose={() => setIsModalOpen(false)}*/ >
-              <EditWorkSessionForm /*handleCloseModal={handleCloseModal}*/ />
-            </EditSessionModal>
+            <EditSessionModal /* onRequestClose={() => setIsModalOpen(false)}*/ />
           )}
           {/* Knapp för manuell loggning */}
           <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
-            <BaseCard className={""} size={""}>
-              <List />
-            </BaseCard>
+          <BaseCard className={""} size={""}>
+            <List />
+          </BaseCard>
           {/* Put eventuellt knapp för manuell loggning here */}
         </div>
       </section>
