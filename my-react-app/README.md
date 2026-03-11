@@ -1,5 +1,3 @@
-<!-- Om Projektet -->
-
 ## Om Projektet
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
