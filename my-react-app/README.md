@@ -79,8 +79,6 @@ För att ge en tydlig bild av hur appen används kan en typisk session se ut så
 5. Loggar humör och anteckningar
 6. Sessionen sparas och visas i statistik och kalender
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Tech Stack
 
 **Frontend**
@@ -100,8 +98,6 @@ För att ge en tydlig bild av hur appen används kan en typisk session se ut så
 **Testning**
 
 [![Vitest][Vitest]][Vitest-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Kom igång -->
 
@@ -159,8 +155,6 @@ Detta projekt kommunicerar med ett backend-API som kräver en privat API-nyckel.
 Av säkerhetsskäl ingår inte API-nyckeln i repot.
 För att kunna använda backend-funktionaliteten måste du få en giltig API-nyckel från projektets utvecklare.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- Användning -->
 
 ## Användning
@@ -168,8 +162,6 @@ För att kunna använda backend-funktionaliteten måste du få en giltig API-nyc
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Huvudkomponenter / Moduler
 
@@ -200,8 +192,6 @@ Responsiv design: Flexbox + grid-layouts, media queries för mobil
 <a href="https://github.com/Sascha-Bergenas/Zoan-Project/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Sascha-Bergenas/Zoan-Project" alt="contrib.rocks image" />
 </a>
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 [product-screenshot]: my-react-app/src/img/screenshot.png
 [React.js]: https://img.shields.io/badge/react-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
