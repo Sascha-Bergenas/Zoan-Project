@@ -1,3 +1,51 @@
+<a id="readme-top"></a>
+
+<div align="center">
+  <a href="https://github.com/othneildrew/Best-README-Template">
+    <img src="src/img/zoan-logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">Zoan Productivity App</h3>
+
+  <p align="center">
+    An awesome README template to jumpstart your projects!
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    &middot;
+    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    &middot;
+    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+  </p>
+</div>
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">Om Projektet</a>
+      <ul>
+        <li><a href="#built-with">Byggt med</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Hur man börjar</a>
+      <ul>
+        <li><a href="#prerequisites">Förinstallationer</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Anvädning</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+  </ol>
+</details>
+
+<!-- Om Projektet -->
+
 ## Om Projektet
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -79,6 +127,8 @@ För att ge en tydlig bild av hur appen används kan en typisk session se ut så
 5. Loggar humör och anteckningar
 6. Sessionen sparas och visas i statistik och kalender
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Tech Stack
 
 **Frontend**
@@ -98,6 +148,8 @@ För att ge en tydlig bild av hur appen används kan en typisk session se ut så
 **Testning**
 
 [![Vitest][Vitest]][Vitest-url]
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- Kom igång -->
 
@@ -155,6 +207,8 @@ Detta projekt kommunicerar med ett backend-API som kräver en privat API-nyckel.
 Av säkerhetsskäl ingår inte API-nyckeln i repot.
 För att kunna använda backend-funktionaliteten måste du få en giltig API-nyckel från projektets utvecklare.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 <!-- Användning -->
 
 ## Användning
@@ -162,6 +216,8 @@ För att kunna använda backend-funktionaliteten måste du få en giltig API-nyc
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Huvudkomponenter / Moduler
 
@@ -192,6 +248,8 @@ Responsiv design: Flexbox + grid-layouts, media queries för mobil
 <a href="https://github.com/Sascha-Bergenas/Zoan-Project/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Sascha-Bergenas/Zoan-Project" alt="contrib.rocks image" />
 </a>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 [product-screenshot]: my-react-app/src/img/screenshot.png
 [React.js]: https://img.shields.io/badge/react-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
