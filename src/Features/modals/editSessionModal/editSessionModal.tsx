@@ -4,7 +4,7 @@ import type { SessionData } from "../../../contexts/sessions/types";
 import useSessions from "../../../contexts/sessions/useSessions";
 import { sessionStore } from "../../../storage/localStorage"
 import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
-// import Modal from "../../../components/ui/modal/Modal";
+import Modal from "../../../components/ui/modal/Modal";
 
 // Modal-komponent för att manuellt logga en arbetsession eller redigera en redan loggad session.
 
@@ -24,16 +24,14 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
     ? sessions.find(s => s.session_id === sessionId)
     : undefined
 
-
-    useEffect(() => {
-      dialogRef.current?.showModal();
-    }, [dialogRef]);
-
-
   // const handleCloseModal = () => {
   //   dialogRef.current?.close();
   //   onRequestClose?.();
   // };
+
+  function handleClose(){
+    dialogRef.current?.close();
+  }
 
   // Hanterar formulär - rensar formulär och state
   const handleSubmit = async (payload: SessionData) => {
@@ -66,7 +64,6 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
         sessionStore.add(payload)
         console.log("sparat till local");
       }
-
       dialogRef.current?.close();
 
       // Nollställer state
@@ -92,12 +89,12 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
 
 
   return (
-    <dialog ref={dialogRef}>
+    <Modal dialogRef={dialogRef} onClose={handleClose}>
       {/* <Modal dialogRef={dialogRef} onClose={handleCloseModal}> */}
         {" "}
         <h3>Logga din session</h3>
           <EditWorkSessionForm initialData={session} handleSubmit={handleSubmit}/>
       {/* </Modal>{" "} */}
-    </dialog>
+    </Modal>
   );
 }

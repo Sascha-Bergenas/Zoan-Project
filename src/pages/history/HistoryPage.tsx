@@ -13,10 +13,9 @@ import EditWorkSessionForm from "../../Features/sessions/EditWorkSessionForm";
 export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
-  const [ isModalOpen, setIsModalOpen ] = useState(false)
   const [ refreshKey, setRefreshKey ] = useState(0)
-  const dialogRef = useRef<HTMLDialogElement | null>(null);
-  
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
   // Tvinga listan att laddas om när en session har lagts till eller ändrats
   // const handleSessionSaved = () => setRefreshKey((k) => k +1)
 
@@ -40,8 +39,7 @@ export default function History() {
   // }, [isAuthed, user?.id])
 
   const handleAddClick = () => { 
-    setIsModalOpen(true)
-
+    dialogRef.current?.showModal()
   }
 
   return (
@@ -52,7 +50,7 @@ export default function History() {
       <section className={styles.wrapper}>
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
-          {isModalOpen && (
+          { (
             <EditSessionModal mode="new" dialogRef={dialogRef}/* onRequestClose={() => setIsModalOpen(false)}*/ />
           )}
           {/* Knapp för manuell loggning */}
