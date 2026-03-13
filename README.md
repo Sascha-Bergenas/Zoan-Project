@@ -21,26 +21,26 @@
   </p> -->
 </div>
 
-<!-- TABLE OF CONTENTS -->
+<!-- Innehåll -->
 <details>
-  <summary>Table of Contents</summary>
+  <summary>Innehåll</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Om Projektet</a>
+      <a href="#om-projektet">Om Projektet</a>
       <ul>
-        <li><a href="#built-with">Byggt med</a></li>
+<a href="#tech-stack">Tech Stack</a>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Hur man börjar</a>
+      <a href="#kom-igång">Kom igång</a>
       <ul>
-        <li><a href="#prerequisites">Förinstallationer</a></li>
+        <li><a href="#förinstallationer">Förinstallationer</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Anvädning</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#användning">Anvädning</a></li>
+    <li><a href="#teknisk-dokumentation">Teknisk Dokumentation</a></li>
+    <li><a href="#contributors">Contributors:</a></li>
   </ol>
 </details>
 
@@ -157,7 +157,7 @@ För att ge en tydlig bild av hur appen används kan en typisk session se ut så
 
 Följ dessa steg för att sätta upp projektet lokalt.
 
-### Förutsättningar
+### Förinstallationer
 
 Se till att du har följande installerat:
 
@@ -215,37 +215,17 @@ För att kunna använda backend-funktionaliteten måste du få en giltig API-nyc
 
 ## Användning
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
+Hur projektet används / screenshots / kodexempel / demo / källor
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Huvudkomponenter / Moduler
+## Teknisk Dokumentation
 
-## Funktionalitet
+För en djupare förståelse av projektets struktur, komponenter och arbetsfördelning, se vår tekniska dokumentation:
 
-### Timer
+[Läs den tekniska dokumentationen](docs/TECHNICAL.md)
 
-### Login / Signup
-
-Använder Supabase auth API
-
-### Sessionsloggning:
-
-Frontend skickar data direkt till Supabase → sessionen sparas i databasen
-
-### Manuell session:
-
-### Grafer
-
-Data hämtas från Local>Storage → renderas med ett diagrambibliotek
-
-### Dark Mode: CSS-variabler ändras via React state
-
-Responsiv design: Flexbox + grid-layouts, media queries för mobil
-
-## Contributors:
+## Contributors
 
 <a href="https://github.com/Sascha-Bergenas/Zoan-Project/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Sascha-Bergenas/Zoan-Project" alt="contrib.rocks image" />
