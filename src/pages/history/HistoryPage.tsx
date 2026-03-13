@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SessionsProvider } from "../../contexts/sessions/SessionsProvider";
 import styles from "./HistoryPage.module.css";
 import List from "../../components/ui/lists/List";
@@ -14,7 +14,8 @@ export default function History() {
   const { user, isAuthed } = useAuth();
   const [ sessions, setSessions ] = useState([])
   const [ isModalOpen, setIsModalOpen ] = useState(false)
-  const [ refreshKey, setRefreshKey ] = useState(0)  
+  const [ refreshKey, setRefreshKey ] = useState(0)
+  const dialogRef = useRef<HTMLDialogElement | null>(null);
   
   // Tvinga listan att laddas om när en session har lagts till eller ändrats
   // const handleSessionSaved = () => setRefreshKey((k) => k +1)
@@ -38,8 +39,9 @@ export default function History() {
 
   // }, [isAuthed, user?.id])
 
-   const handleAddClick = () => { 
+  const handleAddClick = () => { 
     setIsModalOpen(true)
+
   }
 
   return (
@@ -51,7 +53,7 @@ export default function History() {
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
           {isModalOpen && (
-            <EditSessionModal /* onRequestClose={() => setIsModalOpen(false)}*/ />
+            <EditSessionModal mode="new" dialogRef={dialogRef}/* onRequestClose={() => setIsModalOpen(false)}*/ />
           )}
           {/* Knapp för manuell loggning */}
           <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>

@@ -6,10 +6,10 @@ import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
 
-export default function EditWorkSessionForm(handleSubmit: () => void, initialData?: SessionFormData) {
+export default function EditWorkSessionForm(handleSubmit: (formData: SessionFormData) => void, initialData?: SessionFormData) {
 
   // State för att lagra arbetspassets information 
-  const [formData, setFormData] = useState(
+  const [formData, setFormData] = useState<SessionFormData>(
     initialData ?? {  
       started_at: new Date().toLocaleString(),
       ended_at: new Date().toLocaleString(),
@@ -53,7 +53,7 @@ export default function EditWorkSessionForm(handleSubmit: () => void, initialDat
 
 
   // Hanterar ändringar i input-fält genom att uppdatera state
-  function handleChange(e: ChangeEvent) {
+  function handleChange(e) {
     const { value } = e.target;
   
     // Uppdaterar state med det nya värdet från det ändrade fältet
@@ -65,7 +65,7 @@ export default function EditWorkSessionForm(handleSubmit: () => void, initialDat
   
   return (
     // Formulär för att logga arbetspass-aktiviteter
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(formData)}>
     {/* Fält för att ange sessionens tider */}
       <label>Starttid</label>
       <input 
@@ -133,9 +133,9 @@ export default function EditWorkSessionForm(handleSubmit: () => void, initialDat
       />
       <MoodPicker
         value={formData.mood}
-        onChange={() => {setFormData((prev) => ({ ...prev, formData.mood }))}}
+        onChange={() => {setFormData((prev) => ({ ...prev, formData }))}}
       ></MoodPicker>
-      <Button type="submit" text="Logga" onClick={handleSubmit}/>
+      <Button type="submit" text="Logga" onClick={formData}/>
     </form>
   );
 }
