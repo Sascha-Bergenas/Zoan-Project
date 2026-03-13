@@ -1,5 +1,5 @@
 import supabase from "./supabase";
-import type { SessionData } from "../types/sessions";
+import type { SessionData } from "../contexts/sessions/types";
 
 export default async function getSessions(): Promise<SessionData[]> {
   const { data, error } = await supabase
