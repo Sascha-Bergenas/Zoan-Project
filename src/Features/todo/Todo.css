@@ -33,6 +33,10 @@
   flex-direction: column;
 }
 
+.li-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
 .todo-button {
   width: 25px;
   height: 25px;
