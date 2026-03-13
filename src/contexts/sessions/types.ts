@@ -9,8 +9,8 @@ export type SessionData = {
     mood: 1 | 2 | 3 | 4 | 5 | null,
     comment: string,
     active_time_ms: number,
-    started_at: string,
-    ended_at: string,
+    startedAt: string,
+    endedAt: string,
 }
 
 // Lista med poster
@@ -18,13 +18,14 @@ export type SessionsList = SessionData[]
 
 // Formulärdatamodell
 export type SessionFormData = {
+    user_id: string,
     title: string,
     category: "Arbete" | "Möte" | "Studier" | "",
-    mood: 1 | 2 | 3 | 4 | 5 | null,
+    mood: number | null,
     comment: string,
     active_time_ms: number,
-    started_at: string,
-    ended_at: string,
+    startedAt: string,
+    endedAt: string,
 }
 
 
@@ -36,7 +37,7 @@ export type SessionsStatus =
 
 // Actions > Skapa ny post | Uppdatera befintlig post | Ta bort post | Ladda om poster 
 export type DataActions = {
-    save: (newSession: SessionData) => Promise<void>,
+    save: (newSession: SessionFormData) => Promise<void>,
     update: (sessionData: SessionData) => Promise<void>,
     delete: (sessionId: SessionData["session_id"]) => Promise<void>,
     loadSessions: () => Promise<void>,

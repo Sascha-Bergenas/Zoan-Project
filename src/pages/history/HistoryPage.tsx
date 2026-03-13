@@ -41,7 +41,7 @@ export default function History() {
 
   const handleAddClick = () => { 
     setIsModalOpen(true)
-
+    dialogRef.current?.showModal()
   }
 
   return (

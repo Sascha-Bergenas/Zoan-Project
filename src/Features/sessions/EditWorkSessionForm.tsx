@@ -6,13 +6,18 @@ import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
 
-export default function EditWorkSessionForm(handleSubmit: (formData: SessionFormData) => void, initialData?: SessionFormData) {
+type FormProps = {
+  handleSubmit: (e: SubmitEvent, formData: SessionFormData) => void, 
+  initialData?: SessionFormData
+}
+
+export default function EditWorkSessionForm({handleSubmit, initialData}: FormProps) {
 
   // State för att lagra arbetspassets information 
   const [formData, setFormData] = useState<SessionFormData>(
     initialData ?? {  
-      started_at: new Date().toLocaleString(),
-      ended_at: new Date().toLocaleString(),
+      startedAt: new Date().toLocaleString(),
+      endedAt: new Date().toLocaleString(),
       active_time_ms: 0, 
       title: "",
       category: "",
@@ -23,9 +28,10 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
   
   // Räknar ut active_time_ms från start-, stopp- och paustid
   const calculateActiveTime = (pause: number) => {
-    const start = Date.parse(formData.started_at)
-    const end = Date.parse(formData.ended_at)
-    const time = end - start - (pause * 10000)
+    const start = Date.parse(formData.startedAt)
+    const end = Date.parse(formData.endedAt)
+    let time = end - start - (pause * 10000)
+    // TODO: Time ms -> to readable format
     return time
   }
 
@@ -53,9 +59,9 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
 
 
   // Hanterar ändringar i input-fält genom att uppdatera state
-  function handleChange(e) {
-    const { value } = e.target;
-  
+  function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    const { value, name } = e.target;
+    
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setFormData((prev) => ({
       ...prev,
@@ -65,14 +71,19 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
   
   return (
     // Formulär för att logga arbetspass-aktiviteter
-    <form onSubmit={handleSubmit(formData)}>
+    <form 
+      onSubmit={(e) => {
+        e.preventDefault()
+        handleSubmit(e, formData)
+      }}
+    >
     {/* Fält för att ange sessionens tider */}
       <label>Starttid</label>
       <input 
         type="datetime-local" 
-        name="startedAt" 
-        value={formData.started_at} 
-        // onChange={handleChange} 
+        name="started_at" 
+        value={formData.startedAt} 
+        onChange={handleChange} 
       />
       {/* <Input
         type="datetime-local"
@@ -85,9 +96,9 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
       <label>Stopptid</label>
       <input
         type="datetime-local"
-        name="endedAt"
-        value={formData.ended_at}
-        // onChange={handleChange}
+        name="ended_at"
+        value={formData.endedAt}
+        onChange={handleChange}
       />
       <p id="activeTime">Aktiv tid: {calculateActiveTime(pauseTime)}</p>
 
@@ -96,7 +107,7 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
         type="number" 
         name="pause"
         value={pauseTime}
-        // onChange={handleChange} 
+        onChange={handleChange} 
         min={0}
         max={calculateActiveTime(pauseTime)}
         step={1}
@@ -109,14 +120,14 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
         name="title"
         placeholder="Vad har du jobbat med?"
         value={formData.title}
-        // onChange={handleChange}
+        onChange={handleChange}
       />
       {/* Dropdown för att välja aktivitetens kategori */}
       <label>Kategori</label>
       <select
         name="category"
         value={formData.category}
-        // onChange={handleChange}
+        onChange={handleChange}
       >
         <option value="">Välj Kategori</option>
         <option value="Arbete">Arbete</option>
@@ -128,14 +139,14 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
       <textarea
         name="comment"
         value={formData.comment}
-        // onChange={handleChange}
+        onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
       <MoodPicker
         value={formData.mood}
-        onChange={() => {setFormData((prev) => ({ ...prev, formData }))}}
+        onChange={(value: number | null) => {setFormData((prev) => ({ ...prev, mood: value }))}}
       ></MoodPicker>
-      <Button type="submit" text="Logga" onClick={formData}/>
+      <Button type="submit" text="Logga" onClick={() => {}}/>
     </form>
   );
 }

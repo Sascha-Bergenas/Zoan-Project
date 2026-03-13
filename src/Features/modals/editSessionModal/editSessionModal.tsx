@@ -1,17 +1,17 @@
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { useAuth } from "../../../contexts/useAuth";
-import type { SessionData } from "../../../contexts/sessions/types"; 
+import type { SessionFormData } from "../../../contexts/sessions/types"; 
 import useSessions from "../../../contexts/sessions/useSessions";
 import { sessionStore } from "../../../storage/localStorage"
 import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
-// import Modal from "../../../components/ui/modal/Modal";
+import "../../../components/ui/modal/Modal.module.css";
 
 // Modal-komponent för att manuellt logga en arbetsession eller redigera en redan loggad session.
 
 type Props = {
   mode: "new" | "edit"
   sessionId?: string
-  dialogRef: HTMLDialogElement
+  dialogRef: React.RefObject<HTMLDialogElement | null>
   // children?: React.ReactNode
   // onRequestClose?: () => void
 }
@@ -25,18 +25,18 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
     : undefined
 
 
-  useEffect(() => {
-    dialogRef.showModal();
-  }, []);
+  // useEffect(() => {
+  //   dialogRef.current?.showModal();
+  // }, []);
 
-  // const handleCloseModal = () => {
-  //   dialogRef.current?.close();
-  //   onRequestClose?.();
-  // };
+  const handleCloseModal = () => {
+    dialogRef.current?.close();
+    // onRequestClose?.();
+  };
 
   // Hanterar formulär - rensar formulär och state
-  const handleSubmit = async (payload: SessionData) => {
-    // e.preventDefault();
+  const handleSubmit = async (e: SubmitEvent, formData: SessionFormData) => {
+    e.preventDefault();
 
     // const sessionToSave = {
     //   ...session,
@@ -56,17 +56,16 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
     try {
       if (isAuthed) {
         mode === "new" 
-        ? await actions.save(payload)
-        : await actions.update(payload)
-
+        ? await actions.save(formData)
+        : await actions.update({...formData, session_id})
         // handleSessionSaved?.()
         console.log("sparat till db");
       } else {
-        sessionStore.add(payload)
+        sessionStore.add(formData)
         console.log("sparat till local");
       }
 
-      dialogRef.close()
+      dialogRef.current?.close()
 
       // Nollställer state
       // setWorkSession({ 

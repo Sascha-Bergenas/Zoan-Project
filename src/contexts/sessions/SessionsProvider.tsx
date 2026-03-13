@@ -29,6 +29,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
 
             try {
                 await saveSession(newSession.user_id, newSession) // TODO: Ersätt user_id med det från auth
+                console.log("Saving...");
                 setStatus({type: "isOk"})
                 setSessions(prev => [...prev, newSession])
             } catch (error) {
