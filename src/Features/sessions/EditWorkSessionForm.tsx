@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import type { SessionFormData } from "../../contexts/sessions/types";
+import type { Mood, SessionFormData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
@@ -8,7 +8,7 @@ import MoodPicker from "../mood/MoodPicker";
 
 type Props = {
   handleSubmit: (formData: SessionFormData) => void;
-  initialData?: SessionFormData;
+  initialData?: SessionFormData | undefined;
 };
 
 export default function EditWorkSessionForm({ handleSubmit, initialData }: Props){
@@ -16,9 +16,9 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
   // State för att lagra arbetspassets information 
   const [formData, setFormData] = useState<SessionFormData>(
     initialData ?? {  
-      started_at: new Date().toLocaleString(),
-      ended_at: new Date().toLocaleString(),
-      active_time_ms: 0, 
+      startedAt: new Date().toLocaleString(),
+      endedAt: new Date().toLocaleString(),
+      activeTime: 0, 
       title: "",
       category: "",
       comment: "",
@@ -28,8 +28,8 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
   
   // Räknar ut active_time_ms från start-, stopp- och paustid
   const calculateActiveTime = (pause: number) => {
-    const start = Date.parse(formData.started_at)
-    const end = Date.parse(formData.ended_at)
+    const start = Date.parse(formData.startedAt)
+    const end = Date.parse(formData.endedAt)
     const time = end - start - (pause * 10000)
     return time
   }
@@ -80,8 +80,8 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
       <label>Starttid</label>
       <input 
         type="datetime-local" 
-        name="started_at" 
-        value={formData.started_at} 
+        name="startedAt" 
+        value={formData.startedAt} 
         onChange={handleChange} 
       />
       {/* <Input
@@ -95,8 +95,8 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
       <label>Stopptid</label>
       <input
         type="datetime-local"
-        name="ended_at"
-        value={formData.ended_at}
+        name="endedAt"
+        value={formData.endedAt}
         onChange={handleChange}
       />
       <p id="activeTime">Aktiv tid: {calculateActiveTime(pauseTime)}</p>
@@ -143,7 +143,7 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
       />
       <MoodPicker
         value={formData.mood}
-        onChange={(newMood: number | null) => {
+        onChange={(newMood: Mood) => {
           setFormData((prev) => ({ ...prev, mood: newMood }))
         }}
       ></MoodPicker>

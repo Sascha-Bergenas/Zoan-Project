@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
 import { SessionsContext, SessionsContextValue } from "./SessionsContext";
-import { SessionsList, SessionsStatus, DataActions } from "./types";
+import { SessionsList, SessionsStatus, DataActions, SessionData } from "./types";
 import saveSession from "../../supabase/saveSession";
 import updateSession from "../../supabase/updateSession";
 import deleteSession from "../../supabase/deleteSession";
 import getSessions from "../../supabase/getSessions";
-// import { useAuth } from "../useAuth";
+import { useAuth } from "../useAuth";
 
 
 export function SessionsProvider({ children }: {children: React.ReactNode}) {
-    //   const { user, isAuthed } = useAuth();
+    const { user } = useAuth() as { user: { id: string } | null };
+    
     const [sessions, setSessions] = useState<SessionsContextValue["sessions"]>([]) 
     // const [sessionsList, setSessionsList] = useState<SessionsList>([]) 
     // Är det här alternativet vettigt??
@@ -25,18 +26,21 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
 
         // Spara ny session
         async save(newSession) {
-            setStatus({type: "isLoading"})
-
+            setStatus({ type: "isLoading" });
+          
             try {
-                await saveSession(newSession.user_id, newSession) // TODO: Ersätt user_id med det från auth
-                setStatus({type: "isOk"})
-                setSessions(prev => [...prev, newSession])
+              if (!user) throw new Error("User not authenticated");
+          
+              const savedSession = await saveSession(user.id, newSession) as SessionData;
+          
+              setStatus({ type: "isOk" });
+              setSessions(prev => [...prev, savedSession]);
+          
             } catch (error) {
-                setStatus({type: "isFailed"})
-                throw error
+              setStatus({ type: "isFailed" });
+              throw error;
             }
-        }, 
-
+          },
         // Uppdatera tidigare session
         async update(sessionData) {
             setStatus({type: "isLoading"})
