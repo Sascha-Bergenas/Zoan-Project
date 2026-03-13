@@ -20,7 +20,7 @@ export type SessionsList = SessionData[]
 export type SessionFormData = {
     title: string,
     category: "Arbete" | "Möte" | "Studier" | "",
-    mood: 1 | 2 | 3 | 4 | 5 | null,
+    mood: number | null,
     comment: string,
     active_time_ms: number,
     started_at: string,

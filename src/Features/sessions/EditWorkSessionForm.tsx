@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import type { SessionFormData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
@@ -6,7 +6,12 @@ import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
 
-export default function EditWorkSessionForm(handleSubmit: (formData: SessionFormData) => void, initialData?: SessionFormData) {
+type Props = {
+  handleSubmit: (formData: SessionFormData) => void;
+  initialData?: SessionFormData;
+};
+
+export default function EditWorkSessionForm({ handleSubmit, initialData }: Props){
 
   // State för att lagra arbetspassets information 
   const [formData, setFormData] = useState<SessionFormData>(
@@ -53,8 +58,8 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
 
 
   // Hanterar ändringar i input-fält genom att uppdatera state
-  function handleChange(e) {
-    const { value } = e.target;
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+    const { name, value } = e.target;
   
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setFormData((prev) => ({
@@ -65,14 +70,19 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
   
   return (
     // Formulär för att logga arbetspass-aktiviteter
-    <form onSubmit={handleSubmit(formData)}>
+    <form
+    onSubmit={(e) => {
+      e.preventDefault();
+      handleSubmit(formData);
+    }}
+  >
     {/* Fält för att ange sessionens tider */}
       <label>Starttid</label>
       <input 
         type="datetime-local" 
-        name="startedAt" 
+        name="started_at" 
         value={formData.started_at} 
-        // onChange={handleChange} 
+        onChange={handleChange} 
       />
       {/* <Input
         type="datetime-local"
@@ -85,9 +95,9 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
       <label>Stopptid</label>
       <input
         type="datetime-local"
-        name="endedAt"
+        name="ended_at"
         value={formData.ended_at}
-        // onChange={handleChange}
+        onChange={handleChange}
       />
       <p id="activeTime">Aktiv tid: {calculateActiveTime(pauseTime)}</p>
 
@@ -96,7 +106,7 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
         type="number" 
         name="pause"
         value={pauseTime}
-        // onChange={handleChange} 
+        onChange={handleChange} 
         min={0}
         max={calculateActiveTime(pauseTime)}
         step={1}
@@ -109,14 +119,14 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
         name="title"
         placeholder="Vad har du jobbat med?"
         value={formData.title}
-        // onChange={handleChange}
+        onChange={handleChange}
       />
       {/* Dropdown för att välja aktivitetens kategori */}
       <label>Kategori</label>
       <select
         name="category"
         value={formData.category}
-        // onChange={handleChange}
+        onChange={handleChange}
       >
         <option value="">Välj Kategori</option>
         <option value="Arbete">Arbete</option>
@@ -128,14 +138,16 @@ export default function EditWorkSessionForm(handleSubmit: (formData: SessionForm
       <textarea
         name="comment"
         value={formData.comment}
-        // onChange={handleChange}
+        onChange={handleChange}
         placeholder="Skriv en kommentar"
       />
       <MoodPicker
         value={formData.mood}
-        onChange={() => {setFormData((prev) => ({ ...prev, formData }))}}
+        onChange={(newMood: number | null) => {
+          setFormData((prev) => ({ ...prev, mood: newMood }))
+        }}
       ></MoodPicker>
-      <Button type="submit" text="Logga" onClick={formData}/>
+      <Button type="submit" text="Logga" onClick={() => {}}/>
     </form>
   );
 }

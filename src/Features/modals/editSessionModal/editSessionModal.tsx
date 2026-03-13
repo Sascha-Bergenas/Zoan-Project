@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, RefObject } from "react";
 import { useAuth } from "../../../contexts/useAuth";
 import type { SessionData } from "../../../contexts/sessions/types"; 
 import useSessions from "../../../contexts/sessions/useSessions";
@@ -11,8 +11,8 @@ import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
 type Props = {
   mode: "new" | "edit"
   sessionId?: string
-  dialogRef: HTMLDialogElement
-  // children?: React.ReactNode
+  dialogRef: RefObject<HTMLDialogElement | null>;
+    // children?: React.ReactNode
   // onRequestClose?: () => void
 }
 
@@ -25,9 +25,10 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
     : undefined
 
 
-  useEffect(() => {
-    dialogRef.showModal();
-  }, []);
+    useEffect(() => {
+      dialogRef.current?.showModal();
+    }, [dialogRef]);
+
 
   // const handleCloseModal = () => {
   //   dialogRef.current?.close();
@@ -66,7 +67,7 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
         console.log("sparat till local");
       }
 
-      dialogRef.close()
+      dialogRef.current?.close();
 
       // Nollställer state
       // setWorkSession({ 
