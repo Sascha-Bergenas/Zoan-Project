@@ -5,11 +5,11 @@ import saveSession from "../../supabase/saveSession";
 import updateSession from "../../supabase/updateSession";
 import deleteSession from "../../supabase/deleteSession";
 import getSessions from "../../supabase/getSessions";
-// import { useAuth } from "../useAuth";
+import { useAuth } from "../useAuth";
 
 
 export function SessionsProvider({ children }: {children: React.ReactNode}) {
-    //   const { user, isAuthed } = useAuth();
+      const { user, isAuthed } = useAuth();
     const [sessions, setSessions] = useState<SessionsContextValue["sessions"]>([]) 
     // const [sessionsList, setSessionsList] = useState<SessionsList>([]) 
     // Är det här alternativet vettigt??
@@ -28,7 +28,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             setStatus({type: "isLoading"})
 
             try {
-                await saveSession(newSession.user_id, newSession) // TODO: Ersätt user_id med det från auth
+                await saveSession(user, newSession) // TODO: Ersätt user_id med det från auth
                 console.log("Saving...");
                 setStatus({type: "isOk"})
                 setSessions(prev => [...prev, newSession])
@@ -43,7 +43,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             setStatus({type: "isLoading"})
             
             try {
-                await updateSession(sessionData.user_id, sessionData) // TODO: Ersätt user_id med det från auth
+                await updateSession(user, sessionData) // TODO: Ersätt user_id med det från auth
                 setStatus({type: "isOk"})
                 setSessions(prev => prev.map(session => 
                     session.session_id === sessionData.session_id

@@ -1,10 +1,10 @@
 import supabase from "./supabase";
 
 export default async function updateSession(user, payload) {
-  if (!user) return;
+  if (user) return;
 
   const sessionData = {
-    user_id: payload.user_id,
+    user_id: user,
     session_id: payload.session_id,
     title: payload.title,
     category: payload.category,

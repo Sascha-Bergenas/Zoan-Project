@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
-import type { SessionFormData } from "../../contexts/sessions/types";
+import { useAuth } from "../../contexts/useAuth";
+import type { SessionData, SessionFormData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
@@ -8,14 +9,15 @@ import MoodPicker from "../mood/MoodPicker";
 
 type FormProps = {
   handleSubmit: (e: SubmitEvent, formData: SessionFormData) => void, 
-  initialData?: SessionFormData
+  initialData?: SessionData
 }
 
 export default function EditWorkSessionForm({handleSubmit, initialData}: FormProps) {
 
   // State för att lagra arbetspassets information 
   const [formData, setFormData] = useState<SessionFormData>(
-    initialData ?? {  
+    initialData ?? {
+      user_id:
       startedAt: new Date().toLocaleString(),
       endedAt: new Date().toLocaleString(),
       active_time_ms: 0, 

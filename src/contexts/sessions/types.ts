@@ -2,11 +2,12 @@
 
 // Datamodell för databasen
 export type SessionData = {
-    session_id: string,
+    session_id?: string,
     user_id: string,
     title: string,
     category: "Arbete" | "Möte" | "Studier" | "",
-    mood: 1 | 2 | 3 | 4 | 5 | null,
+    mood: number | null,
+    // mood: 1 | 2 | 3 | 4 | 5 | null,
     comment: string,
     active_time_ms: number,
     startedAt: string,
@@ -18,7 +19,7 @@ export type SessionsList = SessionData[]
 
 // Formulärdatamodell
 export type SessionFormData = {
-    user_id: string,
+    user_id: string, 
     title: string,
     category: "Arbete" | "Möte" | "Studier" | "",
     mood: number | null,

@@ -10,18 +10,18 @@ import "../../../components/ui/modal/Modal.module.css";
 
 type Props = {
   mode: "new" | "edit"
-  sessionId?: string
+  session_id?: string
   dialogRef: React.RefObject<HTMLDialogElement | null>
   // children?: React.ReactNode
   // onRequestClose?: () => void
 }
 
-export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
+export default function EditSessionModal({mode, session_id, dialogRef }: Props) {
   const { user, isAuthed } = useAuth();
   const {sessions, actions} = useSessions()
 
   const session = mode === "edit" 
-    ? sessions.find(s => s.session_id === sessionId)
+    ? sessions.find(s => s.session_id === session_id)
     : undefined
 
 
@@ -57,7 +57,7 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
       if (isAuthed) {
         mode === "new" 
         ? await actions.save(formData)
-        : await actions.update({...formData, session_id})
+        : await actions.update(formData)
         // handleSessionSaved?.()
         console.log("sparat till db");
       } else {
