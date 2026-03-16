@@ -17,6 +17,7 @@
     box-shadow 150ms ease,
     transform 150ms ease;
   white-space: nowrap;
+  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn:hover {
