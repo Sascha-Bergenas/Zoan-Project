@@ -10,10 +10,9 @@
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   padding: 1rem;
-  gap: 1rem;
+  gap: 0.5rem;
   margin: 1rem;
   border-radius: 10px;
-  background-color: var(--primary-light-color);
   max-width: 90rem;
 }
 
