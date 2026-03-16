@@ -37,23 +37,15 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
   // Hanterar formulär - rensar formulär och state
   const handleSubmit = async (payload: SessionFormData) => {
     try {
-      if (isAuthed) {
-        if (mode === "new") {
-          await actions.save(payload);
-        } else if (session) {
-          const updatedSession = toUpdatedSessionData(payload, session);
-          await actions.update(updatedSession);
-        }
-  
-        console.log("sparat till db");
-      } else {
-        sessionStore.add(payload);
-        console.log("sparat till local");
+      if (mode === "new") {
+        await actions.save(payload);
+      } else if (session) {
+        await actions.update(toUpdatedSessionData(payload, session));
       }
   
       dialogRef.current?.close();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -62,10 +54,10 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
       {/* <Modal dialogRef={dialogRef} onClose={handleCloseModal}> */}
         {" "}
         <h3>Logga din session</h3>
-    <EditWorkSessionForm
-      {...(session ? { initialData: toSessionFormData(session) } : {})}
-      handleSubmit={handleSubmit}
-      />
+        <EditWorkSessionForm
+            initialData={session ? toSessionFormData(session) : undefined}
+            handleSubmit={handleSubmit}
+          />
       {/* </Modal>{" "} */}
     </Modal>
   );
