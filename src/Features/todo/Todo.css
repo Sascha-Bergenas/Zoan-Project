@@ -31,10 +31,63 @@
 }
 
 .li-wrapper {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 10rem;
   display: flex;
   flex-direction: column;
+  background:
+    linear-gradient(var(--white-color) 30%, transparent) center top,
+    linear-gradient(transparent, var(--white-color) 70%) center bottom,
+    radial-gradient(
+        farthest-side at 50% 0,
+        rgba(0, 0, 0, 0.28),
+        rgba(0, 0, 0, 0)
+      )
+      center top,
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.28),
+        rgba(0, 0, 0, 0)
+      )
+      center bottom;
+  background-repeat: no-repeat;
+  background-size:
+    100% 14px,
+    100% 14px,
+    100% 10px,
+    100% 10px;
+  background-attachment: local, local, scroll, scroll;
+
+  border-radius: 10px;
+}
+
+body.dark .li-wrapper {
+  background:
+    linear-gradient(var(--white-color) 30%, transparent) center top,
+    linear-gradient(transparent, var(--white-color) 70%) center bottom,
+    radial-gradient(
+        farthest-side at 50% 0,
+        rgba(255, 255, 255, 0.32),
+        transparent
+      )
+      center top,
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(255, 255, 255, 0.32),
+        transparent
+      )
+      center bottom;
+  background-repeat: no-repeat;
+  background-size:
+    100% 14px,
+    100% 14px,
+    100% 10px,
+    100% 10px;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.li-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .todo-button {
