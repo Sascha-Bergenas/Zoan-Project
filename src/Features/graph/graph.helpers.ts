@@ -65,6 +65,7 @@ const formatDateLabel = (date: Date) =>
 export const buildGraphData = (sessions: Session[]): GraphData => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  const todayKey = getDateKey(today);
 
   const oldestDate = new Date(today);
   oldestDate.setDate(today.getDate() - (LAST_DAYS - 1));
@@ -102,13 +103,14 @@ export const buildGraphData = (sessions: Session[]): GraphData => {
       return;
     }
 
-    const dayIndex = dateIndexMap.get(getDateKey(date));
+    const sessionDateKey = getDateKey(date);
+    const dayIndex = dateIndexMap.get(sessionDateKey);
     if (dayIndex == null) {
       return;
     }
 
     const mood = normalizeMood(session.mood);
-    if (mood) {
+    if (mood && sessionDateKey === todayKey) {
       const currentMoodCount = moodCounts[mood];
       if (currentMoodCount !== undefined) {
         moodCounts[mood] = currentMoodCount + 1;
