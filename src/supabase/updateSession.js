@@ -1,6 +1,7 @@
 import supabase from "./supabase";
 
 export default async function updateSession(user, payload) {
+  console.log("payload.session_id:", payload.session_id);
   if (!user) return;
 
   const sessionData = {
@@ -17,7 +18,7 @@ export default async function updateSession(user, payload) {
   const { data, error } = await supabase
     .from("sessions")
     .update(sessionData)
-    .eq("id", sessionData.session_id);
+    .eq("id", payload.session_id);
   if (error) throw error;
 
   return data;

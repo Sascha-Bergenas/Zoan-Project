@@ -17,7 +17,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
     // Är det här alternativet vettigt??
     
     const [status, setStatus] = useState<SessionsStatus>({type: "isLoading"})
-    
+
     useEffect(() => {
         actions.loadSessions();
       }, [user?.id]);
@@ -47,6 +47,7 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
             if (!user) {
               localSessionActions.update(sessionData);
             } else {
+                console.log("session_id:", sessionData.session_id) 
               await updateSession(user.id, {
                 ...sessionData,
                 activeTime: sessionData.active_time_ms,
