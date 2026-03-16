@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { SessionsContext, SessionsContextValue } from "./SessionsContext";
-import { SessionsList, SessionsStatus, DataActions, SessionData } from "./types";
+import { SessionsStatus, SessionData } from "./types";
 import saveSession from "../../supabase/saveSession";
 import updateSession from "../../supabase/updateSession";
 import deleteSession from "../../supabase/deleteSession";
 import getSessions from "../../supabase/getSessions";
 import { useAuth } from "../useAuth";
+import { localSessionActions } from "../../storage/localStorage";
 
 
 export function SessionsProvider({ children }: {children: React.ReactNode}) {
@@ -16,79 +17,83 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
     // Är det här alternativet vettigt??
     
     const [status, setStatus] = useState<SessionsStatus>({type: "isLoading"})
-    
+
     useEffect(() => {
-        actions.loadSessions()
-    }, [])
+        actions.loadSessions();
+      }, [user?.id]); 
 
     const actions: SessionsContextValue["actions"] = {
-        // TODO: localStorage om användaren inte är inloggad
 
-        // Spara ny session
         async save(newSession) {
-            setStatus({ type: "isLoading" });
-          
-            try {
-              if (!user) throw new Error("User not authenticated");
-          
-              const savedSession = await saveSession(user.id, newSession) as SessionData;
-          
-              setStatus({ type: "isOk" });
-              setSessions(prev => [...prev, savedSession]);
-          
-            } catch (error) {
-              setStatus({ type: "isFailed" });
-              throw error;
+          setStatus({ type: "isLoading" });
+          try {
+            if (!user) {
+              const saved = localSessionActions.add(newSession);
+              setSessions(prev => [saved, ...prev]);
+            } else {
+              const saved = await saveSession(user.id, newSession) as SessionData;
+              setSessions(prev => [saved, ...prev]);
             }
-          },
-        // Uppdatera tidigare session
+            setStatus({ type: "isOk" });
+          } catch (error) {
+            setStatus({ type: "isFailed" });
+            throw error;
+          }
+        },
+      
         async update(sessionData) {
-            setStatus({type: "isLoading"})
-            
-            try {
-                await updateSession(sessionData.user_id, sessionData) // TODO: Ersätt user_id med det från auth
-                setStatus({type: "isOk"})
-                setSessions(prev => prev.map(session => 
-                    session.session_id === sessionData.session_id
-                        ? sessionData
-                        : session
-                ))
-            } catch (error) {
-                setStatus({type: "isFailed"})
-                throw error
+          setStatus({ type: "isLoading" });
+          try {
+            if (!user) {
+              localSessionActions.update(sessionData);
+            } else {
+              await updateSession(user.id, {
+                ...sessionData,
+                activeTime: sessionData.active_time_ms,
+                startedAt: sessionData.started_at,
+                endedAt: sessionData.ended_at,
+              });
             }
+            setStatus({ type: "isOk" });
+            setSessions(prev =>
+              prev.map(s => s.session_id === sessionData.session_id ? sessionData : s)
+            );
+          } catch (error) {
+            setStatus({ type: "isFailed" });
+            throw error;
+          }
         },
-
-        // Radera tidigare session
+      
         async delete(session_id) {
-            setStatus({type: "isLoading"})
-            
-            try {
-                await deleteSession(session_id)// TODO: lägg till check av user_id från auth
-                setStatus({type: "isOk"})
-                setSessions(prev => 
-                    prev.filter(session => session.session_id !== session_id)
-                )
-            } catch (error) {
-                setStatus({type: "isFailed"})
-                throw error
+          setStatus({ type: "isLoading" });
+          try {
+            if (!user) {
+              localSessionActions.delete(session_id);
+            } else {
+              await deleteSession(user.id, session_id);
             }
+            setStatus({ type: "isOk" });
+            setSessions(prev => prev.filter(s => s.session_id !== session_id));
+          } catch (error) {
+            setStatus({ type: "isFailed" });
+            throw error;
+          }
         },
-
-        // Hämmta alla sessioner
+      
         async loadSessions() {
-            setStatus({type: "isLoading"})
-            
-            try {
-                const sessions = await getSessions()
-                setSessions(sessions)
-                setStatus({type: "isOk"})
-            } catch (error) {
-                setStatus({type: "isFailed"})
-                throw error
-            }
+          setStatus({ type: "isLoading" });
+          try {
+            const data = user
+              ? await getSessions()
+              : localSessionActions.load();
+            setSessions(data);
+            setStatus({ type: "isOk" });
+          } catch (error) {
+            setStatus({ type: "isFailed" });
+            throw error;
+          }
         },
-    }
+      };
     
     const value: SessionsContextValue = {
         sessions: sessions, status, actions
@@ -97,4 +102,3 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
 
     return <SessionsContext.Provider value={value}>{ children }</SessionsContext.Provider>
 }
-

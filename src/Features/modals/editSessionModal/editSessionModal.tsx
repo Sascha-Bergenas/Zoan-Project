@@ -1,8 +1,6 @@
-import { useEffect, useRef, RefObject } from "react";
-import { useAuth } from "../../../contexts/useAuth";
+import { RefObject } from "react";
 import type { SessionFormData } from "../../../contexts/sessions/types"; 
 import useSessions from "../../../contexts/sessions/useSessions";
-import { sessionStore } from "../../../storage/localStorage"
 import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
 import Modal from "../../../components/ui/modal/Modal";
 import { toSessionFormData, toUpdatedSessionData } from "../../../contexts/sessions/types";
@@ -18,7 +16,6 @@ type Props = {
 }
 
 export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
-  const { user, isAuthed } = useAuth();
   const {sessions, actions} = useSessions()
 
   const session = mode === "edit" 

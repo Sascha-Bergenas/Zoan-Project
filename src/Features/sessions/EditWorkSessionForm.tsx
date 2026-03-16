@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import type { Mood, SessionFormData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
@@ -60,7 +60,12 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
   // Hanterar ändringar i input-fält genom att uppdatera state
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
     const { name, value } = e.target;
-  
+
+    if (name === "pause") {
+      setPauseTime(Number(value));
+      return;
+    }
+
     // Uppdaterar state med det nya värdet från det ändrade fältet
     setFormData((prev) => ({
       ...prev,
@@ -73,7 +78,10 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
     <form
     onSubmit={(e) => {
       e.preventDefault();
-      handleSubmit(formData);
+      handleSubmit({
+        ...formData,
+        activeTime: calculateActiveTime(pauseTime),
+      });
     }}
   >
     {/* Fält för att ange sessionens tider */}
