@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, RefObject } from "react";
 import { useAuth } from "../../../contexts/useAuth";
 import type { SessionData } from "../../../contexts/sessions/types"; 
 import useSessions from "../../../contexts/sessions/useSessions";
@@ -11,7 +11,7 @@ import "../../../components/ui/modal/Modal.module.css";
 type Props = {
   mode: "new" | "edit"
   session_id: string
-  dialogRef: React.RefObject<HTMLDialogElement | null>
+  dialogRef: RefObject<HTMLDialogElement | null>
   // children?: React.ReactNode
   // onRequestClose?: () => void
 }
@@ -37,9 +37,9 @@ export default function EditSessionModal({mode, session_id, dialogRef }: Props) 
     : emptyTemplate
 
 
-  // useEffect(() => {
-  //   dialogRef.current?.showModal();
-  // }, []);
+  useEffect(() => {
+    dialogRef.current?.showModal();
+  }, []);
 
   const handleCloseModal = () => {
     dialogRef.current?.close();
@@ -49,21 +49,6 @@ export default function EditSessionModal({mode, session_id, dialogRef }: Props) 
   // Hanterar formulär - rensar formulär och state
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formData: SessionData) => {
     e.preventDefault();
-
-    // const sessionToSave = {
-    //   ...session,
-    // };
-    
-    // const activeMinutes = toMinutes(sessionToSave.activeTime);
-    // if (activeMinutes > maxActiveMinutes) {
-    //   alert(`Aktiv tid får vara max ${maxActiveHHMM}`);
-    //   return;
-    // }
-    
-    // // Ett nödvändigt ont för att konvertera "HH:MM" till ms för att matcha fältet i databasen:
-    // sessionToSave.activeTime = 
-    //   Number(sessionToSave.activeTime.slice(0, 2)) * 3600000 + 
-    //   Number(sessionToSave.activeTime.slice(3, 5)) * 60000
 
     try {
       if (isAuthed) {

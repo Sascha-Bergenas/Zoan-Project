@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useAuth } from "../../contexts/useAuth";
 import type { SessionData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
@@ -8,7 +8,7 @@ import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
 
 type FormProps = {
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>, formData: SessionData) => void, 
+  handleSubmit: (e: FormEvent<HTMLFormElement>, formData: SessionData) => void, 
   initialData: SessionData
 }
 
@@ -19,36 +19,13 @@ export default function EditWorkSessionForm({handleSubmit, initialData}: FormPro
   const [pauseTime, setPauseTime] = useState(0)
   
   // Räknar ut active_time_ms från start-, stopp- och paustid
-  const calculateActiveTime = (pause: number) => {
+  const calculateActiveTime = (pause: number) :string => {
     const start = Date.parse(formData.startedAt)
     const end = Date.parse(formData.endedAt)
-    let time = end - start - (pause * 10000)
-    // TODO: Time ms -> to readable format
-    return time
+    const time = end - start - (pause * 10000)
+    const readableTime = new Date(time)
+    return `Aktiv tid: ${readableTime.getUTCHours()} timmar och ${readableTime.getMinutes()} minuter`
   }
-
-  // // Funktioner för att begränsa activeTime till tidsspannet mellan start och stopp
-  //   const toMinutes = (hhmm = "00:00") => {
-  //     const [h, m] = hhmm.split(":").map(Number);
-  //     return h * 60 + m;
-  //   };
-
-  //   const toHHMM = (mins = 0) => {
-  //     const h = String(Math.floor(mins / 60)).padStart(2, "0");
-  //     const m = String(mins % 60).padStart(2, "0");
-  //     return `${h}:${m}`;
-  //   };
-
-  //   const getMaxActiveMinutes = (start, end) => {
-  //     if (!start || !end) return 0;
-  //     const diffMs = new Date(end).getTime() - new Date(start).getTime();
-  //     return Math.max(0, Math.floor(diffMs / 60000));
-  //   };
-
-  //   const maxActiveMinutes = getMaxActiveMinutes(formData.started_at, formData.endedAt);
-  //   const maxActiveHHMM = toHHMM(maxActiveMinutes);
-  // // ------------------------------------------------------------------------------
-
 
   // Hanterar ändringar i input-fält genom att uppdatera state
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
@@ -69,7 +46,7 @@ export default function EditWorkSessionForm({handleSubmit, initialData}: FormPro
         handleSubmit(e, formData)
       }}
     >
-    {/* Fält för att ange sessionens tider */}
+      {/* Fält för att ange sessionens tider */}
       <label>Starttid</label>
       <input 
         type="datetime-local" 
@@ -77,13 +54,6 @@ export default function EditWorkSessionForm({handleSubmit, initialData}: FormPro
         value={formData.startedAt} 
         onChange={handleChange} 
       />
-      {/* <Input
-        type="datetime-local"
-        label="Starttid"
-        name="startedAt"
-        value={formData.startedAt}
-        onChange={handleChange}
-      /> */}
 
       <label>Stopptid</label>
       <input
@@ -92,7 +62,7 @@ export default function EditWorkSessionForm({handleSubmit, initialData}: FormPro
         value={formData.endedAt}
         onChange={handleChange}
       />
-      <p id="activeTime">Aktiv tid: {calculateActiveTime(pauseTime)}</p>
+      <p id="activeTime">{calculateActiveTime(pauseTime)}</p>
 
       <label>Paus (minuter)</label>  
       <input 
@@ -101,7 +71,9 @@ export default function EditWorkSessionForm({handleSubmit, initialData}: FormPro
         value={pauseTime}
         onChange={handleChange} 
         min={0}
-        max={calculateActiveTime(pauseTime)}
+        max={
+          Math.floor((Date.parse(formData.endedAt) - Date.parse(formData.startedAt)) / 60000)
+        }
         step={1}
       />
 

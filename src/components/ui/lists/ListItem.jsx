@@ -1,3 +1,4 @@
+import { CloudLightning } from "lucide-react"
 import styles from "./List.module.css"
 
 export default function ListItem({session, evenOdd}) {
