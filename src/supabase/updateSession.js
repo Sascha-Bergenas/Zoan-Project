@@ -5,7 +5,7 @@ export default async function updateSession(user, payload) {
 
   const sessionData = {
     user_id: payload.user_id,
-    session_id: payload.session_id,
+    // session_id: payload.session_id,
     title: payload.title,
     category: payload.category,
     mood: payload.mood,
@@ -17,8 +17,8 @@ export default async function updateSession(user, payload) {
   const { data, error } = await supabase
     .from("sessions")
     .update(sessionData)
-    .eq("session_id", sessionData.session_id) 
-    if (error) throw error;
+    .eq("id", sessionData.session_id);
+  if (error) throw error;
 
   return data;
 }

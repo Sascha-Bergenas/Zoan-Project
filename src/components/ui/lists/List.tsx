@@ -2,7 +2,7 @@ import useSessions from "../../../contexts/sessions/useSessions"
 import ListHeader from "./ListHeader"
 import ListItem from "./ListItem"
 import styles from "./List.module.css" 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import EditSessionModal from "../../../Features/modals/editSessionModal/editSessionModal"
 
 
@@ -27,6 +27,7 @@ function List() {
         setEditingSessionId(sessionId);
         editDialogRef.current?.showModal();
         };
+
 
     console.log(status);
 

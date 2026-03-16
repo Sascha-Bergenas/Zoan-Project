@@ -17,8 +17,7 @@ export default function Timer() {
   const dialogRef = useRef(null);
 
   const [timerData, setTimerData] = useState({activeTime: 0, startedAt: 0, endedAt: 0});
-  console.log(timerData)
-  
+    
   const [stopTimeFormatted, setStopTimeFormatted] = useState("");
 
   function calcTime(ms) {

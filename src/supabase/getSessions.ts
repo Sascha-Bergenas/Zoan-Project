@@ -13,7 +13,7 @@ export default async function getSessions(): Promise<SessionData[]> {
   }
 
   return (data ?? []).map((row) => ({
-    session_id: row.session_id,
+    session_id:  row.id,
     user_id: row.user_id,
     title: row.title,
     category: row.category,
