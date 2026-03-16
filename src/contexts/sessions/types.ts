@@ -2,7 +2,7 @@
 
 // Datamodell för databasen
 export type SessionData = {
-    session_id?: string,
+    session_id: string,
     user_id: string,
     title: string,
     category: "Arbete" | "Möte" | "Studier" | "",
@@ -38,7 +38,7 @@ export type SessionsStatus =
 
 // Actions > Skapa ny post | Uppdatera befintlig post | Ta bort post | Ladda om poster 
 export type DataActions = {
-    save: (newSession: SessionFormData) => Promise<void>,
+    save: (newSession: SessionData) => Promise<void>,
     update: (sessionData: SessionData) => Promise<void>,
     delete: (sessionId: SessionData["session_id"]) => Promise<void>,
     loadSessions: () => Promise<void>,

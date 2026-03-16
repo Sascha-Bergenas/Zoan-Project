@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { useAuth } from "../../contexts/useAuth";
-import type { SessionData, SessionFormData } from "../../contexts/sessions/types";
+import type { SessionData } from "../../contexts/sessions/types";
 import Button from "../../components/ui/button/Button";
 import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
@@ -8,24 +8,14 @@ import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
 
 type FormProps = {
-  handleSubmit: (e: SubmitEvent, formData: SessionFormData) => void, 
-  initialData?: SessionData
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>, formData: SessionData) => void, 
+  initialData: SessionData
 }
 
 export default function EditWorkSessionForm({handleSubmit, initialData}: FormProps) {
 
   // State för att lagra arbetspassets information 
-  const [formData, setFormData] = useState<SessionFormData>(
-    initialData ?? {
-      user_id:
-      startedAt: new Date().toLocaleString(),
-      endedAt: new Date().toLocaleString(),
-      active_time_ms: 0, 
-      title: "",
-      category: "",
-      comment: "",
-      mood: null,
-  });
+  const [formData, setFormData] = useState<SessionData>(initialData);
   const [pauseTime, setPauseTime] = useState(0)
   
   // Räknar ut active_time_ms från start-, stopp- och paustid

@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useRef } from "react";
 import { useAuth } from "../../../contexts/useAuth";
-import type { SessionFormData } from "../../../contexts/sessions/types"; 
+import type { SessionData } from "../../../contexts/sessions/types"; 
 import useSessions from "../../../contexts/sessions/useSessions";
 import { sessionStore } from "../../../storage/localStorage"
 import EditWorkSessionForm from "../../sessions/EditWorkSessionForm"
@@ -10,7 +10,7 @@ import "../../../components/ui/modal/Modal.module.css";
 
 type Props = {
   mode: "new" | "edit"
-  session_id?: string
+  session_id: string
   dialogRef: React.RefObject<HTMLDialogElement | null>
   // children?: React.ReactNode
   // onRequestClose?: () => void
@@ -20,9 +20,21 @@ export default function EditSessionModal({mode, session_id, dialogRef }: Props) 
   const { user, isAuthed } = useAuth();
   const {sessions, actions} = useSessions()
 
+  const emptyTemplate: SessionData = {
+        session_id: "",
+        user_id: user,
+        startedAt: new Date().toLocaleString(),
+        endedAt: new Date().toLocaleString(),
+        active_time_ms: 0, 
+        title: "",
+        category: "",
+        comment: "",
+        mood: null,
+      }
+
   const session = mode === "edit" 
-    ? sessions.find(s => s.session_id === session_id)
-    : undefined
+    ? sessions.find(s => s.session_id === session_id) ?? emptyTemplate
+    : emptyTemplate
 
 
   // useEffect(() => {
@@ -35,7 +47,7 @@ export default function EditSessionModal({mode, session_id, dialogRef }: Props) 
   };
 
   // Hanterar formulär - rensar formulär och state
-  const handleSubmit = async (e: SubmitEvent, formData: SessionFormData) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>, formData: SessionData) => {
     e.preventDefault();
 
     // const sessionToSave = {
