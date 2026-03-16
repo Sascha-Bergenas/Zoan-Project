@@ -154,8 +154,6 @@ export default function Timer() {
             <Button onClick={handleStopClick} text="Stop" variant="primary" />
           </>
         )}
-
-        <p>{state.mode}</p>
       </div>
     </div>
   );
