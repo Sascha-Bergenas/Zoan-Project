@@ -1,15 +1,23 @@
 .btn {
   align-items: center;
   border: 1px solid transparent;
-  border-radius: 0.25rem;
-  box-shadow: rgba(0, 0, 0, 0.425) 0 1px 3px 0;
-  display: inline-flex;
-  font-family: inherit, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  border-radius: 9999px;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
   justify-content: center;
   min-width: 8rem;
-  padding: 0.5rem 2rem;
+  padding: 0.5625rem 1.75rem;
   margin: 0.8rem 0.4rem;
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
+  white-space: nowrap;
+  font-family: "Montserrat", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .btn:hover {
@@ -24,7 +32,7 @@
 
 .btn-primary {
   background-color: var(--primary-light-color);
-  color: var(--black-color);
+  color: var(--white-color);
 }
 .btn-primary:hover {
   background-color: var(--primary-color);
