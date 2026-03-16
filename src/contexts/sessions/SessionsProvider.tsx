@@ -17,10 +17,10 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
     // Är det här alternativet vettigt??
     
     const [status, setStatus] = useState<SessionsStatus>({type: "isLoading"})
-
+    
     useEffect(() => {
         actions.loadSessions();
-      }, [user?.id]); 
+      }, [user?.id]);
 
     const actions: SessionsContextValue["actions"] = {
 
@@ -81,18 +81,20 @@ export function SessionsProvider({ children }: {children: React.ReactNode}) {
         },
       
         async loadSessions() {
-          setStatus({ type: "isLoading" });
-          try {
-            const data = user
-              ? await getSessions()
-              : localSessionActions.load();
-            setSessions(data);
-            setStatus({ type: "isOk" });
-          } catch (error) {
-            setStatus({ type: "isFailed" });
-            throw error;
-          }
-        },
+            setStatus({ type: "isLoading" });
+          
+            try {
+              const sessions = !user
+                ? localSessionActions.load()
+                : await getSessions();
+          
+              setSessions(sessions);
+              setStatus({ type: "isOk" });
+            } catch (error) {
+              setStatus({ type: "isFailed" });
+              throw error;
+            }
+          },
       };
     
     const value: SessionsContextValue = {

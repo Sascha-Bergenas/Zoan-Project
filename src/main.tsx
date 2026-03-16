@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { TimerProvider } from "./contexts/TimerContext";
+import { SessionsProvider } from "./contexts/sessions/SessionsProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -12,7 +13,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <AuthProvider>
         <ThemeProvider>
           <TimerProvider>
+          <SessionsProvider>
             <App />
+          </SessionsProvider>
           </TimerProvider>
         </ThemeProvider>
       </AuthProvider>
