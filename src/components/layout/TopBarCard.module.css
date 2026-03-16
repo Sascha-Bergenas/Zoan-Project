@@ -32,3 +32,10 @@
 .green {
   background-color: #28cb64;
 }
+
+@media only screen and (max-width: 650px) {
+  .card {
+    width: 350px;
+    margin: 0 auto;
+  }
+}

@@ -102,7 +102,7 @@
   .timer {
     grid-column: 1fr;
     grid-row: 1;
-    height: 150px;
+    height: 300px;
   }
 
   .card1 {
