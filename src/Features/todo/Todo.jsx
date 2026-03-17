@@ -41,21 +41,24 @@ const Todo = () => {
       </div>
 
       <ul className="li-wrapper">
-        {todos.map((todo) => (
-          <li className="li-item" key={todo.id}>
-            <span className="todo-text">{todo.text}</span>
-
-            <button
-              className="todo-button"
-              aria-label={`Ta bort ${todo.text}`}
-              onClick={() =>
-                setTodos((prev) => prev.filter((t) => t.id !== todo.id))
-              }
-            >
-              x
-            </button>
-          </li>
-        ))}
+        {todos.length === 0 ? (
+          <li className="todo-text">Inga todos än. Lägg till något!</li>
+        ) : (
+          todos.map((todo) => (
+            <li className="li-item" key={todo.id}>
+              <span className="todo-text">{todo.text}</span>
+              <button
+                className="todo-button"
+                aria-label={`Ta bort ${todo.text}`}
+                onClick={() =>
+                  setTodos((prev) => prev.filter((t) => t.id !== todo.id))
+                }
+              >
+                x
+              </button>
+            </li>
+          ))
+        )}
       </ul>
     </>
   );
