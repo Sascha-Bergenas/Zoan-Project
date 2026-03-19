@@ -7,7 +7,7 @@
   overflow-y: scroll;
   scrollbar-width: thin;
   scroll-behavior: smooth;
-  color: var(--primary-color);
+  color: var(--black-color);
 }
 
 .listItem {
@@ -70,7 +70,7 @@
   border-right: none;
 }
 
-.listHeader {
+.listHeader span {
   font-weight: 600;
 }
 
