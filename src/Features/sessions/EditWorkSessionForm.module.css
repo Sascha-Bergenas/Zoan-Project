@@ -1,0 +1,15 @@
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  min-width: 320px;
+}
+label,
+p {
+  font-weight: 600;
+}
+
+input {
+  padding: 6px;
+}

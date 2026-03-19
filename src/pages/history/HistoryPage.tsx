@@ -49,7 +49,7 @@ export default function History() {
 
   return (
     <>
-      <h2 className="text-lg">Statserinos</h2>
+      <h2 className="text-lg">Historik</h2>
 
       <section className={styles.wrapper}>
         <div className={styles.container}>

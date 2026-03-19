@@ -5,6 +5,7 @@ import Input from "../../components/ui/input";
 import Select from "../../components/ui/select/Select";
 import TextArea from "../../components/ui/textArea/TextArea";
 import MoodPicker from "../mood/MoodPicker";
+import styles from "./EditWorkSessionForm.module.css"
 
 type Props = {
   handleSubmit: (formData: SessionFormData) => void;
@@ -77,16 +78,18 @@ const calculateActiveTime = (pause: number) :string => {
   return (
     // Formulär för att logga arbetspass-aktiviteter
     <form
+    className={styles.modalForm}
     onSubmit={(e) => {
       e.preventDefault();
       handleSubmit(formData);
     }}
   >
     {/* Fält för att ange sessionens tider */}
-      <label>Starttid</label>
+      <label htmlFor="startedAt">Starttid</label>
       <input 
         type="datetime-local" 
         name="startedAt" 
+        id="startedAt" 
         value={formData.startedAt} 
         onChange={handleChange} 
       />
@@ -98,19 +101,21 @@ const calculateActiveTime = (pause: number) :string => {
         onChange={handleChange}
       /> */}
 
-      <label>Stopptid</label>
+      <label htmlFor="endedAt">Stopptid</label>
       <input
         type="datetime-local"
         name="endedAt"
+        id="endedAt"
         value={formData.endedAt}
         onChange={handleChange}
       />
       <p id="activeTime">{calculateActiveTime(pauseTime)}</p>
 
-      <label>Paus (minuter)</label>  
+      <label htmlFor="pause" >Paus (minuter)</label>  
       <input 
         type="number" 
         name="pause"
+        id="pause"
         value={pauseTime}
         onChange={handleChange} 
         min={0}
@@ -119,18 +124,20 @@ const calculateActiveTime = (pause: number) :string => {
       />
 
       {/* Input-fält för aktivitetens titel */}
-      <label>Aktivitet</label>
+      <label htmlFor="title">Aktivitet</label>
       <input
         type="text"
         name="title"
+        id="title"
         placeholder="Vad har du jobbat med?"
         value={formData.title}
         onChange={handleChange}
       />
       {/* Dropdown för att välja aktivitetens kategori */}
-      <label>Kategori</label>
+      <label htmlFor="category">Kategori</label>
       <select
         name="category"
+        id="category"
         value={formData.category}
         onChange={handleChange}
       >
@@ -140,9 +147,10 @@ const calculateActiveTime = (pause: number) :string => {
         <option value="Möte">Möte</option>
       </select>
 
-      <label>Kommentar</label>
+      <label htmlFor="comment">Kommentar</label>
       <textarea
         name="comment"
+        id="comment"
         value={formData.comment}
         onChange={handleChange}
         placeholder="Skriv en kommentar"
