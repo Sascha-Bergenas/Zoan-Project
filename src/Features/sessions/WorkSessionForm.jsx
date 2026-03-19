@@ -7,6 +7,7 @@ import MoodPicker from "../mood/MoodPicker";
 import { useAuth } from "../../contexts/useAuth";
 import { sessionStore } from "../../storage/localStorage";
 import saveSession from "../../supabase/saveSession";
+import "./WorkSessionForm.modal.css";
 
 function WorkSessionForm({ handleCloseModal, timerData }) {
   const { user, isAuthed } = useAuth();
@@ -86,15 +87,15 @@ function WorkSessionForm({ handleCloseModal, timerData }) {
         <option value="Arbete">Arbete</option>
         <option value="Studier">Studier</option>
         <option value="Möte">Möte</option>
-        {/* <option value="Chill">Chill-i-Dill</option> */}
       </Select>
 
       <TextArea
+        className="sessionText"
         label="Kommentar"
         name="comment"
         value={workSession.comment}
         onChange={handleChange}
-        placeholder="Skriv en kommentar"
+        placeholder=" Skriv en kommentar"
       />
       <MoodPicker
         value={workSession.mood}

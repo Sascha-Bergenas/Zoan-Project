@@ -6,9 +6,7 @@ import {
   Session
 } from "./graph.types";
 
-const WEEK_DAYS = ["Mån", "Tis", "Ons", "Tors", "Fre", "Lör", "Sön"] as const;
 const MS_PER_MINUTE = 60_000;
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
 const LAST_DAYS = 7;
 
 // Säkerställer att mood är ett heltal mellan 1 och 5.
@@ -50,9 +48,38 @@ const getSessionDate = (session: Session) => {
   return date;
 };
 
-// Bygger all data till båda graferna, filtrerat på senaste 7 dagar.
+const getDateKey = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const formatDateLabel = (date: Date) =>
+  date.toLocaleDateString("sv-SE", {
+    day: "2-digit",
+    month: "2-digit"
+  });
+
+// Bygger all data till båda graferna, filtrerat på senaste 7 dagarna för bars och dagens datum för pie.
 export const buildGraphData = (sessions: Session[]): GraphData => {
-  const sevenDaysAgo = Date.now() - LAST_DAYS * MS_PER_DAY;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayKey = getDateKey(today);
+
+  const oldestDate = new Date(today);
+  oldestDate.setDate(today.getDate() - (LAST_DAYS - 1));
+
+  const recentDates: Date[] = [];
+  for (let offset = LAST_DAYS - 1; offset >= 0; offset -= 1) {
+    const date = new Date(today);
+    date.setDate(today.getDate() - offset);
+    recentDates.push(date);
+  }
+
+  const dateIndexMap = new Map<string, number>(
+    recentDates.map((date, index) => [getDateKey(date), index])
+  );
 
   const moodCounts: Record<number, number> = {
     1: 0,
@@ -62,23 +89,33 @@ export const buildGraphData = (sessions: Session[]): GraphData => {
     5: 0
   };
 
-  const barData: BarDatum[] = WEEK_DAYS.map((name) => ({
-    name,
+  const barData: BarDatum[] = recentDates.map((date) => ({
+    name: formatDateLabel(date),
     work: 0,
     study: 0,
     meeting: 0
   }));
 
   sessions.forEach((session) => {
-    // Hoppa över sessioner utanför tidsfönstret.
+    // Hoppa över sessioner äldre än senaste 7 dagarna (för stapeldiagrammet).
     const date = getSessionDate(session);
-    if (!date || date.getTime() < sevenDaysAgo) {
+    if (!date || date.getTime() < oldestDate.getTime()) {
       return;
     }
 
+    const sessionDateKey = getDateKey(date);
+    const dayIndex = dateIndexMap.get(sessionDateKey);
+    if (dayIndex == null) {
+      return;
+    }
+
+    // Räkna bara mood från dagens sessioner för piecharten.
     const mood = normalizeMood(session.mood);
-    if (mood) {
-      moodCounts[mood] += 1;
+    if (mood && sessionDateKey === todayKey) {
+      const currentMoodCount = moodCounts[mood];
+      if (currentMoodCount !== undefined) {
+        moodCounts[mood] = currentMoodCount + 1;
+      }
     }
 
     const categoryKey = getCategoryKey(session.category);
@@ -90,10 +127,13 @@ export const buildGraphData = (sessions: Session[]): GraphData => {
       return;
     }
 
-    const dayIndex = (date.getDay() + 6) % 7;
     const durationMinutes = activeTimeMs / MS_PER_MINUTE;
+    const currentBarDay = barData[dayIndex];
+    if (!currentBarDay) {
+      return;
+    }
 
-    barData[dayIndex][categoryKey] += durationMinutes;
+    currentBarDay[categoryKey] += durationMinutes;
   });
 
   const moodPieData: PieDatum[] = (

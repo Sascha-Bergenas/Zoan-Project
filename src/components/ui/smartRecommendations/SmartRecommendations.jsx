@@ -14,7 +14,7 @@ const SmartRecommendations = () => {
       const res = await fetch("http://localhost:5000/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userInput }),
+        body: JSON.stringify({ userInput })
       });
 
       const text = await res.text();
@@ -42,6 +42,7 @@ const SmartRecommendations = () => {
     <div style={{ padding: "20px" }}>
       <h3>Smarta rekommendationer</h3>
       <TextArea
+        className="smart-textArea"
         placeholder="Skriv hur ditt humör är idag och få en rekommendation."
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}

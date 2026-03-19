@@ -34,6 +34,7 @@
 }
 
 .mood-picker p {
+  margin: 0.5rem;
   font-size: 01rem;
 }
 .active {
