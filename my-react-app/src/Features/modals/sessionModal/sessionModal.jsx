@@ -1,4 +1,4 @@
-import WorkSessionForm from "../../../Features/sessions/WorkSessionForm";
+import WorkSessionForm from "../../sessions/WorkSessionForm";
 import Modal from "../../../components/ui/modal/Modal";
 import styles from "./sessionModal.module.css";
 

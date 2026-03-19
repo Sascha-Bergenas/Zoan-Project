@@ -10,13 +10,12 @@ export default function Timer() {
   const { time, state, actions, getStartedTime } = useTimer();
 
   const dialogRef = useRef(null);
-
+  
   const [timerData, setTimerData] = useState({
     activeTime: 0,
     startedAt: 0,
     endedAt: 0,
   });
-  console.log(timerData);
 
   const [stopTimeFormatted, setStopTimeFormatted] = useState("");
 
