@@ -4,6 +4,7 @@
     max-content auto repeat(4, max-content)
     auto max-content;
   max-height: 30rem;
+  overflow-x:hidden;
   overflow-y: scroll;
   scrollbar-width: thin;
   scroll-behavior: smooth;
@@ -15,6 +16,7 @@
   display: grid;
   grid-template-columns: subgrid;
   position: relative;
+  transition: all .5s ease;
 }
 .even {
   background-color: var(--gray-light-color);
@@ -81,8 +83,32 @@ button {
   border-radius: 10px;
 }
 .buttonCont {
+  z-index: 2;
+  position: absolute;
+  /* top: -.25rem; */
+  top: 0;
+  right: 0;
+  translate: 6rem;
+  /* box-sizing: content-box; */
   display: flex;
+  opacity: 0;
+  border-top-left-radius: 1lh;
+  border-bottom-left-radius: 1lh;;
+  border: .5rem solid var(--primary-light-color);
+  background: var(--primary-light-color);
   justify-content: center;
   align-items: center;
   gap: 10px;
+  transition: all 0.3s ease
+}
+.buttonCont:hover {
+  translate: 0;
+  opacity: 1;
+}
+.listItem:has(span:hover) .buttonCont {
+  translate: 3rem;
+  opacity: 1;
+}
+:not(.listHeader).listItem:hover {
+  filter: invert(10%);
 }
