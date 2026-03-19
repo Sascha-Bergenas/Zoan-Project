@@ -50,8 +50,8 @@ export function toSessionFormData(session: SessionData): SessionFormData {
       mood: session.mood,
       comment: session.comment,
       activeTime: session.active_time_ms,
-      startedAt: session.started_at,
-      endedAt: session.ended_at,
+      startedAt: session.started_at.slice(0, 16),
+      endedAt: session.ended_at.slice(0, 16),
     };
   }
 

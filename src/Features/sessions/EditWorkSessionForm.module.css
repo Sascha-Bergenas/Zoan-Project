@@ -1,0 +1,31 @@
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  min-width: 320px;
+}
+.modalForm label,
+.modalForm p {
+  font-weight: 600;
+}
+
+.modalForm input,
+select {
+  padding: 6px;
+}
+.modalForm li {
+  cursor: pointer;
+}
+.modalForm .timeError {
+  border: 2px solid red;
+}
+.modalForm .timeError:focus-visible {
+  outline: 2px solid red;
+}
+
+@media (max-width: 900px) {
+  .modalForm {
+    min-width: 0;
+  }
+}
