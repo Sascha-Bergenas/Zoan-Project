@@ -233,7 +233,7 @@ För en djupare förståelse av projektets struktur, komponenter och arbetsförd
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-[product-screenshot]: my-react-app/src/img/screenshot.png
+[product-screenshot]: src/img/screenshot.png
 [React.js]: https://img.shields.io/badge/react-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://react.dev/
 [Supabase.io]: https://img.shields.io/badge/supabase-181818?style=for-the-badge&logo=supabase&logoColor=3ECF8E

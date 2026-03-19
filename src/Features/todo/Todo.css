@@ -1,8 +1,7 @@
 .li-item {
   list-style: none;
-  padding: 0.75rem;
-  margin: 0 1rem 0.5rem 1.75rem;
-
+  padding: 0.5rem;
+  margin: 0.3rem 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,18 +10,84 @@
   border-radius: 8px;
 }
 
+.todo-text {
+  font-weight: 400;
+}
+
+.todo-header {
+  margin: 0;
+  padding: 0 0 0.5rem 0;
+}
+
 .todo-wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   flex-direction: row;
-  padding: 0.5rem 0 0.5rem 0;
+  margin-bottom: 0.3rem;
+}
+
+.todo-input {
+  padding: 0.6rem;
 }
 
 .li-wrapper {
-  overflow-y: scroll;
-  max-height: 11rem;
+  overflow-y: auto;
+  max-height: 10rem;
   display: flex;
   flex-direction: column;
+  background:
+    linear-gradient(var(--white-color) 30%, transparent) center top,
+    linear-gradient(transparent, var(--white-color) 70%) center bottom,
+    radial-gradient(
+        farthest-side at 50% 0,
+        rgba(0, 0, 0, 0.28),
+        rgba(0, 0, 0, 0)
+      )
+      center top,
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(0, 0, 0, 0.28),
+        rgba(0, 0, 0, 0)
+      )
+      center bottom;
+  background-repeat: no-repeat;
+  background-size:
+    100% 14px,
+    100% 14px,
+    100% 10px,
+    100% 10px;
+  background-attachment: local, local, scroll, scroll;
+
+  border-radius: 10px;
+}
+
+body.dark .li-wrapper {
+  background:
+    linear-gradient(var(--white-color) 30%, transparent) center top,
+    linear-gradient(transparent, var(--white-color) 70%) center bottom,
+    radial-gradient(
+        farthest-side at 50% 0,
+        rgba(255, 255, 255, 0.32),
+        transparent
+      )
+      center top,
+    radial-gradient(
+        farthest-side at 50% 100%,
+        rgba(255, 255, 255, 0.32),
+        transparent
+      )
+      center bottom;
+  background-repeat: no-repeat;
+  background-size:
+    100% 14px,
+    100% 14px,
+    100% 10px,
+    100% 10px;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.li-wrapper::-webkit-scrollbar {
+  display: none;
 }
 
 .todo-button {
@@ -43,6 +108,5 @@
 }
 
 .todo-add-btn {
-  min-width: auto;
   margin: 0;
 }

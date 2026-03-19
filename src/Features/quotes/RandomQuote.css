@@ -1,4 +1,7 @@
 .random-quote {
   max-width: 300px;
   word-wrap: break-word;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 5rem;
 }

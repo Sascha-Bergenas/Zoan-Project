@@ -1,0 +1,11 @@
+.modalHeader {
+  margin: 0.5rem;
+}
+
+.sessionTime {
+  padding-bottom: 0.5rem;
+}
+
+.sessionWrapper[open] {
+  padding: 2rem;
+}

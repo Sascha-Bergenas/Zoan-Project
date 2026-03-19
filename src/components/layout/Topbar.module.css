@@ -34,3 +34,13 @@
 .skipBtn:hover {
   transform: translateY(-1px);
 }
+
+@media only screen and (max-width: 650px) {
+  .container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}

@@ -10,4 +10,4 @@ förstå kodbasen utan att behöva läsa igenom varje fil.
 
 - [Projektstruktur](STRUCTURE.md)
 - [Komponenter](COMPONENTS.md)
-- [Arbetsfördelning](ARBETSFORDELNING.md)
+- [Arbetssätt](ARBETSSATT.md)

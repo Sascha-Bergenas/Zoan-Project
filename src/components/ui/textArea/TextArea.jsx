@@ -6,6 +6,7 @@ function TextArea({ label, name, value, onChange, placeholder, className }) {
       <label>
         <span>{label}</span>
         <textarea
+          className=""
           name={name}
           value={value}
           onChange={onChange}
