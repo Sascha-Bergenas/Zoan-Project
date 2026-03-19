@@ -116,7 +116,27 @@ Timer-komponenten används för att mäta och visa en pågående session. Använ
 
 Timer-komponenten använder React hooks som useState för lokal state och useRef för att styra modalen. Den använder även useTimer från en context för att hantera timerns status och funktioner som start, paus och stopp. Tiden beräknas genom att omvandla millisekunder till timmar, minuter och sekunder, och visas både som text och som en visuell timer. Komponentens layout och knappar ändras beroende på timerns aktuella status, och knapparna för val av arbetsläge och sessionhantering är tydligt integrerade på sidan.
 
----
+#### Random Quote
+
+**Syfte:** Syfte:
+RandomQuote-komponenten visar ett slumpmässigt citat från en fördefinierad lista när komponenten laddas. Den används för att ge användaren en liten rolig touch när de besöker sidan!
+
+**Fil:** `src/Features/RandomQuote.jsx`
+
+**Använder:**
+
+React hooks useState för att lagra det valda citatet och useEffect för att välja ett slumpmässigt citat när komponenten renderas första gången. Citatet hämtas från en array i en separat fil (quotes.ts) som innehåller listan med alla tillgängliga citat. Komponenten stödjer även en valfri prop size för att justera textstorleken och använder CSS (RandomQuote.css) för styling.
+
+#### Login Form
+
+**Syfte:** Syfte:
+LoginForm-komponenten hanterar inloggning och registrering av användare. Den låter användaren logga in med e-post och lösenord, eller skapa ett nytt konto med e-post, lösenord och användarnamn. Komponenten validerar input och visar felmeddelanden om något är felaktigt.
+
+**Fil:** `src/Features/authentication/LoginForm.jsx`
+
+**Använder:**
+
+LoginForm använder React hooks (useState och useRef) för att lagra formulärdata och hålla referenser till lösenordsfälten. Den använder useAuth-contexten för autentisering, där funktioner för inloggning, registrering och utloggning finns, och Supabase används för att spara användarprofilen vid registrering. Komponenten innehåller logik för att byta mellan inloggnings- och registreringsläge, validerar e-post, lösenord och användarnamn, och visar felmeddelanden direkt under respektive fält. UI-komponenter som Button används för att starta inloggning eller registrering och för att byta läge mellan login och signup.
 
 ### Pages
 
