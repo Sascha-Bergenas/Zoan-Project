@@ -5,11 +5,27 @@
   padding: 10px;
   min-width: 320px;
 }
-label,
-p {
+.modalForm label,
+.modalForm p {
   font-weight: 600;
 }
 
-input {
+.modalForm input,
+select {
   padding: 6px;
+}
+.modalForm li {
+  cursor: pointer;
+}
+.modalForm .timeError {
+  border: 2px solid red;
+}
+.modalForm .timeError:focus-visible {
+  outline: 2px solid red;
+}
+
+@media (max-width: 900px) {
+  .modalForm {
+    min-width: 0;
+  }
 }
