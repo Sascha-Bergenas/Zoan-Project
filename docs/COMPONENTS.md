@@ -6,14 +6,21 @@ Här beskrivs projektets viktigaste komponenter och vad de gör.
 
 ### Components
 
-**Syfte:** Beskriv vad mappen innehåller
+#### Smarta Rekommendationer
 
-**Fil:** `src/components/`
+**Syfte:**
+
+Smarta rekommendationer-komponenten hjälper användaren att få förslag på arbetsläge och arbetstid baserat på hur de mår. Användaren skriver in sitt humör eller tillstånd, och komponenten genererar en rekommendation som kan innehålla arbetsläge (Deep Work eller Chill), föreslagen arbetstid och ett kort tips. Komponenten används för att ge motivation, vägledning och förbättra fokus under arbetsdagen.
+
+**Fil:** `src/components/ui/smartRecommendations.jsx`
 
 **Använder:**
 
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
+React hooks (useState) för att lagra användarens input, rekommenderat arbetsläge, tid och tips. Komponenten skickar användarens input via ett POST-anrop till backend (/recommend) som returnerar en rekommendation. Resultatet visas dynamiskt i UI:t med rubrik, tid och tips. UI-komponenter som TextArea och Button används för input och interaktion. Komponenten hanterar även fel, till exempel om backend inte kan generera en rekommendation, och visar då ett standardförslag.
+
+**Backend**
+
+En Express-server (server.js) tar emot POST-anrop från frontend, skickar användarens meddelande till OpenRouter AI (GPT-4) och returnerar ett svar. Servern avgör om meddelandet är relevant, klassificerar arbetsläge, föreslår arbetstid och ger ett kort tips. Fel hanteras genom loggning och standardmeddelande till frontend.
 
 ---
 
@@ -92,6 +99,19 @@ Posts   <-(fetch data)   SessionsProvider
 
 ---
 
+#### ThemeContext.tsx (Light/DarkMode)
+
+**Syfte:**
+ThemeContext-komponenten hanterar applikationens tema (ljus eller mörk). Den låter användaren växla mellan light och dark mode och sparar inställningen lokalt så att temat behålls mellan sessioner. Alla komponenter som använder ThemeContext kan läsa det aktuella temat och ändra UI dynamiskt. När användaren togglar temat uppdateras värdet i contexten och sparas automatiskt i localStorage, vilket gör att appen startar med rätt tema vid nästa besök.
+
+**Fil:** `src/contexts/ThemeContext.tsx`
+
+**Använder:**
+
+React hooks (useState, useEffect) används för att lagra och uppdatera temat. localStorage används för att spara användarens val. Komponenten använder TypeScript-typer för att definiera temat (Theme), contextens struktur (ThemeContextType) och props för ThemeProvider (ThemeProviderProps). Detta gör att contexten och toggle-funktionen blir typ-säkra och enklare att använda i hela applikationen. Contexten (ThemeContext) gör temat och toggle-funktionen tillgängliga för alla barnkomponenter.
+
+---
+
 **Syfte:** Beskriv vad mappen innehåller
 
 **Fil:** `src/contexts/`
@@ -107,7 +127,7 @@ Posts   <-(fetch data)   SessionsProvider
 
 #### Timer
 
-**Syfte:** Syfte:
+**Syfte:**
 Timer-komponenten används för att mäta och visa en pågående session. Användaren kan välja arbetsläge, som t.ex. Deep Work, Möte eller Chill, och starta, pausa eller stoppa timern under sessionen. När timern stoppas visas en modal (SessionModal) som visar information om sessionens längd, start- och sluttid samt den totala aktiva tiden. Komponenten gör det enkelt för användaren att hålla koll på arbetstid och få en visuell representation av sessionen.
 
 **Fil:** `src/Features/Timer.jsx`
@@ -137,6 +157,20 @@ LoginForm-komponenten hanterar inloggning och registrering av användare. Den l�
 **Använder:**
 
 LoginForm använder React hooks (useState och useRef) för att lagra formulärdata och hålla referenser till lösenordsfälten. Den använder useAuth-contexten för autentisering, där funktioner för inloggning, registrering och utloggning finns, och Supabase används för att spara användarprofilen vid registrering. Komponenten innehåller logik för att byta mellan inloggnings- och registreringsläge, validerar e-post, lösenord och användarnamn, och visar felmeddelanden direkt under respektive fält. UI-komponenter som Button används för att starta inloggning eller registrering och för att byta läge mellan login och signup.
+
+#### Profil
+
+**Syfte:**
+
+Profile-komponenten visar användarens profilinformation, inklusive användarnamn, bild och datum. Om användaren inte är inloggad visas en standardbild och ett meddelande om att logga in. Komponenten inkluderar även ett slumpmässigt citat via RandomQuote för inspiration.
+
+**Fil:** `src/Features/profile/Profile.tsx`
+
+**Använder:**
+
+React hooks (useState, useEffect) används för att hämta och lagra användarens profil. Komponenten använder TypeScript-typer för att definiera UserProfile och styrka user-objektets struktur. useAuth används för att kontrollera inloggning och hämta användar-ID. Profilinformation hämtas från Supabase (user_profile), inklusive bild-URL, och uppdateringar sker direkt i state och Supabase Storage vid uppladdning av ny bild. Layout och styling hanteras via CSS (Profile.css) och datum visas i lokaliserat format. RandomQuote används för att visa ett inspirerande citat.
+
+Komponenten uppdaterar dynamiskt beroende på inloggningsstatus. Användarbild laddas från Supabase Storage och uppdateras direkt vid förändring. RandomQuote-komponenten ger en personlig touch och gör profilen lite roligare.
 
 ### Pages
 
