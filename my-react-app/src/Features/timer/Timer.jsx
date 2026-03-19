@@ -7,17 +7,16 @@ import { useTimer } from "../../contexts/TimerContext";
 export default function Timer() {
   // const [selectedMode, setSelectedmode] = useState(null);
 
-  const {
-    time,
-    state,
-    actions,
-    getStartedTime,
-  } = useTimer();
+  const { time, state, actions, getStartedTime } = useTimer();
 
   const dialogRef = useRef(null);
-
-  const [timerData, setTimerData] = useState({activeTime: 0, startedAt: 0, endedAt: 0});
   
+  const [timerData, setTimerData] = useState({
+    activeTime: 0,
+    startedAt: 0,
+    endedAt: 0,
+  });
+
   const [stopTimeFormatted, setStopTimeFormatted] = useState("");
 
   function calcTime(ms) {
@@ -80,6 +79,7 @@ export default function Timer() {
       />
 
       <div className="stopwatch">
+        <h2 className="small-title">Pågående Session</h2>
         <div className="ring" style={{ "--p": (time % 60000) / 60000 }}>
           <div className="ticks" />
           <div className="ring-inner">
@@ -92,8 +92,8 @@ export default function Timer() {
 
       {/* Start / Stop / Pause Buttons */}
       <div className="timer-buttons">
-      {/* Mode buttons */}
-        {state.status === 'idle' && state.mode == null && (
+        {/* Mode buttons */}
+        {state.status === "idle" && state.mode == null && (
           <>
             <p style={{ fontSize: "text-sm" }}>Välj Work mode</p>
             <Button
@@ -113,38 +113,46 @@ export default function Timer() {
             />
           </>
         )}
-                {/* Start session / Return button */}
-        {state.status === 'idle' && state.mode != null && state.firstStartedAtMs == null && (
+        {/* Start session / Return button */}
+        {state.status === "idle" &&
+          state.mode != null &&
+          state.firstStartedAtMs == null && (
+            <>
+              <p>Starta en ny session och påbörja timern.</p>
+              <Button
+                onClick={actions.start}
+                disabled={state.mode === null}
+                text="Starta Session"
+                variant="primary"
+              />
+              <Button
+                onClick={actions.clearMode}
+                disabled={state.mode === null}
+                text="Återgå"
+                variant="primary"
+              />
+            </>
+          )}
+
+        {state.status !== "idle" && state.firstStartedAtMs != null && (
           <>
-            <p>Starta en ny session och påbörja timern.</p>
-            <Button
-              onClick={actions.start}
-              disabled={state.mode === null}
-              text="Starta Session"
-              variant="primary"
-            />
-            <Button
-              onClick={actions.clearMode}
-              disabled={state.mode === null}
-              text="Återgå"
-              variant="primary"
-            />
+            {state.status === "running" ? (
+              <Button
+                onClick={actions.pause}
+                text="Pause"
+                variant="secondary"
+              />
+            ) : (
+              <Button
+                onClick={actions.start}
+                text="Resume"
+                variant="secondary"
+              />
+            )}
+
+            <Button onClick={handleStopClick} text="Stop" variant="primary" />
           </>
         )}
-
-        {state.status !== 'idle' && state.firstStartedAtMs != null && (
-          <>
-          {state.status === "running" ? (
-            <Button onClick={actions.pause} text="Pause" variant="secondary" />
-          ) : (
-            <Button onClick={actions.start} text="Resume" variant="secondary" />
-          )}
-    
-          <Button onClick={handleStopClick} text="Stop" variant="primary" />
-        </>
-      )}
-
-        <p>{state.mode}</p>
       </div>
     </div>
   );

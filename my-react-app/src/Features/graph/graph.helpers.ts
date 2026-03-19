@@ -61,10 +61,11 @@ const formatDateLabel = (date: Date) =>
     month: "2-digit"
   });
 
-// Bygger all data till båda graferna, filtrerat på senaste 7 dagar.
+// Bygger all data till båda graferna, filtrerat på senaste 7 dagarna för bars och dagens datum för pie.
 export const buildGraphData = (sessions: Session[]): GraphData => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  const todayKey = getDateKey(today);
 
   const oldestDate = new Date(today);
   oldestDate.setDate(today.getDate() - (LAST_DAYS - 1));
@@ -96,19 +97,21 @@ export const buildGraphData = (sessions: Session[]): GraphData => {
   }));
 
   sessions.forEach((session) => {
-    // Hoppa över sessioner utanför tidsfönstret.
+    // Hoppa över sessioner äldre än senaste 7 dagarna (för stapeldiagrammet).
     const date = getSessionDate(session);
     if (!date || date.getTime() < oldestDate.getTime()) {
       return;
     }
 
-    const dayIndex = dateIndexMap.get(getDateKey(date));
+    const sessionDateKey = getDateKey(date);
+    const dayIndex = dateIndexMap.get(sessionDateKey);
     if (dayIndex == null) {
       return;
     }
 
+    // Räkna bara mood från dagens sessioner för piecharten.
     const mood = normalizeMood(session.mood);
-    if (mood) {
+    if (mood && sessionDateKey === todayKey) {
       const currentMoodCount = moodCounts[mood];
       if (currentMoodCount !== undefined) {
         moodCounts[mood] = currentMoodCount + 1;

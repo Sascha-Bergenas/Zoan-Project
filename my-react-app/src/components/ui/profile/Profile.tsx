@@ -31,7 +31,7 @@ export default function Profile() {
       weekday: "long",
       year: "numeric",
       month: "long",
-      day: "numeric"
+      day: "numeric",
     })
     .replace(/^\p{L}/u, (letter) => letter.toUpperCase());
 
@@ -89,30 +89,22 @@ export default function Profile() {
 
   return !profile ? (
     <div className="profile-card">
-      <p>{formattedDate}</p>
-      <p style={{ paddingTop: "30px" }} className="text-bold text-lg">
+      <p className="pb-1">{formattedDate}</p>
+      <h3 style={{ paddingTop: "30px" }} className="text-bold text-md ">
         Ingen profil hittad.
-      </p>
+      </h3>
       <div className="avatar-wrapper">
         <img className="profile-img" src={DEFAULT_AVATAR} alt="" />
         <p style={{ paddingBottom: "30px" }}>
           Logga in för att se information.
         </p>
       </div>
-      <RandomQuote size="20px" />
+      <RandomQuote size="18px" />
     </div>
   ) : (
     <div className="profile-card">
-      {/* <input
-        type="file"
-        accept="image/*"
-        style={{ color: "transparent" }}
-        onChange={(e) => {
-          const file = e.target.files?.[0];
-          if (file) uploadAvatar(file);
-        }}
-      /> */}
-      <h3 className="text-lg">Välkommen, {profile.username}!</h3>
+      <p className="pb-1">{formattedDate}</p>
+      <h3 className="text-md">Välkommen, {profile.username}!</h3>
       <div className="avatar-wrapper">
         <img
           className="profile-img"
