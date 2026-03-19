@@ -27,14 +27,17 @@ export default function EditWorkSessionForm({ handleSubmit, initialData }: Props
   const [pauseTime, setPauseTime] = useState(0)
   
 // Räknar ut active_time_ms från start-, stopp- och paustid
-const calculateActiveTime = (pause: number) :string => {
+const calculateActiveTime = (pause: number) :number => {
   const start = Date.parse(formData.startedAt)
   const end = Date.parse(formData.endedAt)
   const time = end - start - (pause * 60000)
+  return time
+}
+
+function renderActiveTime(time : number) {
   const readableTime = new Date(time)
   return `Aktiv tid: ${readableTime.getUTCHours()} timmar och ${readableTime.getMinutes()} minuter`
 }
-
   // // Funktioner för att begränsa activeTime till tidsspannet mellan start och stopp
   //   const toMinutes = (hhmm = "00:00") => {
   //     const [h, m] = hhmm.split(":").map(Number);
@@ -77,11 +80,11 @@ const calculateActiveTime = (pause: number) :string => {
   return (
     // Formulär för att logga arbetspass-aktiviteter
     <form
-    onSubmit={(e) => {
+      onSubmit={(e) => {
       e.preventDefault();
-      handleSubmit(formData);
-    }}
-  >
+      handleSubmit({ ...formData, activeTime: calculateActiveTime(pauseTime) });
+      }}
+    >
     {/* Fält för att ange sessionens tider */}
       <label>Starttid</label>
       <input 
@@ -105,7 +108,7 @@ const calculateActiveTime = (pause: number) :string => {
         value={formData.endedAt}
         onChange={handleChange}
       />
-      <p id="activeTime">{calculateActiveTime(pauseTime)}</p>
+      <p id="activeTime">{renderActiveTime(calculateActiveTime(pauseTime))}</p>
 
       <label>Paus (minuter)</label>  
       <input 
