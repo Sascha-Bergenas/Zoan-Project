@@ -4,11 +4,27 @@
     max-content auto repeat(4, max-content)
     auto max-content;
   max-height: 30rem;
-  overflow-x:hidden;
+  overflow-x: hidden;
   overflow-y: scroll;
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
   scroll-behavior: smooth;
+  scrollbar-track-color: var(--white-color);
+  scrollbar-base-color: var(--primary-color);
+  scrollbar-gutter: stable;
   color: var(--black-color);
+}
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: var(--white-color);
+  border-radius: 999px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 999px;
 }
 
 .listItem {
@@ -34,7 +50,7 @@
 .listItem .cutLine {
   position: relative;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
   white-space: nowrap;
   padding-right: 0;
 }
@@ -89,7 +105,6 @@ button {
   top: 0;
   right: 0;
   translate: 6rem;
-  /* box-sizing: content-box; */
   display: flex;
   opacity: 0;
   border-top-left-radius: 1lh;
