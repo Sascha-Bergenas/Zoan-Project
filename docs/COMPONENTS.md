@@ -172,16 +172,163 @@ React hooks (useState, useEffect) används för att hämta och lagra användaren
 
 Komponenten uppdaterar dynamiskt beroende på inloggningsstatus. Användarbild laddas från Supabase Storage och uppdateras direkt vid förändring. RandomQuote-komponenten ger en personlig touch och gör profilen lite roligare.
 
-### Pages
+#### CalendarCard
 
-**Syfte:** Beskriv vad mappen innehåller
+**Syfte:**
+CalendarCard visar användarens loggade arbetssessioner i en månadskalender där varje dag färgmarkeras utifrån det dominerande humöret (mood) bland de sessions som avslutades den dagen. Det ger en snabb visuell överblick över hur arbetet och humöret varierat under månaden.
 
-**Fil:** `src/pages/`
+**Fil:** `src/Features/calendar/CalendarCard.jsx`
 
 **Använder:**
 
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
+- @fullcalendar/react
+- @fullcalendar/daygrid
+- @fullcalendar/core/locales/sv
+- react (useEffect, useMemo, useState)
+- ../../storage/localStorage
+- ../../contexts/useAuth
+- ../../supabase/supabase
+- ./CalendarCard.css
+- ../mood/mood.css
+
+**Beskrivning:**
+
+FullCalendar med dayGridPlugin renderar månadskalendervyn och är lokaliserad till svenska. Sessionsdata hämtas från Supabase om användaren är inloggad, annars från localStorage via sessionStore. För att kalendern ska uppdateras direkt när en ny session sparas, utan att sidan behöver laddas om, lyssnar komponenten på custom events (sessions:change och localstore:change). useMemo används för att beräkna vilket mood som dominerar per dag utan att räkna om i onödan vid varje rendering. Mood-värdena 1–5 mappas till CSS-klasser med tillhörande färger.
+
+---
+
+#### Graph
+
+**Syfte:**
+Graph visualiserar användarens sessionsdata med ett stapeldiagram och ett cirkeldiagram (pajdiagram). Staplarna visar antalet sessions per tidsperiod grupperade efter humör, medan pajdiagrammet visar den totala fördelningen av mood. Tillsammans ger de en statistisk bild av hur arbetet och välmåendet sett ut över tid.
+
+**Fil:** `src/Features/graph/graph.tsx`
+
+**Använder:**
+
+- recharts
+- @recharts/devtools
+- react (useMemo)
+- ./graph.helpers
+- ./graph.types
+- ./graph.css
+
+**Beskrivning:**
+
+Recharts används för att rendera diagrammen. All databearbetning är separerad till hjälpfilen graph.helpers.ts som innehåller funktionen buildGraphData, den tar emot en array med sessions och returnerar färdigformatterad stapel- och pajdata. TypeScript-typer för sessions och datapunkter definieras i graph.types.ts, vilket gör att komponentens props och interna data är typsäkra. useMemo ser till att data inte räknas om i onödan. Mood-värdena 1–5 mappas konsekvent till samma färgskalor som används i resten av appen.
+
+---
+
+#### SessionModal
+
+**Syfte:**
+SessionModal dyker upp automatiskt när timern stoppas och uppmanar användaren att logga sin session. Den visar sessionens totala längd och innehåller WorkSessionForm där användaren fyller i detaljer om arbetspasset. När formuläret skickas stängs modalen och sessionen sparas.
+
+**Fil:** `src/Features/modals/sessionModal/sessionModal.jsx`
+
+**Använder:**
+
+- ../../../Features/sessions/WorkSessionForm
+- ../../../components/ui/modal/Modal
+- ./sessionModal.module.css
+
+**Beskrivning:**
+
+Den generiska Modal-komponenten (src/components/ui/modal/Modal.tsx) används som wrapper och styr öppning och stängning via dialogRef som skickas ner från Timer. SessionModal tar emot timerData (starttid, sluttid, arbetsläge m.m.) och handleCloseModal som props och vidarebefordrar dem till WorkSessionForm som sköter all formulärlogik. sessionModal.module.css hanterar modalens layout och typografi.
+
+---
+
+#### WorkSessionForm
+
+**Syfte:**
+WorkSessionForm är formuläret som används för att logga ett avslutat arbetspass. Användaren fyller i titel, kategori, en valfri kommentar och väljer sitt humör (mood). Formuläret hanterar sparning till rätt plats beroende på om användaren är inloggad eller inte, och signalerar till resten av appen att ny data finns tillgänglig när sessionen sparats.
+
+**Fil:** `src/Features/sessions/WorkSessionForm.jsx`
+
+**Använder:**
+
+- react (useState)
+- ../../components/ui/button/Button
+- ../../components/ui/input
+- ../../components/ui/select/Select
+- ../../components/ui/textArea/TextArea
+- ../mood/MoodPicker
+- ../../contexts/useAuth
+- ../../storage/localStorage
+- ../../supabase/saveSession
+- ./WorkSessionForm.modal.css
+
+**Beskrivning:**
+
+Användarens inloggningsstatus avgörs via useAuth, är man inloggad sparas sessionen till Supabase via saveSession, annars sparas den lokalt via sessionStore. timerData (tid och arbetsläge) tas emot som prop från SessionModal och slås ihop med formulärdata vid submit, så att all information om sessionen hamnar i samma post. När sparningen är klar skickas ett custom event (sessions:change) som gör att kalender och övriga komponenter uppdateras direkt. UI-komponenterna Input, Select, TextArea, Button och MoodPicker bygger upp formulärets fält.
+
+---
+
+#### Todo
+
+**Syfte:**
+Todo är en enkel att-göra-lista direkt i dashboarden där användaren kan lägga till och ta bort uppgifter. Listan sparas i localStorage så att uppgifterna finns kvar även om sidan laddas om eller webbläsaren stängs.
+
+**Fil:** `src/Features/todo/Todo.jsx`
+
+**Använder:**
+
+- react (useEffect, useState)
+- ../../components/ui/input/Input
+- ../../components/ui/button/Button
+- ../../storage/localStorage
+- ./Todo.css
+
+**Beskrivning:**
+
+useState håller listan av todos och inputfältets aktuella värde. Varje gång listan ändras synkas den automatiskt till localStorage via useEffect och todoStore. Varje todo-post får ett unikt id baserat på Date.now() vilket gör det enkelt att ta bort exakt rätt post utan att påverka resten av listan. UI-komponenterna Input och Button används för inmatningsfältet och lägg-till-knappen.
+
+---
+
+### Pages
+
+#### DashboardPage
+
+**Syfte:**
+DashboardPage är applikationens huvudvy och fungerar som ett kontrollcenter för användaren. Alla centrala funktioner – profil, smarta rekommendationer, timer, kalender och att-göra-lista – samlas på en och samma sida så att användaren snabbt kan komma igång med och följa sin arbetsdag.
+
+**Fil:** `src/pages/dashboard/DashboardPage.jsx`
+
+**Använder:**
+
+- ../../components/ui/cards/Card
+- ./Dashboard.module.css
+- ../../Features/timer/Timer
+- ../../components/layout/Topbar
+- ../../Features/calendar/CalendarCard
+- ../../Features/todo/Todo
+- ../../components/ui/profile/Profile
+- ../../components/ui/smartRecommendations/SmartRecommendations
+
+**Beskrivning:**
+
+Topbar renderas längst upp och hanterar navigering och tema. Sidans innehåll är uppdelat i ett CSS Grid (via Dashboard.module.css) där varje sektion wrappas i ett BaseCard med en storlek anpassad för sitt innehåll. Komponenterna som renderas är: Profile (användarinfo och slumpcitat), SmartRecommendations (AI-rekommendationer för arbetsläge), Timer (startar och stoppar sessions), CalendarCard (historik i kalenderform) och Todo (att-göra-lista). DashboardPage innehåller själv ingen logik och är enbart ansvarig för layout och sammansättning av de övriga komponenterna.
+
+---
+
+#### SettingsPage
+
+**Syfte:**
+SettingsPage låter användaren hantera sin kontoinformation – byta profilbild och ändra användarnamn. Sidan hämtar befintlig profildata vid inladdning och sparar ändringar direkt till Supabase. När användaren väljer en ny bild visas en lokal förhandsgranskning innan bilden laddas upp, vilket ger omedelbar feedback utan nätverksanrop.
+
+**Fil:** `src/pages/settings/SettingsPage.tsx`
+
+**Använder:**
+
+- react (ChangeEvent, useEffect, useState)
+- ../../components/ui/cards/Card
+- ../../contexts/TimerContext
+- ./settingComponents/userService
+- ./SettingsPage.css
+
+**Beskrivning:**
+
+All kommunikation med Supabase sköts av servicefilen settingComponents/userService.ts som exponerar funktioner för att hämta inloggad användare, läsa profil, uppdatera användarnamn och ladda upp profilbild. När en fil väljs skapas en tillfällig blob-URL lokalt för förhandsvisning och den städas upp med URL.revokeObjectURL så att minne inte läcker. En cache-buster (avatarVersion) läggs till bild-URL:en efter uppladdning för att tvinga webbläsaren att visa den nya bilden direkt. TypeScript används genomgående för typsäker hantering av state och händelser. Layout och stilsättning hanteras av BaseCard och SettingsPage.css.
 
 ---
 
