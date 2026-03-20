@@ -33,6 +33,8 @@
 .li-wrapper {
   overflow-y: auto;
   max-height: 10rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   display: flex;
   flex-direction: column;
   background:
