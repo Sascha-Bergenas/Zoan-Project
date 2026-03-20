@@ -1,6 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import BaseCard from "../../components/ui/cards/Card";
 import { useTimer } from "../../contexts/TimerContext";
+// Exponerar funktioner för att hämta inloggad användare, läsa/uppdatera profil samt ladda upp profilbild.
 import {
   getCurrentUser,
   updateUsername,
