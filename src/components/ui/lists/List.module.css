@@ -127,3 +127,17 @@ button {
 :not(.listHeader).listItem:hover {
   filter: invert(10%);
 }
+
+.list .loading {
+  animation-name: blink;
+  animation-duration: .3s; 
+  animation-timing-function: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+
+@keyframes blink {
+  from {color: var(--gray-light-color);}
+  to {color: var(--black-color);}
+}
