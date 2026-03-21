@@ -101,7 +101,6 @@ button {
 .buttonCont {
   z-index: 2;
   position: absolute;
-  /* top: -.25rem; */
   top: 0;
   right: 0;
   translate: 6rem;
