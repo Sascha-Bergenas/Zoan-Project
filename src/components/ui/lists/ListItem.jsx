@@ -48,10 +48,8 @@ export default function ListItem({session, evenOdd, onEdit}) {
         <span className={styles.cutLine}>{comment}</span>
         <span className={styles.lastCol}>{mood}</span>
         <div className={styles.buttonCont}>
+            <button type="button" onClick={() => onEdit(session.session_id)}>Ändra</button>
             <button type="button" onClick={handleDelete}>✖️</button>
-            <button type="button" onClick={() => onEdit(session.session_id)}>
-                Ändra
-            </button>
         </div>
       </li>
     )

@@ -4,10 +4,27 @@
     max-content auto repeat(4, max-content)
     auto max-content;
   max-height: 30rem;
+  overflow-x: hidden;
   overflow-y: scroll;
-  scrollbar-width: thin;
+  /* scrollbar-width: thin; */
   scroll-behavior: smooth;
-  color: var(--primary-color);
+  scrollbar-track-color: var(--white-color);
+  scrollbar-base-color: var(--primary-color);
+  scrollbar-gutter: stable;
+  color: var(--black-color);
+}
+.list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: var(--white-color);
+  border-radius: 999px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 999px;
 }
 
 .listItem {
@@ -15,6 +32,7 @@
   display: grid;
   grid-template-columns: subgrid;
   position: relative;
+  transition: all .5s ease;
 }
 .even {
   background-color: var(--gray-light-color);
@@ -32,7 +50,7 @@
 .listItem .cutLine {
   position: relative;
   overflow: hidden;
-  /* text-overflow: ellipsis; */
+  text-overflow: ellipsis;
   white-space: nowrap;
   padding-right: 0;
 }
@@ -70,7 +88,7 @@
   border-right: none;
 }
 
-.listHeader {
+.listHeader span {
   font-weight: 600;
 }
 
@@ -81,8 +99,45 @@ button {
   border-radius: 10px;
 }
 .buttonCont {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  translate: 6rem;
   display: flex;
+  opacity: 0;
+  border-top-left-radius: 1lh;
+  border-bottom-left-radius: 1lh;;
+  border: .4rem solid var(--primary-light-color);
+  background: var(--primary-light-color);
   justify-content: center;
   align-items: center;
   gap: 10px;
+  transition: all 0.3s ease
+}
+.buttonCont:hover {
+  translate: 0;
+  opacity: 1;
+}
+.listItem:has(span:hover) .buttonCont {
+  translate: 3rem;
+  opacity: 1;
+}
+:not(.listHeader).listItem:hover {
+  filter: invert(10%);
+}
+
+.list .loading {
+  animation-name: blink;
+  animation-delay: 0s;
+  animation-duration: 75ms; 
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: running;
+}
+
+@keyframes blink {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }

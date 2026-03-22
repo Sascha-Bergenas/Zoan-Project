@@ -136,7 +136,7 @@ ul {
   list-style-type: none;
 }
 
-p {
+p, span, label {
   font-weight: 400;
 }
 

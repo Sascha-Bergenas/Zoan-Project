@@ -1,7 +1,11 @@
 h2 {
-    margin-inline: auto;
-    max-width : 90rem;
-    padding-inline: 2rem;
+  margin-inline: auto;
+  max-width : 90rem;
+  padding-inline: 2rem;
+}
+
+h3 {
+  color: var(--black-color);
 }
 
 .wrapper {
@@ -20,7 +24,3 @@ h2 {
     max-width : 90rem;
 }
 
-.list {
-  max-height: 30rem;
-  overflow-y: scroll;
-}
