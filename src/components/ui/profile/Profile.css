@@ -8,9 +8,9 @@
 }
 
 .profile-img {
-  margin: 2rem;
-  width: 150px;
-  height: 150px;
+  margin: 0.5rem 0 2rem 0;
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   object-fit: cover;
 }
