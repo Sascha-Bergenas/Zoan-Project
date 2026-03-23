@@ -14,15 +14,13 @@ Smarta rekommendationer-komponenten hjälper användaren att få förslag på ar
 
 **Fil:** `src/components/ui/smartRecommendations.jsx`
 
-**Använder:**
+**Beskrivning:**
 
-React hooks (useState) för att lagra användarens input, rekommenderat arbetsläge, tid och tips. Komponenten skickar användarens input via ett POST-anrop till backend (/recommend) som returnerar en rekommendation. Resultatet visas dynamiskt i UI:t med rubrik, tid och tips. UI-komponenter som TextArea och Button används för input och interaktion. Komponenten hanterar även fel, till exempel om backend inte kan generera en rekommendation, och visar då ett standardförslag.
+Använder react hooks (useState) för att lagra användarens input, rekommenderat arbetsläge, tid och tips. Komponenten skickar användarens input via ett POST-anrop till backend (/recommend) som returnerar en rekommendation. Resultatet visas dynamiskt i UI:t med rubrik, tid och tips. UI-komponenter som TextArea och Button används för input och interaktion. Komponenten hanterar även fel, till exempel om backend inte kan generera en rekommendation, och visar då ett standardförslag.
 
 **Backend**
 
-En Express-server (server.js) tar emot POST-anrop från frontend, skickar användarens meddelande till OpenRouter AI (GPT-4) och returnerar ett svar. Servern avgör om meddelandet är relevant, klassificerar arbetsläge, föreslår arbetstid och ger ett kort tips. Fel hanteras genom loggning och standardmeddelande till frontend.
-
----
+## En Express-server (server.js) tar emot POST-anrop från frontend, skickar användarens meddelande till OpenRouter AI (GPT-4) och returnerar ett svar. Servern avgör om meddelandet är relevant, klassificerar arbetsläge, föreslår arbetstid och ger ett kort tips. Fel hanteras genom loggning och standardmeddelande till frontend.
 
 ### Contexts
 
@@ -106,7 +104,7 @@ ThemeContext-komponenten hanterar applikationens tema (ljus eller mörk). Den l�
 
 **Fil:** `src/contexts/ThemeContext.tsx`
 
-**Använder:**
+**Beskrivning:**
 
 React hooks (useState, useEffect) används för att lagra och uppdatera temat. localStorage används för att spara användarens val. Komponenten använder TypeScript-typer för att definiera temat (Theme), contextens struktur (ThemeContextType) och props för ThemeProvider (ThemeProviderProps). Detta gör att contexten och toggle-funktionen blir typ-säkra och enklare att använda i hela applikationen. Contexten (ThemeContext) gör temat och toggle-funktionen tillgängliga för alla barnkomponenter.
 
@@ -132,7 +130,7 @@ Timer-komponenten används för att mäta och visa en pågående session. Använ
 
 **Fil:** `src/Features/Timer.jsx`
 
-**Använder:**
+**Beskrivning:**
 
 Timer-komponenten använder React hooks som useState för lokal state och useRef för att styra modalen. Den använder även useTimer från en context för att hantera timerns status och funktioner som start, paus och stopp. Tiden beräknas genom att omvandla millisekunder till timmar, minuter och sekunder, och visas både som text och som en visuell timer. Komponentens layout och knappar ändras beroende på timerns aktuella status, och knapparna för val av arbetsläge och sessionhantering är tydligt integrerade på sidan.
 
@@ -143,9 +141,9 @@ RandomQuote-komponenten visar ett slumpmässigt citat från en fördefinierad li
 
 **Fil:** `src/Features/RandomQuote.jsx`
 
-**Använder:**
+**Beskrivning:**
 
-React hooks useState för att lagra det valda citatet och useEffect för att välja ett slumpmässigt citat när komponenten renderas första gången. Citatet hämtas från en array i en separat fil (quotes.ts) som innehåller listan med alla tillgängliga citat. Komponenten stödjer även en valfri prop size för att justera textstorleken och använder CSS (RandomQuote.css) för styling.
+Använder useState för att lagra det valda citatet och useEffect för att välja ett slumpmässigt citat när komponenten renderas första gången. Citatet hämtas från en array i en separat fil (quotes.ts) som innehåller listan med alla tillgängliga citat. Komponenten stödjer även en valfri prop size för att justera textstorleken och använder CSS (RandomQuote.css) för styling.
 
 #### Login Form
 
@@ -154,7 +152,7 @@ LoginForm-komponenten hanterar inloggning och registrering av användare. Den l�
 
 **Fil:** `src/Features/authentication/LoginForm.jsx`
 
-**Använder:**
+**Beskrivning:**
 
 LoginForm använder React hooks (useState och useRef) för att lagra formulärdata och hålla referenser till lösenordsfälten. Den använder useAuth-contexten för autentisering, där funktioner för inloggning, registrering och utloggning finns, och Supabase används för att spara användarprofilen vid registrering. Komponenten innehåller logik för att byta mellan inloggnings- och registreringsläge, validerar e-post, lösenord och användarnamn, och visar felmeddelanden direkt under respektive fält. UI-komponenter som Button används för att starta inloggning eller registrering och för att byta läge mellan login och signup.
 
@@ -166,9 +164,9 @@ Profile-komponenten visar användarens profilinformation, inklusive användarnam
 
 **Fil:** `src/Features/profile/Profile.tsx`
 
-**Använder:**
+**Beskrivning:**
 
-React hooks (useState, useEffect) används för att hämta och lagra användarens profil. Komponenten använder TypeScript-typer för att definiera UserProfile och styrka user-objektets struktur. useAuth används för att kontrollera inloggning och hämta användar-ID. Profilinformation hämtas från Supabase (user_profile), inklusive bild-URL, och uppdateringar sker direkt i state och Supabase Storage vid uppladdning av ny bild. Layout och styling hanteras via CSS (Profile.css) och datum visas i lokaliserat format. RandomQuote används för att visa ett inspirerande citat.
+useState och useEffect används för att hämta och lagra användarens profil. Komponenten använder TypeScript-typer för att definiera UserProfile och styrka user-objektets struktur. useAuth används för att kontrollera inloggning och hämta användar-ID. Profilinformation hämtas från Supabase (user_profile), inklusive bild-URL, och uppdateringar sker direkt i state och Supabase Storage vid uppladdning av ny bild. Layout och styling hanteras via CSS (Profile.css) och datum visas i lokaliserat format. RandomQuote används för att visa ett inspirerande citat.
 
 Komponenten uppdaterar dynamiskt beroende på inloggningsstatus. Användarbild laddas från Supabase Storage och uppdateras direkt vid förändring. RandomQuote-komponenten ger en personlig touch och gör profilen lite roligare.
 
