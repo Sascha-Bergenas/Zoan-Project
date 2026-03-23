@@ -179,17 +179,20 @@ CalendarCard visar användarens loggade arbetssessioner i en månadskalender dä
 
 **Fil:** `src/Features/calendar/CalendarCard.jsx`
 
-**Använder:**
+**Importer:**
 
 - @fullcalendar/react
 - @fullcalendar/daygrid
 - @fullcalendar/core/locales/sv
-- react (useEffect, useMemo, useState)
 - ../../storage/localStorage
 - ../../contexts/useAuth
 - ../../supabase/supabase
 - ./CalendarCard.css
 - ../mood/mood.css
+
+**Använder:**
+
+- react (useEffect, useMemo, useState)
 
 **Beskrivning:**
 
@@ -204,14 +207,17 @@ Graph visualiserar användarens sessionsdata med ett stapeldiagram och ett cirke
 
 **Fil:** `src/Features/graph/graph.tsx`
 
+**Importer:**
+
+- ./graph.helpers
+- ./graph.types
+- ./graph.css
+
 **Använder:**
 
 - recharts
 - @recharts/devtools
 - react (useMemo)
-- ./graph.helpers
-- ./graph.types
-- ./graph.css
 
 **Beskrivning:**
 
@@ -226,7 +232,7 @@ SessionModal dyker upp automatiskt när timern stoppas och uppmanar användaren 
 
 **Fil:** `src/Features/modals/sessionModal/sessionModal.jsx`
 
-**Använder:**
+**Importer:**
 
 - ../../../Features/sessions/WorkSessionForm
 - ../../../components/ui/modal/Modal
@@ -245,9 +251,8 @@ WorkSessionForm är formuläret som används för att logga ett avslutat arbetsp
 
 **Fil:** `src/Features/sessions/WorkSessionForm.jsx`
 
-**Använder:**
+**Importer:**
 
-- react (useState)
 - ../../components/ui/button/Button
 - ../../components/ui/input
 - ../../components/ui/select/Select
@@ -257,6 +262,10 @@ WorkSessionForm är formuläret som används för att logga ett avslutat arbetsp
 - ../../storage/localStorage
 - ../../supabase/saveSession
 - ./WorkSessionForm.modal.css
+
+**Använder:**
+
+- react (useState)
 
 **Beskrivning:**
 
@@ -271,13 +280,16 @@ Todo är en enkel att-göra-lista direkt i dashboarden där användaren kan läg
 
 **Fil:** `src/Features/todo/Todo.jsx`
 
-**Använder:**
+**Importer:**
 
-- react (useEffect, useState)
 - ../../components/ui/input/Input
 - ../../components/ui/button/Button
 - ../../storage/localStorage
 - ./Todo.css
+
+**Använder:**
+
+- react (useEffect, useState)
 
 **Beskrivning:**
 
@@ -294,7 +306,7 @@ DashboardPage är applikationens huvudvy och fungerar som ett kontrollcenter fö
 
 **Fil:** `src/pages/dashboard/DashboardPage.jsx`
 
-**Använder:**
+**Importer:**
 
 - ../../components/ui/cards/Card
 - ./Dashboard.module.css
@@ -318,13 +330,16 @@ SettingsPage låter användaren hantera sin kontoinformation – byta profilbild
 
 **Fil:** `src/pages/settings/SettingsPage.tsx`
 
-**Använder:**
+**Importer**
 
-- react (ChangeEvent, useEffect, useState)
-- ../../components/ui/cards/Card
-- ../../contexts/TimerContext
+- `src/ui/components/ui/cards/Card`
+- `src/contexts/TimerContext`
 - ./settingComponents/userService
 - ./SettingsPage.css
+
+  **Använder:**
+
+- react (ChangeEvent, useEffect, useState)
 
 **Beskrivning:**
 
