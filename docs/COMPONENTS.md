@@ -112,14 +112,50 @@ React hooks (useState, useEffect) används för att lagra och uppdatera temat. l
 
 ---
 
-**Syfte:** Beskriv vad mappen innehåller
+### TimerContext.tsx TimerProvider
 
-**Fil:** `src/contexts/`
+**Syfte:** Hanterar hela timer-logiken via context + reducer. Utbyggd utifrån Timer.jsx. Skapad för att flera sidor behövde kunna nå samma timer, data behövde kunna flyttas smidigt utan att behöva skicka props genom flera lager. Timerprovider är en wrapper som exponerar all timer-data till appen.
+
+Ansvar:
+
+- Koppla reducer + state
+- Uppdatera tid kontinuerligt (setInterval)
+- Spara break settings automatiskt
+- Exponera:
+  - current time
+  - state
+  - actions
+  - break settings
+
+State innehåller:
+
+- Status: idle / running / paused
+- Mode: deep / meeting / chill
+- Tid (start, paus, ackumulerad)
+- Pauslogik (nästa paus, intervall, onBreak)
+
+Actions:
+
+- start / pause / stop
+- selectMode / clearMode
+- setBreakEvery
+- takeBreak / acknowledgeBreak
+
+Funktion:
+
+- Reducer säkerställer att state ändras korrekt
+- Tid räknas dynamiskt (nu + starttid)
+- Pauser justeras korrekt vid paus/resume
+
+**Fil:** `src/contexts/TimerContext.tsx`
 
 **Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
+createContext – skapar ett globalt context för att dela timer-state i hela appen
+useContext – hämtar timer-data och actions från context
+useReducer – hanterar all timer-logik och state-förändringar på ett strukturerat sätt
+useEffect – kör effekter som timer-loop (setInterval) och auto-save
+useMemo – optimerar beräkningar så att värden inte räknas om i onödan
+useState – hanterar lokal state som inte passar i reducern
 
 ---
 
@@ -332,29 +368,60 @@ All kommunikation med Supabase sköts av servicefilen settingComponents/userServ
 
 ---
 
-### Storage
+## Storage
 
-**Syfte:** Beskriv vad mappen innehåller
+### breakSettings.ts och breakSettingStorage.ts
 
-**Fil:** `src/storage/`
+**Syfte:**
+Systemet hanterar användarens pausinställningar via `localStorage`.
+
+- Standardvärden används om inget finns sparat.
+- Vid laddning valideras datan för att undvika krascher (fallback till default).
+- Inställningar inkluderar:
+  - Pausintervall för olika lägen/modes (deep, meeting, chill)
+  - Extra inställning för fredag (beerOnFriday)
+- Sparning sker automatiskt när inställningar ändras.
+
+**Fil:**
+`src/storage/breakSettings.ts`
+`src/storage/breakSettingStorage.ts`
 
 **Använder:**
 
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
+- `localStorage` – sparar och hämtar användarens pausinställningar
+- `JSON.parse` / `JSON.stringify` – konverterar data till/från string vid lagring
+- TypeScript-typer – säkerställer korrekt struktur på inställningar
 
 ---
 
-### Supabase
+### Supabase (getSessions, saveSession, updateSession, supabase)
 
-**Syfte:** Beskriv vad mappen innehåller
+**Syfte:**  
+Hanterar all kommunikation med databasen via Supabase för att hämta, skapa och uppdatera sessioner. Koppla frontend till databasen och säkerställa att data är kopplad till rätt `user_id`.Hantera CRUD-operationer samt abstrahera databaslogik från UI.
 
-**Fil:** `src/supabase/`
+- Centraliserar databasanslutning via en gemensam klient
+- Hämtar sessioner för inloggad användare
+- Sparar nya sessioner i databasen
+- Uppdaterar befintliga sessioner
+- Raderar befintliga sessioner
+
+**Filer:**  
+`src/supabase/getSessions.ts`  
+`src/supabase/saveSession.ts`  
+`src/supabase/updateSession.ts`  
+`src/supabase/deleteSession.js`  
+`src/supabase/supabase.ts`
 
 **Använder:**
 
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
+- Supabase client – kommunikation med databasen
+- `createClient` – initierar anslutning till Supabase
+- `select` – hämtar data från tabell
+- `insert` – skapar nya rader
+- `update` – uppdaterar befintliga rader
+- `eq` – filtrerar data (t.ex. på `user_id` eller `id`)
+- async/await – hanterar asynkrona databasoperationer
+- miljövariabler – lagrar API-url och nycklar säkert
 
 ---
 
