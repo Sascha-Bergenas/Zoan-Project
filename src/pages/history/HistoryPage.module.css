@@ -8,7 +8,6 @@ h3 {
 }
 
 .wrapper {
-  /* container-type: inline-size; */
   display: flex;
   justify-content: center;
   /* background-color: var(--white-color); */
@@ -20,6 +19,5 @@ h3 {
   margin: 1rem;
   border-radius: 10px;
   width: 100%;
-  /* max-width : 90vw; */
 }
 

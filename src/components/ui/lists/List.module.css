@@ -1,4 +1,16 @@
+
+.canhide {
+  display: inline;
+}
+
+@container hideaway (max-width: 680px) {
+  .canhide {
+    display: none;
+  }
+}
 .list {
+  container-type: inline-size;
+  container-name: hideaway;
   display: grid;
   grid-template-columns:
     max-content auto repeat(4, max-content)
