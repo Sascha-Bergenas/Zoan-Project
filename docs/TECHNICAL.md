@@ -8,6 +8,7 @@ förstå kodbasen utan att behöva läsa igenom varje fil.
 
 ## Innehåll
 
+- [Projektbesktivning](PROJECT.md)
 - [Projektstruktur](STRUCTURE.md)
 - [Komponenter](COMPONENTS.md)
 - [Arbetssätt](ARBETSSATT.md)
