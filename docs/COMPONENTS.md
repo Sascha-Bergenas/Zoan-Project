@@ -181,14 +181,14 @@ CalendarCard visar användarens loggade arbetssessioner i en månadskalender dä
 
 **Importer:**
 
-- @fullcalendar/react
-- @fullcalendar/daygrid
-- @fullcalendar/core/locales/sv
-- ../../storage/localStorage
-- ../../contexts/useAuth
-- ../../supabase/supabase
-- ./CalendarCard.css
-- ../mood/mood.css
+- `@fullcalendar/react`
+- `@fullcalendar/daygrid`
+- `@fullcalendar/core/locales/sv`
+- `src/storage/localStorage`
+- `src/contexts/useAuth`
+- `src/supabase/supabase`
+- `src/Features/CalendarCard.css`
+- `src/Features/mood/mood.css`
 
 **Använder:**
 
@@ -209,9 +209,9 @@ Graph visualiserar användarens sessionsdata med ett stapeldiagram och ett cirke
 
 **Importer:**
 
-- ./graph.helpers
-- ./graph.types
-- ./graph.css
+- `src/Features/graph/graph.helpers`
+- `src/Features/graph/graph.types`
+- `src/Features/graph/graph.css`
 
 **Använder:**
 
@@ -234,9 +234,9 @@ SessionModal dyker upp automatiskt när timern stoppas och uppmanar användaren 
 
 **Importer:**
 
-- ../../../Features/sessions/WorkSessionForm
-- ../../../components/ui/modal/Modal
-- ./sessionModal.module.css
+- `src/Features/sessions/WorkSessionForm`
+- `src/components/ui/modal/Modal`
+- `src/Features/modals/sessionModal/sessionModal.module.css`
 
 **Beskrivning:**
 
@@ -253,15 +253,15 @@ WorkSessionForm är formuläret som används för att logga ett avslutat arbetsp
 
 **Importer:**
 
-- ../../components/ui/button/Button
-- ../../components/ui/input
-- ../../components/ui/select/Select
-- ../../components/ui/textArea/TextArea
-- ../mood/MoodPicker
-- ../../contexts/useAuth
-- ../../storage/localStorage
-- ../../supabase/saveSession
-- ./WorkSessionForm.modal.css
+- `src/components/ui/button/Button`
+- `src/components/ui/input`
+- `src/components/ui/select/Select`
+- `src/components/ui/textArea/TextArea`
+- `src/Features/mood/MoodPicker`
+- `src/contexts/useAuth`
+- `src/storage/localStorage`
+- `src/supabase/saveSession`
+- `src/Features/sessions/WorkSessionForm.modal.css`
 
 **Använder:**
 
@@ -282,10 +282,10 @@ Todo är en enkel att-göra-lista direkt i dashboarden där användaren kan läg
 
 **Importer:**
 
-- ../../components/ui/input/Input
-- ../../components/ui/button/Button
-- ../../storage/localStorage
-- ./Todo.css
+- `src/components/ui/input/Input`
+- `src/components/ui/button/Button`
+- `src/storage/localStorage`
+- `src/Features/todo/Todo.css`
 
 **Använder:**
 
@@ -308,14 +308,14 @@ DashboardPage är applikationens huvudvy och fungerar som ett kontrollcenter fö
 
 **Importer:**
 
-- ../../components/ui/cards/Card
-- ./Dashboard.module.css
-- ../../Features/timer/Timer
-- ../../components/layout/Topbar
-- ../../Features/calendar/CalendarCard
-- ../../Features/todo/Todo
-- ../../components/ui/profile/Profile
-- ../../components/ui/smartRecommendations/SmartRecommendations
+- `src/components/ui/cards/Card`
+- `src/pages/Dashboard.module.css`
+- `src/Features/timer/Timer`
+- `src/components/layout/Topbar`
+- `src/Features/calendar/CalendarCard`
+- `src/Features/todo/Todo`
+- `src/components/ui/profile/Profile`
+- `src/components/ui/smartRecommendations/SmartRecommendations`
 
 **Beskrivning:**
 
@@ -334,10 +334,10 @@ SettingsPage låter användaren hantera sin kontoinformation – byta profilbild
 
 - `src/ui/components/ui/cards/Card`
 - `src/contexts/TimerContext`
-- ./settingComponents/userService
-- ./SettingsPage.css
+- `src/pages/settings/settingComponents/userService`
+- `src/pages/settings/SettingsPage.css`
 
-  **Använder:**
+**Använder:**
 
 - react (ChangeEvent, useEffect, useState)
 
