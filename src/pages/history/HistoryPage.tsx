@@ -32,19 +32,19 @@ export default function History() {
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
         
-            <EditSessionModal mode="new" dialogRef={dialogRef}/* onRequestClose={() => setIsModalOpen(false)}*/ />
+          <EditSessionModal mode="new" dialogRef={dialogRef}/* onRequestClose={() => setIsModalOpen(false)}*/ />
       
-          {/* Knapp för manuell loggning */}
-          <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
+          <Button text={"Lägg till"} variant="primary" onClick={handleAddClick}/>
           <BaseCard className={""} size={""}>
             <List />
           </BaseCard>
-          {/* Put eventuellt knapp för manuell loggning here */}
         </div>
       </section>
 
-      <Graph sessions={sessions} />
-      </>
+      <section className={styles.wrapper}>
+        <Graph sessions={sessions} />
+      </section>
+    </>
 
   );
 }
