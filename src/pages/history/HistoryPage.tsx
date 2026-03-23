@@ -41,9 +41,7 @@ export default function History() {
         </div>
       </section>
 
-      <section className={styles.wrapper}>
         <Graph sessions={sessions} />
-      </section>
     </>
 
   );
