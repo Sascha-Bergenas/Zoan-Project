@@ -4,15 +4,14 @@ h3 {
 
 .smart-textArea textarea {
   border-radius: 10px;
+  border: 1px solid var(--gray-color);
   width: 100%;
   max-width: 300px;
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid var(--gray-color);
   resize: none;
   outline: none;
   font-family: inherit;
-  border: none;
 }
 
 @media (max-width: 480px) {
