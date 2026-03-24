@@ -18,29 +18,6 @@ export default function History() {
   const [ refreshKey, setRefreshKey ] = useState(0)
   const dialogRef = useRef<HTMLDialogElement | null>(null);
   const { sessions } = useSessions();
-   
-  
-  // Tvinga listan att laddas om när en session har lagts till eller ändrats
-  // const handleSessionSaved = () => setRefreshKey((k) => k +1)
-
-  // Hämta data från Supabase
-  // useEffect(() => {
-  //   let mounted = true;
-  //   const fetchSessions = async () => {
-  //     if(!isAuthed) return
-
-  //     try {
-  //         const data = await getSessions(user.id)
-  //         if(mounted) setSessions(data || [])
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
-  //   }
-    
-  //   fetchSessions()
-  //   return () => { mounted = false}
-
-  // }, [isAuthed, user?.id])
 
   const handleAddClick = () => { 
     console.log(sessions)
@@ -55,19 +32,17 @@ export default function History() {
         <div className={styles.container}>
           <h3>Loggade sessioner</h3>
         
-            <EditSessionModal mode="new" dialogRef={dialogRef}/* onRequestClose={() => setIsModalOpen(false)}*/ />
+          <EditSessionModal mode="new" dialogRef={dialogRef}/* onRequestClose={() => setIsModalOpen(false)}*/ />
       
-          {/* Knapp för manuell loggning */}
-          <Button text={"Lägg till"} variant="secondary" onClick={handleAddClick}/>
+          <Button text={"Lägg till"} variant="primary" onClick={handleAddClick}/>
           <BaseCard className={""} size={""}>
             <List />
           </BaseCard>
-          {/* Put eventuellt knapp för manuell loggning here */}
         </div>
       </section>
 
-      <Graph sessions={sessions} />
-      </>
+        <Graph sessions={sessions} />
+    </>
 
   );
 }
