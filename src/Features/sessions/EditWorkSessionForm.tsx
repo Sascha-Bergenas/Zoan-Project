@@ -41,9 +41,7 @@ const calculateActiveTime = (pause: number) :number => {
   return time
 }
 
-const hasTimeError = calculateActiveTime(pauseTime) < 0
-
-function renderActiveTime(time : number){
+function renderActiveTime(time : number) {
   const readableTime = new Date(time)
   if (time < 0 ) {
     return `Starttid måste vara före stopptid`
@@ -53,7 +51,6 @@ function renderActiveTime(time : number){
     return `Aktiv tid: ${readableTime.getUTCHours()} timmar och ${readableTime.getMinutes()} minuter`
   }
 }
-
   // // Funktioner för att begränsa activeTime till tidsspannet mellan start och stopp
   //   const toMinutes = (hhmm = "00:00") => {
   //     const [h, m] = hhmm.split(":").map(Number);
@@ -96,12 +93,11 @@ function renderActiveTime(time : number){
   return (
     // Formulär för att logga arbetspass-aktiviteter
     <form
-    className={styles.modalForm}
-    onSubmit={(e) => {
+      onSubmit={(e) => {
       e.preventDefault();
-      handleSubmit({...formData, activeTime: calculateActiveTime(pauseTime)});
-    }}
-  >
+      handleSubmit({ ...formData, activeTime: calculateActiveTime(pauseTime) });
+      }}
+    >
     {/* Fält för att ange sessionens tider */}
       <label htmlFor="startedAt">Starttid</label>
       <input 
