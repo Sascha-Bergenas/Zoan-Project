@@ -6,19 +6,6 @@
   </a>
 
   <h3 align="center">Zoan Productivity App</h3>
- <!--
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
-  </p> -->
 </div>
 
 <!-- Innehåll -->
@@ -208,14 +195,6 @@ Detta projekt kommunicerar med ett backend-API som kräver en privat API-nyckel.
 
 Av säkerhetsskäl ingår inte API-nyckeln i repot.
 För att kunna använda backend-funktionaliteten måste du få en giltig API-nyckel från projektets utvecklare.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- Användning -->
-
-## Användning
-
-Hur projektet används / screenshots / kodexempel / demo / källor
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
