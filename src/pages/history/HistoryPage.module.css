@@ -1,26 +1,23 @@
 h2 {
-    margin-inline: auto;
-    max-width : 90rem;
-    padding-inline: 2rem;
+  /* margin-inline: auto; */
+  padding-inline: 2rem;
+}
+
+h3 {
+  color: var(--black-color);
 }
 
 .wrapper {
-  container-type: inline-size;
   display: flex;
   justify-content: center;
+  /* background-color: var(--white-color); */
 }
 
 .container {
-    padding: 1rem;
-    gap: 1rem;
-    margin: 1rem;
-    border-radius: 10px;
-    background-color: var(--primary-light-color);
-    width: 100%;
-    max-width : 90rem;
+  padding: 1rem;
+  gap: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  width: 100%;
 }
 
-.list {
-  max-height: 30rem;
-  overflow-y: scroll;
-}

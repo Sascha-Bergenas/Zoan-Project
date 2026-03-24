@@ -19,7 +19,6 @@ function List() {
         "Mood"
     ]
     const { sessions, status } = useSessions()
-
     const [editingSessionId, setEditingSessionId] = useState<string | null>(null);
     const editDialogRef = useRef<HTMLDialogElement | null>(null);
 
@@ -44,7 +43,10 @@ function List() {
         />
       )}
             <ul className={styles.list}>
-                <ListHeader headers={headers} />
+                {status.type === "isLoading" ? 
+                    <p className={styles.loading}>Loading...</p> :
+                    <ListHeader headers={headers} />
+                    }
                 {  
                     sessions.map((session, i) => {
                         return <ListItem 

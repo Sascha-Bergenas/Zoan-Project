@@ -50,7 +50,7 @@ export default function EditSessionModal({mode, sessionId, dialogRef }: Props) {
     <Modal dialogRef={dialogRef} onClose={handleClose}>
       {/* <Modal dialogRef={dialogRef} onClose={handleCloseModal}> */}
         {" "}
-        <h3>Logga din session</h3>
+        <h3 style={{ margin: 0}}>Logga din session</h3>
         <EditWorkSessionForm
             initialData={session ? toSessionFormData(session) : undefined}
             handleSubmit={handleSubmit}

@@ -18,6 +18,7 @@
   --gray-color: rgb(140, 145, 155);
   --gray-light-color: rgb(245, 246, 250);
   --white-color: rgb(255, 255, 255);
+  --white-color-primary: rgb(255, 255, 255);
 
   /* Status Colors */
   --error-color: rgb(239, 68, 68);
@@ -47,6 +48,7 @@ body.dark {
   --gray-light-color: rgb(20, 20, 25);
   --black-color: rgb(245, 246, 250);
   --white-color: rgb(30, 30, 35);
+  --white-color-primary: rgb(255, 255, 255);
 
   --primary-light-color: rgb(58, 54, 78);
   --primary-lighter-color: rgb(105, 92, 143);
@@ -136,7 +138,9 @@ ul {
   list-style-type: none;
 }
 
-p {
+p,
+span,
+label {
   font-weight: 400;
 }
 

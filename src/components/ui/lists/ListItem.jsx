@@ -40,18 +40,20 @@ export default function ListItem({session, evenOdd, onEdit}) {
     return (
       <li className={`${styles.listItem} ${evenOdd === "even" ? styles.even : styles.odd}`}>
         <span>{date}</span>
-        <span className={styles.cutLine}>{title}</span>
+        <span className={styles.cutLine}>{title}
+          <span>{/* Don't remove this extra span, it's for the fade effect */}</span>
+        </span>
         <span>{category}</span>
-        <span>{startTime}</span>
-        <span>{stopTime}</span>
+        <span className={styles.canhide}>{startTime}</span>
+        <span className={styles.canhide}>{stopTime}</span>
         <span>{activeTime}</span>
-        <span className={styles.cutLine}>{comment}</span>
-        <span className={styles.lastCol}>{mood}</span>
+        <span className={`${styles.cutLine} ${styles.canhide}`}>{comment}
+          <span>{/* Don't remove this extra span, it's for the fade effect */}</span>
+        </span>
+        <span className={`${styles.lastCol} ${styles.canhide}`}>{mood}</span>
         <div className={styles.buttonCont}>
+            <button type="button" onClick={() => onEdit(session.session_id)}>Ändra</button>
             <button type="button" onClick={handleDelete}>✖️</button>
-            <button type="button" onClick={() => onEdit(session.session_id)}>
-                Ändra
-            </button>
         </div>
       </li>
     )

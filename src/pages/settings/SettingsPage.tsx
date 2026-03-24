@@ -96,6 +96,13 @@ const SettingsPage = () => {
     setPreviewUrl(null);
   };
 
+  const persistedImageSrc = avatarUrl
+    ? `${avatarUrl}?t=${avatarVersion}`
+    : DEFAULT_AVATAR;
+
+  // Visar preview om den finns, annars sparad profilbild.
+  const imageSrc = previewUrl ?? persistedImageSrc;
+
   // Break settings
   const handleBreakDeep = (e: ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value);
@@ -106,13 +113,6 @@ const SettingsPage = () => {
     const val = Number(e.target.value);
     setBreakSettings((prev) => ({ ...prev, meetingMin: val }));
   };
-
-  const persistedImageSrc = avatarUrl
-    ? `${avatarUrl}?t=${avatarVersion}`
-    : DEFAULT_AVATAR;
-
-  // Visar preview om den finns, annars sparad profilbild.
-  const imageSrc = previewUrl ?? persistedImageSrc;
 
   return (
     <section className="settings-wrapper">
