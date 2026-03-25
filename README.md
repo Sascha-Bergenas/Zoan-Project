@@ -25,7 +25,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#användning">Anvädning</a></li>
+    <li><a href="#användning">Användning</a></li>
     <li><a href="#teknisk-dokumentation">Teknisk Dokumentation</a></li>
     <li><a href="#contributors">Contributors:</a></li>
   </ol>
@@ -48,7 +48,7 @@ Istället för att bara spåra arbetad tid låter Zoan användare registrera vad
 
 Målet med applikationen är att ge användare insikter i deras arbetsvanor så att de kan planera sina arbetsdagar bättre och behålla fokus under djupa arbetsperioder.
 
-Zoan utvecklades som ett projekt för Fullstack JavaScript / Javascript-utvecklarprogrammet på Chas Academy.
+Zoan utvecklades som ett projekt för Fullstack JavaScript / JavaScript-utvecklarprogrammet på Chas Academy.
 
 Zoan syftar till att **förbättra din produktivitet** och hjälper dig att **hålla fokus under hela dagen.**
 
@@ -70,7 +70,7 @@ Sessioner sparas och kan granskas senare för att analysera produktivitetsmönst
 
 **Registrera sessioner manuellt**
 
-Om en användare glömmer att starta timern kan sessioner också läggas till manuellt genom att ange sessionsens längd och detaljer.
+Om en användare glömmer att starta timern kan sessioner också läggas till manuellt genom att ange sessionens längd och detaljer.
 
 **Produktivitetsinsikter**
 
