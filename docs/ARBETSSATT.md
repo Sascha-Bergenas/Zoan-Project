@@ -24,7 +24,7 @@ Det tvingar en också att tänka igenom grundligt hur allt faktiskt _ska fungera
 
 ##### Vilka problem fick vi av att använda TS?
 
-Även om fördelarna med TypeScript snabbt blev tydliga, så stötte vi också på en del problem. Kombinationen React och TS när man är ny på båda områdena var utmanade, eftersom man såg direkt när något var fel men vi hade inte tillräcklig kunskap för att förstå varför det blev fel eller hur man skulle ha gjort istället. Det verkliga nyttan med TS kommer antagligen med tiden när man är mer van vid det, men för oss blev upplevelsen ofta att vi "högg i sten" och att istället för att bli hjälpta av det bara fick fler saker som inte verkade vilja sitta ihop med varandra.
+Även om fördelarna med TypeScript snabbt blev tydliga, så stötte vi också på en del problem. Kombinationen React och TS när man är ny på båda områdena var utmanade eftersom man såg direkt när något var fel men kanske inte hade tillräcklig kunskap alla gånger för att förstå varför det blev fel eller hur man skulle ha gjort istället. Det verkliga nyttan med TS kommer antagligen med tiden när man är mer van vid det, men för oss blev upplevelsen ofta att vi "högg i sten" och att istället för att bli hjälpta av det bara fick fler saker som inte verkade vilja sitta ihop med varandra.
 
 Det bör också nämnas att många fel som utgjordes av att TS sa ifrån antagligen hade uppstått även utan TS men i form av obskyra Type Errors och liknande, som även de hade tagit tid att hitta och rätta till.
 
