@@ -164,25 +164,23 @@ npm -v
    ```sh
    git clone https://github.com/Sascha-Bergenas/Zoan-Project.git
    ```
-2. Navigera till projektmappen
-   ```sh
-   cd my-react-app
-   ```
-3. Installera dependencies
+2. Installera dependencies
 
    ```sh
+   npm install
+   cd backend
    npm install
    ```
 
 ### Starta applikationen
 
-1.  Starta frontend-utvecklingsservern
+1.  Starta frontend-utvecklingsservern från projektets rotkatalog
 
 ```sh
 npm run dev
 ```
 
-4. Starta backend-servern (körs separat)
+2. Starta backend-servern (körs separat)
 
 ```sh
 cd backend

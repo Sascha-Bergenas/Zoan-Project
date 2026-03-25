@@ -41,6 +41,8 @@ const calculateActiveTime = (pause: number) :number => {
   return time
 }
 
+const hasTimeError = calculateActiveTime(pauseTime) < 0
+
 function renderActiveTime(time : number) {
   const readableTime = new Date(time)
   if (time < 0 ) {
@@ -93,6 +95,7 @@ function renderActiveTime(time : number) {
   return (
     // Formulär för att logga arbetspass-aktiviteter
     <form
+      className={styles.modalForm}
       onSubmit={(e) => {
       e.preventDefault();
       handleSubmit({ ...formData, activeTime: calculateActiveTime(pauseTime) });
