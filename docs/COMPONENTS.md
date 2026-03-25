@@ -20,7 +20,7 @@ Använder react hooks (useState) för att lagra användarens input, rekommendera
 
 **Backend**
 
-## En Express-server (server.js) tar emot POST-anrop från frontend, skickar användarens meddelande till OpenRouter AI (GPT-4) och returnerar ett svar. Servern avgör om meddelandet är relevant, klassificerar arbetsläge, föreslår arbetstid och ger ett kort tips. Fel hanteras genom loggning och standardmeddelande till frontend.
+En Express-server (server.js) tar emot POST-anrop från frontend, skickar användarens meddelande till OpenRouter AI (GPT-4) och returnerar ett svar. Servern avgör om meddelandet är relevant, klassificerar arbetsläge, föreslår arbetstid och ger ett kort tips. Fel hanteras genom loggning och standardmeddelande till frontend.
 
 ### Contexts
 
@@ -107,17 +107,6 @@ ThemeContext-komponenten hanterar applikationens tema (ljus eller mörk). Den l�
 **Beskrivning:**
 
 React hooks (useState, useEffect) används för att lagra och uppdatera temat. localStorage används för att spara användarens val. Komponenten använder TypeScript-typer för att definiera temat (Theme), contextens struktur (ThemeContextType) och props för ThemeProvider (ThemeProviderProps). Detta gör att contexten och toggle-funktionen blir typ-säkra och enklare att använda i hela applikationen. Contexten (ThemeContext) gör temat och toggle-funktionen tillgängliga för alla barnkomponenter.
-
----
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/contexts/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
 
 ---
 
@@ -342,57 +331,3 @@ SettingsPage låter användaren hantera sin kontoinformation – byta profilbild
 **Beskrivning:**
 
 All kommunikation med Supabase sköts av servicefilen settingComponents/userService.ts som exponerar funktioner för att hämta inloggad användare, läsa profil, uppdatera användarnamn och ladda upp profilbild. När en fil väljs skapas en tillfällig blob-URL lokalt för förhandsvisning och den städas upp med URL.revokeObjectURL så att minne inte läcker. En cache-buster (avatarVersion) läggs till bild-URL:en efter uppladdning för att tvinga webbläsaren att visa den nya bilden direkt. TypeScript används genomgående för typsäker hantering av state och händelser. Layout och stilsättning hanteras av BaseCard och SettingsPage.css.
-
----
-
-### Storage
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/storage/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
-
----
-
-### Supabase
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/supabase/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
-
----
-
-### Types
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/types/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
-
----
-
-### Utils
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/utils/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
-
----
