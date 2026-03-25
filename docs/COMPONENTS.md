@@ -50,49 +50,49 @@ En Express-server (server.js) tar emot POST-anrop från frontend, skickar använ
 
 `useSessions.ts` - Den custom hook som exponerar Context:ens data, states och actions.
 
-##### Ett exempel på dataflöde och funktion (en inloggad användare redigerar en post):
+**Ett exempel på dataflöde och funktion (en inloggad användare redigerar en post):**
 
 Sidan laddas in och SessionProviderns load-action anropas direkt, och databasen anropas därefter.
 
-```Page_load_and_data_fetch
-HistoryPage                  SessionsContext                    Supabase
------------                  ---------------                    --------
-useSessions -(read action)-> SessionsProvider  -(fetch data)->  User's sessions
+```
+HistoryPage                    SessionsContext                    Supabase
+-----------                    ---------------                    --------
+useSessions -("read"-action)-> SessionsProvider  -(begär data)->  "sessions"-tabellen
 ```
 
-SessionsContext får tillbaka alla loggade arbetssessioner (poster) som hör till den inloggade användaren från Supabase och talar om för UI på HistoryPage att det finns data att visa. List-komponenten på sidan renderar ut alla poster.
+SessionsContext får tillbaka alla loggade arbetssessioner som hör till den inloggade användaren från Supabase och talar om för UI på HistoryPage att det finns data att visa. List-komponenten på sidan renderar ut alla "session"-poster.
 
-```Data_retrieval_and_distribution
-Supabase               SessionsContext                          HistoryPage
---------               ---------------                          -----------
-(array of posts)->     SessionsProvider   -(array of posts)->   UI
+```
+Supabase                     SessionsContext                                 HistoryPage
+--------                     ---------------                                 -----------
+En array MED "sessions" ->   SessionsProvider   -(Arrayen med "sessions")->   UI
 ```
 
 Användaren klickar på en post i listan, klick-eventet fångas upp av List-komponenten som öppnar en modal med ett formulär för redigering och bifogar det unika id-numret för den valda posten. Modalen plockar ut den posten från listan som Context:en redan hämtat och fyller i fälten i formuläret med postens data i förväg.
 
-```User_action_and_UI_reaction
-UI              List component  -(post id)->  Modal                   Form
---              --------------                -----                   ----
-(user click)->  Click handler                 useSessions  -(post)->  UI
-(post id)
+```
+UI                 List component   -("session_id")->   Modal                           Form
+--                 --------------                       -----                           ----
+Klick på en rad->  Klick-hanterare                      useSessions  -(En "session")->  UI
+("session_id")
 ```
 
 Användaren redigerar datan i ett eller flera fält och klickar på en submit-knapp, modalen samlar datan från formulärets fält och anropar SessionsProviderns update-action med postens uppdaterade data, ett update-kommando skickas till Supabase med den nya datan.
 
-```User_submission_and_Context_reaction
-Form -(submit)-> Modal                 SessionsContext            Supabase
-----             -----                 ---------------            --------
-(form data)->    useSessions -(post)-> SessionsProvider -(post)-> User's sessions
+```
+Form -("submit")-> Modal                                 SessionsContext                            Supabase
+----               -----                                 ---------------                            --------
+(formulärdata)->   useSessions -(Uppdaterad "session")-> SessionsProvider -(Uppdaterad "session")-> User's sessions
 ```
 
 Supabase utför update-kommandot och skickar tillbaka "ok". Context:en begär då en ny uppdaterad lista från databasen som sedan skickas till HistoryPage där List-komponenten renderas om med den redigerade posten.
 
-```Database_update_and_list_refresh
-Supabase                 SessionsContext                          HistoryPage
---------                 ---------------                          -----------
-Updates post  -(ok!)->   SessionsProvider
-Posts   <-(fetch data)   SessionsProvider
-(array of posts)->       SessionsProvider   -(array of posts)->   UI
+```
+Supabase                        SessionsContext                            HistoryPage
+--------                        ---------------                            -----------
+Uppdaterar posten  -(ok!)->     SessionsProvider
+Posts     <-(Begär data)        SessionsProvider
+(En ny array med "sessions")->  SessionsProvider  -("sessions"-arrayen)->  UI
 ```
 
 ---
@@ -100,7 +100,7 @@ Posts   <-(fetch data)   SessionsProvider
 #### ThemeContext.tsx (Light/DarkMode)
 
 **Syfte:**
-ThemeContext-komponenten hanterar applikationens tema (ljus eller mörk). Den låter användaren växla mellan light och dark mode och sparar inställningen lokalt så att temat behålls mellan sessioner. Alla komponenter som använder ThemeContext kan läsa det aktuella temat och ändra UI dynamiskt. När användaren togglar temat uppdateras värdet i contexten och sparas automatiskt i localStorage, vilket gör att appen startar med rätt tema vid nästa besök.
+ThemeContext-komponenten hanterar applikationens tema (ljust eller mörkt). Den låter användaren växla mellan light och dark mode och sparar inställningen lokalt så att temat behålls mellan sessioner. Alla komponenter som använder ThemeContext kan läsa det aktuella temat och ändra UI dynamiskt. När användaren togglar temat uppdateras värdet i contexten och sparas automatiskt i localStorage, vilket gör att appen startar med rätt tema vid nästa besök.
 
 **Fil:** `src/contexts/ThemeContext.tsx`
 
@@ -172,7 +172,7 @@ Timer-komponenten använder React hooks som useState för lokal state och useRef
 
 #### Random Quote
 
-**Syfte:** Syfte:
+**Syfte:**
 RandomQuote-komponenten visar ett slumpmässigt citat från en fördefinierad lista när komponenten laddas. Den används för att ge användaren en liten rolig touch när de besöker sidan!
 
 **Fil:** `src/Features/RandomQuote.jsx`
@@ -183,7 +183,8 @@ Använder useState för att lagra det valda citatet och useEffect för att välj
 
 #### Login Form
 
-**Syfte:** Syfte:
+**Syfte:**
+
 LoginForm-komponenten hanterar inloggning och registrering av användare. Den låter användaren logga in med e-post och lösenord, eller skapa ett nytt konto med e-post, lösenord och användarnamn. Komponenten validerar input och visar felmeddelanden om något är felaktigt.
 
 **Fil:** `src/Features/authentication/LoginForm.jsx`
@@ -255,7 +256,7 @@ Graph visualiserar användarens sessionsdata med ett stapeldiagram och ett cirke
 
 **Beskrivning:**
 
-Recharts används för att rendera diagrammen. All databearbetning är separerad till hjälpfilen graph.helpers.ts som innehåller funktionen buildGraphData, den tar emot en array med sessions och returnerar färdigformatterad stapel- och pajdata. TypeScript-typer för sessions och datapunkter definieras i graph.types.ts, vilket gör att komponentens props och interna data är typsäkra. useMemo ser till att data inte räknas om i onödan. Mood-värdena 1–5 mappas konsekvent till samma färgskalor som används i resten av appen.
+Recharts används för att rendera diagrammen. All databearbetning är separerad till hjälpfilen graph.helpers.ts som innehåller funktionen buildGraphData, den tar emot en array med sessions och returnerar färdigformaterad stapel- och pajdata. TypeScript-typer för sessions och datapunkter definieras i graph.types.ts, vilket gör att komponentens props och interna data är typsäkra. useMemo ser till att data inte räknas om i onödan. Mood-värdena 1–5 mappas konsekvent till samma färgskalor som används i resten av appen.
 
 ---
 
@@ -498,28 +499,3 @@ Mappar datan så vår tidigare byggda kod matchar med den senare byggda. Hantera
 - TypeScript-typer – säkerställer korrekt struktur
 - Mapping-funktioner – översätter mellan olika datalager
 
-### Types
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/types/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
-
----
-
-### Utils
-
-**Syfte:** Beskriv vad mappen innehåller
-
-**Fil:** `src/utils/`
-
-**Använder:**
-
-- Komponent/bibliotek 1
-- Komponent/bibliotek 2
-
----
