@@ -112,7 +112,7 @@ React hooks (useState, useEffect) används för att lagra och uppdatera temat. l
 
 ---
 
-### TimerContext.tsx TimerProvider
+#### TimerContext.tsx med TimerProvider
 
 **Syfte:** Hanterar hela timer-logiken via context + reducer. Utbyggd utifrån Timer.jsx. Skapad för att flera sidor behövde kunna nå samma timer, data behövde kunna flyttas smidigt utan att behöva skicka props genom flera lager. Timerprovider är en wrapper som exponerar all timer-data till appen.
 
@@ -424,6 +424,66 @@ Hanterar all kommunikation med databasen via Supabase för att hämta, skapa och
 - miljövariabler – lagrar API-url och nycklar säkert
 
 ---
+
+### localStore.ts
+
+**Syfte:**  
+En generell lösning för att lagra data i `localStorage`.
+
+- Hanterar all CRUD-logik för listor (load, add, save, clear)
+- Genererar automatiskt `id` och `createdAt` för nya objekt
+- Säkerställer att data alltid returneras i korrekt format (fallback till tom array vid fel)
+- Skickar ett globalt event vid ändringar för att hålla UI synkat
+
+**Funktionalitet:**
+
+- `load()` → hämtar sparad data
+- `add()` → lägger till nytt objekt (med auto-genererat id + timestamp)
+- `save()` → sparar hela listan
+- `clear()` → rensar all data
+
+**Fil:**  
+`src/storage/localStore.ts`
+
+**Använder:**
+
+- `localStorage` – lagring av listdata
+- `JSON.parse` / `JSON.stringify` – serialisering/deserialisering
+- `crypto.randomUUID()` – generering av unika id:n
+- `CustomEvent` – notifiera UI om förändringar
+- Sessions (`sessionStore`)
+- Todos (`todoStore`)
+- Dispatchar `localstore:change` event vid förändringar för att trigga UI-uppdatering
+
+---
+
+### sessionMapping.ts + sessionLocalActions.ts
+
+**Syfte:**  
+Mappar datan så vår tidigare byggda kod matchar med den senare byggda. Hanterar sessionsdata lokalt och säkerställer att data kan användas konsekvent mellan UI, localStorage och databas.
+
+- Konverterar mellan olika dataformat för samma session
+- Förhindrar mismatch mellan frontend och backend (t.ex. `id` vs `session_id`)
+- Samlar all lokal sessionslogik i ett lager
+- Mapping-funktioner mellan:
+  - `StoredSession` (localStorage)
+  - `SessionData` (app/databas)
+  - `SessionFormData` (formulär)
+
+- `load()` → hämtar sessions
+- `add()` → skapar ny session
+- `update()` → uppdaterar befintlig session
+- `delete()` → tar bort session
+
+**Fil:**  
+`src/storage/sessionMapping.ts`  
+`src/storage/sessionLocalActions.ts`
+
+**Använder:**
+
+- `localStore` – för lagring av sessions
+- TypeScript-typer – säkerställer korrekt struktur
+- Mapping-funktioner – översätter mellan olika datalager
 
 ### Types
 
