@@ -110,6 +110,53 @@ React hooks (useState, useEffect) används för att lagra och uppdatera temat. l
 
 ---
 
+#### TimerContext.tsx med TimerProvider
+
+**Syfte:** Hanterar hela timer-logiken via context + reducer. Utbyggd utifrån Timer.jsx. Skapad för att flera sidor behövde kunna nå samma timer, data behövde kunna flyttas smidigt utan att behöva skicka props genom flera lager. Timerprovider är en wrapper som exponerar all timer-data till appen.
+
+Ansvar:
+
+- Koppla reducer + state
+- Uppdatera tid kontinuerligt (setInterval)
+- Spara break settings automatiskt
+- Exponera:
+  - current time
+  - state
+  - actions
+  - break settings
+
+State innehåller:
+
+- Status: idle / running / paused
+- Mode: deep / meeting / chill
+- Tid (start, paus, ackumulerad)
+- Pauslogik (nästa paus, intervall, onBreak)
+
+Actions:
+
+- start / pause / stop
+- selectMode / clearMode
+- setBreakEvery
+- takeBreak / acknowledgeBreak
+
+Funktion:
+
+- Reducer säkerställer att state ändras korrekt
+- Tid räknas dynamiskt (nu + starttid)
+- Pauser justeras korrekt vid paus/resume
+
+**Fil:** `src/contexts/TimerContext.tsx`
+
+**Använder:**
+createContext – skapar ett globalt context för att dela timer-state i hela appen
+useContext – hämtar timer-data och actions från context
+useReducer – hanterar all timer-logik och state-förändringar på ett strukturerat sätt
+useEffect – kör effekter som timer-loop (setInterval) och auto-save
+useMemo – optimerar beräkningar så att värden inte räknas om i onödan
+useState – hanterar lokal state som inte passar i reducern
+
+---
+
 ### Features
 
 #### Timer
@@ -331,3 +378,148 @@ SettingsPage låter användaren hantera sin kontoinformation – byta profilbild
 **Beskrivning:**
 
 All kommunikation med Supabase sköts av servicefilen settingComponents/userService.ts som exponerar funktioner för att hämta inloggad användare, läsa profil, uppdatera användarnamn och ladda upp profilbild. När en fil väljs skapas en tillfällig blob-URL lokalt för förhandsvisning och den städas upp med URL.revokeObjectURL så att minne inte läcker. En cache-buster (avatarVersion) läggs till bild-URL:en efter uppladdning för att tvinga webbläsaren att visa den nya bilden direkt. TypeScript används genomgående för typsäker hantering av state och händelser. Layout och stilsättning hanteras av BaseCard och SettingsPage.css.
+
+---
+
+## Storage
+
+### breakSettings.ts och breakSettingStorage.ts
+
+**Syfte:**
+Systemet hanterar användarens pausinställningar via `localStorage`.
+
+- Standardvärden används om inget finns sparat.
+- Vid laddning valideras datan för att undvika krascher (fallback till default).
+- Inställningar inkluderar:
+  - Pausintervall för olika lägen/modes (deep, meeting, chill)
+  - Extra inställning för fredag (beerOnFriday)
+- Sparning sker automatiskt när inställningar ändras.
+
+**Fil:**
+`src/storage/breakSettings.ts`
+`src/storage/breakSettingStorage.ts`
+
+**Använder:**
+
+- `localStorage` – sparar och hämtar användarens pausinställningar
+- `JSON.parse` / `JSON.stringify` – konverterar data till/från string vid lagring
+- TypeScript-typer – säkerställer korrekt struktur på inställningar
+
+---
+
+### Supabase (getSessions, saveSession, updateSession, supabase)
+
+**Syfte:**  
+Hanterar all kommunikation med databasen via Supabase för att hämta, skapa och uppdatera sessioner. Koppla frontend till databasen och säkerställa att data är kopplad till rätt `user_id`.Hantera CRUD-operationer samt abstrahera databaslogik från UI.
+
+- Centraliserar databasanslutning via en gemensam klient
+- Hämtar sessioner för inloggad användare
+- Sparar nya sessioner i databasen
+- Uppdaterar befintliga sessioner
+- Raderar befintliga sessioner
+
+**Filer:**  
+`src/supabase/getSessions.ts`  
+`src/supabase/saveSession.ts`  
+`src/supabase/updateSession.ts`  
+`src/supabase/deleteSession.js`  
+`src/supabase/supabase.ts`
+
+**Använder:**
+
+- Supabase client – kommunikation med databasen
+- `createClient` – initierar anslutning till Supabase
+- `select` – hämtar data från tabell
+- `insert` – skapar nya rader
+- `update` – uppdaterar befintliga rader
+- `eq` – filtrerar data (t.ex. på `user_id` eller `id`)
+- async/await – hanterar asynkrona databasoperationer
+- miljövariabler – lagrar API-url och nycklar säkert
+
+---
+
+### localStore.ts
+
+**Syfte:**  
+En generell lösning för att lagra data i `localStorage`.
+
+- Hanterar all CRUD-logik för listor (load, add, save, clear)
+- Genererar automatiskt `id` och `createdAt` för nya objekt
+- Säkerställer att data alltid returneras i korrekt format (fallback till tom array vid fel)
+- Skickar ett globalt event vid ändringar för att hålla UI synkat
+
+**Funktionalitet:**
+
+- `load()` → hämtar sparad data
+- `add()` → lägger till nytt objekt (med auto-genererat id + timestamp)
+- `save()` → sparar hela listan
+- `clear()` → rensar all data
+
+**Fil:**  
+`src/storage/localStore.ts`
+
+**Använder:**
+
+- `localStorage` – lagring av listdata
+- `JSON.parse` / `JSON.stringify` – serialisering/deserialisering
+- `crypto.randomUUID()` – generering av unika id:n
+- `CustomEvent` – notifiera UI om förändringar
+- Sessions (`sessionStore`)
+- Todos (`todoStore`)
+- Dispatchar `localstore:change` event vid förändringar för att trigga UI-uppdatering
+
+---
+
+### sessionMapping.ts + sessionLocalActions.ts
+
+**Syfte:**  
+Mappar datan så vår tidigare byggda kod matchar med den senare byggda. Hanterar sessionsdata lokalt och säkerställer att data kan användas konsekvent mellan UI, localStorage och databas.
+
+- Konverterar mellan olika dataformat för samma session
+- Förhindrar mismatch mellan frontend och backend (t.ex. `id` vs `session_id`)
+- Samlar all lokal sessionslogik i ett lager
+- Mapping-funktioner mellan:
+  - `StoredSession` (localStorage)
+  - `SessionData` (app/databas)
+  - `SessionFormData` (formulär)
+
+- `load()` → hämtar sessions
+- `add()` → skapar ny session
+- `update()` → uppdaterar befintlig session
+- `delete()` → tar bort session
+
+**Fil:**  
+`src/storage/sessionMapping.ts`  
+`src/storage/sessionLocalActions.ts`
+
+**Använder:**
+
+- `localStore` – för lagring av sessions
+- TypeScript-typer – säkerställer korrekt struktur
+- Mapping-funktioner – översätter mellan olika datalager
+
+### Types
+
+**Syfte:** Beskriv vad mappen innehåller
+
+**Fil:** `src/types/`
+
+**Använder:**
+
+- Komponent/bibliotek 1
+- Komponent/bibliotek 2
+
+---
+
+### Utils
+
+**Syfte:** Beskriv vad mappen innehåller
+
+**Fil:** `src/utils/`
+
+**Använder:**
+
+- Komponent/bibliotek 1
+- Komponent/bibliotek 2
+
+---
