@@ -1,8 +1,8 @@
 ## Arbetsfördelning
 
-| namn                                                  | Ansvarsområde      |
-| ----------------------------------------------------- | ------------------ |
-| [Sascha Bergenås](https://github.com/Sascha-Bergenas) | Exempel1, Exempel2 |
-| [Max Mattiasson](https://github.com/maxmattiasson)    | Exempel1, Exempel2 |
-| [Isabelle Franzén](https://github.com/isabellea-f)    | Exempel1, Exempel2 |
-| [Björn Boman](https://github.com/bjorneboman)         | Sessions-historik, SessionsContext |
+| namn                                                  | Ansvarsområde                                                                                                                                                                                                                           |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Sascha Bergenås](https://github.com/Sascha-Bergenas) | Dashboard, Todo, SettingsPage (Bild och användarnamn + Vitest-testning), SessionModal, WorkSessionForm, Grafer , CalenderCard, Återanvändbara komponenter, UI/CSS-styling, SettingsPage i React Native, dokumentation av berörda delar. |
+| [Max Mattiasson](https://github.com/maxmattiasson)    | Header, Topbar, storage, TimerContext, AuthContext, Energydisplay, Supabase, settings                                                                                                                                                                                                      |
+| [Isabelle Franzén](https://github.com/isabellea-f)    | Timer, ThemeContext / Darkmode, Profil, LoginForm, Smarta rekommendationer, Välja Mode, RandomQuote, Återanvändbara komponenter, React Native - Todo, Navigering                                                                        |
+| [Björn Boman](https://github.com/bjorneboman)         | Sessions-historik, SessionsContext, Logotype |

@@ -138,11 +138,3 @@
 └── vitest.config.js
 
 ```
-
-### Beskrivning
-
-| Mapp/Fil | Beskrivning                   |
-| -------- | ----------------------------- |
-| `mapp1/` | Beskriv vad mappen innehåller |
-| `mapp2/` | Beskriv vad mappen innehåller |
-| `fil.xx` | Beskriv vad filen gör         |
